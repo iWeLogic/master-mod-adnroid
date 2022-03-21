@@ -4,7 +4,10 @@ import android.view.Gravity
 import android.widget.ImageView
 import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.iwelogic.minecraft.mods.R
+import com.iwelogic.minecraft.mods.models.Mod
+import com.iwelogic.minecraft.mods.ui.main.mods.ModAdapter
 
 
 object Main {
@@ -44,5 +47,14 @@ object Main {
             }
             popup.show()
         }
+    }
+
+    @BindingAdapter("mods", "onClick")
+    @JvmStatic
+    fun showMods(view: RecyclerView, apps: List<Mod>?, onClick: (Mod) -> Unit) {
+        view.adapter ?: run {
+            view.adapter = ModAdapter(onClick)
+        }
+        (view.adapter as ModAdapter).submitList(apps?.toMutableList())
     }
 }

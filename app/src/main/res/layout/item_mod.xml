@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.iwelogic.minecraft.mods.models.Mod" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_size"
+            android:layout_marginTop="@dimen/half_default_size"
+            android:layout_marginEnd="@dimen/default_size"
+            android:layout_marginBottom="@dimen/half_default_size"
+            app:cardCornerRadius="@dimen/quarter_default_size"
+            app:cardElevation="@dimen/quarter_default_size">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="32:18"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        image="@{item.getFirstImage()}"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:scaleType="centerCrop" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/roboto_medium"
+                            android:lines="1"
+                            android:text="@{item.title}"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="10"
+                                android:drawablePadding="2dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/roboto_regular"
+                                android:lines="1"
+                                android:text="@{item.fileSize + ` Mb`}"
+                                android:textSize="12sp"
+                                app:drawableStartCompat="@drawable/folder" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/quarter_default_size"
+                                android:layout_weight="7"
+                                android:drawablePadding="2dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/roboto_regular"
+                                android:lines="1"
+                                android:text="@{item.getFormattedDownloads()}"
+                                android:textSize="12sp"
+                                app:drawableStartCompat="@drawable/download" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/quarter_default_size"
+                                android:layout_weight="7"
+                                android:drawablePadding="2dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/roboto_regular"
+                                android:lines="1"
+                                android:text="@{item.getFormattedLikes()}"
+                                android:textSize="12sp"
+                                app:drawableStartCompat="@drawable/favorite_small" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/quarter_default_size"
+                                android:layout_weight="8"
+                                android:drawablePadding="2dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/roboto_regular"
+                                android:lines="1"
+                                android:text="@{item.getVersion() + `+`}"
+                                android:textSize="12sp"
+                                app:drawableStartCompat="@drawable/version" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+    </FrameLayout>
+
+</layout>
+

@@ -11,14 +11,14 @@ class DataBaseSource @Inject constructor(private val api: Api, @ApplicationConte
 
     var dataBase = Room.databaseBuilder(applicationContext, DataBase::class.java, "statistics").allowMainThreadQueries().build()
 
-    suspend fun insertItemToFavourite(item: BaseItem): IResult<ResponseData<Any>> {
+    suspend fun insertItemToFavourite(item: BaseItem): Result<ResponseData<Any>> {
         dataBase.itemDao().insert(item)
-        return IResult(IResult.Status.SUCCESS, null, null)
+        return Result.Success(null)
     }
 
-    suspend fun removeFromFavourite(item: BaseItem): IResult<ResponseData<Any>> {
+    suspend fun removeFromFavourite(item: BaseItem): Result<ResponseData<Any>> {
         dataBase.itemDao().removeFromFavourite(item.primaryId)
-        return IResult(IResult.Status.SUCCESS, null, null)
+        return Result.Success(null)
     }
 
     fun checkExist(id: String) = dataBase.itemDao().checkExist(id)

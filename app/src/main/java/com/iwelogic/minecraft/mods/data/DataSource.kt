@@ -1,15 +1,13 @@
 package com.iwelogic.minecraft.mods.data
 
 import android.content.Context
-import android.util.ArrayMap
+import com.google.gson.Gson
 import com.iwelogic.minecraft.mods.R
-import com.iwelogic.minecraft.mods.models.BaseItem
 import com.iwelogic.minecraft.mods.models.BaseResponse
-import com.iwelogic.minecraft.mods.models.ResponseData
+import com.iwelogic.minecraft.mods.models.Mod
 import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Response
 import java.lang.ref.WeakReference
-import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
@@ -17,36 +15,37 @@ class DataSource @Inject constructor(private val api: Api, @ApplicationContext a
 
     var context: WeakReference<Context> = WeakReference(applicationContext)
 
-    suspend fun getBaseItems(queries: ArrayMap<String, Any>): IResult<ResponseData<BaseItem>> {
-        return getResponse(request = { api.getBaseItems(queries) }, defaultErrorMessage = context.get()?.getString(R.string.something_went_wrong))
+    suspend fun getMods(queries: MultiMap<String, Any>): Result<List<Mod>> {
+        return getResponse(request = { api.getMods(queries) })
     }
 
-    suspend fun increaseInstalls(type: String?, id: String?): IResult<BaseResponse> {
-        return getResponse(request = { api.increaseInstalls(type, id) }, defaultErrorMessage = context.get()?.getString(R.string.something_went_wrong))
+    suspend fun increaseInstalls(type: String?, id: String?): Result<BaseResponse> {
+        return getResponse(request = { api.increaseInstalls(type, id) })
     }
 
-    suspend fun like(type: String?, id: String?, action: String?): IResult<BaseResponse> {
-        return getResponse(request = { api.like(type, id, action) }, defaultErrorMessage = context.get()?.getString(R.string.something_went_wrong))
+    suspend fun like(type: String?, id: String?, action: String?): Result<BaseResponse> {
+        return getResponse(request = { api.like(type, id, action) })
     }
 
-    private suspend fun <T> getResponse(request: suspend () -> Response<T>, defaultErrorMessage: String?): IResult<T> {
+    @Suppress("BlockingMethodInNonBlockingContext")
+    private suspend fun <T> getResponse(request: suspend () -> Response<T>): Result<T> {
         return try {
             val result = request.invoke()
             if (result.isSuccessful) {
-                if (result.body() is BaseResponse && (result.body() as BaseResponse).status != 1) {
-                    IResult.error(Error(ErrorCode.UNKNOWN, (result.body() as BaseResponse).message ?: defaultErrorMessage?: Const.SOMETHING_WENT_WRONG))
-                } else {
-                    return IResult.success(result.body())
-                }
+                Result.Success(result.body())
             } else {
-                val errorResponse = ErrorUtils.parseError(result, defaultErrorMessage ?: Const.SOMETHING_WENT_WRONG)
-                IResult.error(errorResponse)
+                return try {
+                    val responseError = Gson().fromJson(result.errorBody()?.string(), BaseResponse::class.java)
+                    Result.Error(/*responseError.code*/ null ?: Result.Error.Code.UNKNOWN, responseError.message)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Result.Error(Result.Error.Code.UNKNOWN, e.message)
+                }
             }
         } catch (e: Throwable) {
-            if (e is UnknownHostException || e is SocketTimeoutException) {
-                IResult.error(Error(ErrorCode.CONNECTION, e.message ?: defaultErrorMessage ?: Const.SOMETHING_WENT_WRONG))
-            } else {
-                IResult.error(Error(ErrorCode.UNKNOWN, e.message ?: defaultErrorMessage ?: Const.SOMETHING_WENT_WRONG))
+            when (e) {
+                is UnknownHostException -> Result.Error(Result.Error.Code.NO_CONNECTION, context.get()?.getString(R.string.something_went_wrong))
+                else -> Result.Error(Result.Error.Code.UNKNOWN, e.message)
             }
         }
     }

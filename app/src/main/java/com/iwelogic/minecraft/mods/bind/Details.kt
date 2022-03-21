@@ -9,18 +9,19 @@ import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.ui.base.SliderAdapter
 import com.iwelogic.minecraft.mods.views.CollapseTextView
 import com.iwelogic.minecraft.mods.models.BaseItem
+import com.iwelogic.minecraft.mods.models.Mod
 import com.smarteist.autoimageslider.SliderView
 
 object Details {
 
     @BindingAdapter("images")
     @JvmStatic
-    fun setImage(imageSlider: SliderView, item: BaseItem?) {
+    fun setImage(imageSlider: SliderView, item: Mod?) {
         item?.let {
             if (imageSlider.sliderAdapter == null) {
                 val sliderAdapter = SliderAdapter()
                 val count = item.countImages ?: 0
-                sliderAdapter.renewItems((0 until count).map { "${BuildConfig.BACKEND_URL}/${item.category}/${item.id}/$it.jpg" })
+                sliderAdapter.renewItems(item.getImages())
                 imageSlider.setSliderAdapter(sliderAdapter)
             }
             imageSlider.startAutoCycle()

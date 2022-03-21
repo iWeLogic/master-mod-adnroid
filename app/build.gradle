@@ -23,12 +23,14 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            buildConfigField "String", "BACKEND_URL", '"http://studiodevelopment.ru"'
+            buildConfigField "String", "BACKEND_URL", '"https://angelicperson.backendless.app"'
+            buildConfigField "String", "BACKEND_FILES", '"https://eu.backendlessappcontent.com/131E89F3-9ABD-92C9-FF6A-9A48441F6800/D6116013-FF57-4830-AD2C-3F16ED393819/files"'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             debuggable true
-            buildConfigField "String", "BACKEND_URL", '"http://studiodevelopment.ru"'
+            buildConfigField "String", "BACKEND_URL", '"https://angelicperson.backendless.app"'
+            buildConfigField "String", "BACKEND_FILES", '"https://eu.backendlessappcontent.com/131E89F3-9ABD-92C9-FF6A-9A48441F6800/D6116013-FF57-4830-AD2C-3F16ED393819/files"'
         }
     }
 
@@ -46,7 +48,7 @@ android {
 
 dependencies {
 
-    implementation fileTree( include: ["*.jar", "*.aar"], dir: "libs")
+    implementation fileTree(include: ["*.jar", "*.aar"], dir: "libs")
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom"
+    app:startDestination="@id/addons">
+
+    <navigation
+        android:id="@+id/addons"
+        app:startDestination="@id/addonsFragment">
+        <fragment
+            android:id="@+id/addonsFragment"
+            android:name="com.iwelogic.minecraft.mods.ui.main.mods.ModsFragment"
+            android:label="AddonsFragment" />
+    </navigation>
+
+    <navigation
+        android:id="@+id/maps"
+        app:startDestination="@id/mapsFragment">
+        <fragment
+            android:id="@+id/mapsFragment"
+            android:name="com.iwelogic.minecraft.mods.ui.main.mods.ModsFragment"
+            android:label="MapsFragment" />
+    </navigation>
+
+    <navigation
+        android:id="@+id/textures"
+        app:startDestination="@id/texturesFragment">
+        <fragment
+            android:id="@+id/texturesFragment"
+            android:name="com.iwelogic.minecraft.mods.ui.main.mods.ModsFragment"
+            android:label="TexturesFragment" />
+    </navigation>
+</navigation>

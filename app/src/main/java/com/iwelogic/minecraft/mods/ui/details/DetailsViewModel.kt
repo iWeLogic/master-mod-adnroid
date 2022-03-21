@@ -8,23 +8,20 @@ import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.DownloadListener
-import com.iwelogic.minecraft.mods.BuildConfig
 import com.iwelogic.minecraft.mods.data.Repository
-import com.iwelogic.minecraft.mods.models.BaseItem
+import com.iwelogic.minecraft.mods.models.Mod
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.utils.isTrue
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.File
-import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(private val repository: Repository, @ApplicationContext applicationContext: Context) : BaseViewModel() {
 
-    val item: MutableLiveData<BaseItem> = MutableLiveData()
+    val item: MutableLiveData<Mod> = MutableLiveData()
     var isFavourite: LiveData<Boolean>? = null
     val base = "${applicationContext.filesDir?.path}"
 
@@ -41,10 +38,10 @@ class DetailsViewModel @Inject constructor(private val repository: Repository, @
 
     fun download() {
         if (item.value?.progress != 0) return
-    //    navigator?.showInterstitialAd()
+        //    navigator?.showInterstitialAd()
         item.value?.progress = 1
         val dir = File("$base/${item.value?.category}/${item.value?.id}").apply { mkdirs() }
-        AndroidNetworking.download("${BuildConfig.BACKEND_URL}/${item.value?.category}/${item.value?.id}/file.${item.value?.getDownloadFileExtension()}", dir.path, "file.${item.value?.getFileExtension()}")
+        AndroidNetworking.download(item.value?.getFile(), dir.path, "file.${item.value?.getFileExtension()}")
             .setTag("Downloading file")
             .setPriority(Priority.MEDIUM)
             .build()
@@ -58,7 +55,7 @@ class DetailsViewModel @Inject constructor(private val repository: Repository, @
             .startDownload(object : DownloadListener {
                 override fun onDownloadComplete() {
                     viewModelScope.launch {
-                        repository.increaseInstalls(item.value?.category, item.value?.id).collect()
+                        //     repository.increaseInstalls(item.value?.category, item.value?.id).collect()
                         item.value?.installs = (item.value?.installs ?: 0) + 1
                     }
                     item.value?.progress = 10000
@@ -67,13 +64,13 @@ class DetailsViewModel @Inject constructor(private val repository: Repository, @
                 override fun onError(error: ANError?) {
                     dir.delete()
                     item.value?.progress = 0
-          //          navigator?.openNoConnection()
+                    //          navigator?.openNoConnection()
                 }
             })
     }
 
     fun onClickInstall() {
-     //   navigator?.install(File("$base/${item.value?.category}/${item.value?.id}/file.${item.value?.getFileExtension()}").path)
+        //   navigator?.install(File("$base/${item.value?.category}/${item.value?.id}/file.${item.value?.getFileExtension()}").path)
     }
 
     fun onClickFavourite() {
@@ -81,20 +78,20 @@ class DetailsViewModel @Inject constructor(private val repository: Repository, @
             it.primaryId = "${it.category} ${it.pack} ${it.id}"
             viewModelScope.launch {
                 if (isFavourite?.value.isTrue()) {
-                    repository.removeFromFavourite(it).collect()
+                    //    repository.removeFromFavourite(it).collect()
                     item.value?.likes = (item.value?.likes ?: 0) - 1
-                    repository.like(item.value?.category, item.value?.id, "decrease").collect()
+                    //   repository.like(item.value?.category, item.value?.id, "decrease").collect()
                 } else {
                     it.favouriteDate = System.currentTimeMillis()
-                    repository.setFavourite(it).collect()
+                    //  repository.setFavourite(it).collect()
                     item.value?.likes = (item.value?.likes ?: 0) + 1
-                    repository.like(item.value?.category, item.value?.id, "increase").collect()
+                    //  repository.like(item.value?.category, item.value?.id, "increase").collect()
                 }
             }
         }
     }
 
     fun onClickHelp() {
-       // item.value?.category?.let { navigator?.openHelp(it) }
+        // item.value?.category?.let { navigator?.openHelp(it) }
     }
 }

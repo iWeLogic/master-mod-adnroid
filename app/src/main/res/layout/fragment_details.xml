@@ -76,7 +76,7 @@
                     android:layout_marginTop="@dimen/half_default_size"
                     android:layout_marginEnd="@dimen/default_size"
                     android:fontFamily="@font/roboto_medium"
-                    android:text="@{viewModel.item.name}"
+                    android:text="@{viewModel.item.title}"
                     android:textSize="24sp" />
 
                 <LinearLayout
@@ -101,7 +101,7 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/roboto_medium"
                         android:lines="1"
-                        android:text="@{viewModel.item.filesize + ` Mb`}"
+                        android:text="@{viewModel.item.fileSize + ` Mb`}"
                         android:textSize="16sp" />
 
                     <ImageView
