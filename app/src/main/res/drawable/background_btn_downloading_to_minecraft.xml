@@ -1,0 +1,17 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/background_btn_downloading_to_minecraft_white" />
+    </item>
+    <item android:id="@+id/clip_drawable">
+        <clip
+            android:clipOrientation="horizontal"
+            android:gravity="start">
+            <bitmap
+                android:gravity="center"
+                android:src="@drawable/background_btn_downloading_blue_to_minecraft" />
+        </clip>
+    </item>
+
+</layer-list>

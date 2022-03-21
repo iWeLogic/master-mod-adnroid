@@ -23,15 +23,24 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            buildConfigField "String", "BACKEND_URL", '"http://studiodevelopment.ru"'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            debuggable true
+            buildConfigField "String", "BACKEND_URL", '"http://studiodevelopment.ru"'
+        }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    buildFeatures {
+        dataBinding = true
     }
 }
 
