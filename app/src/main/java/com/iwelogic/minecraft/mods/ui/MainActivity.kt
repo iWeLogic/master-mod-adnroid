@@ -5,7 +5,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
+import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
@@ -21,37 +24,37 @@ class MainActivity : AppCompatActivity() {
     var mInterstitialAd: InterstitialAd? = null
     private var mAdIsLoading: Boolean = false
     private var count = 0
-    private var backStackSize: Int = 0
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.checkAge()
         binding.viewModel = viewModel
+
+        viewModel.openMain.observe(this) {
+            openMain()
+        }
+
+        viewModel.openOnboarding.observe(this) {
+            openOnboarding()
+        }
     }
 
-    /*fun openHost() {
-        val host = NavHostFragment.create(R.navigation.host)
-        supportFragmentManager.beginTransaction().replace(R.id.hostContainer, host)
-            .setPrimaryNavigationFragment(host).commitAllowingStateLoss()
-    }
-
-    override fun openLoading() {
+    fun openMain() {
         loadInterstitialAd()
-        val host = NavHostFragment.create(R.navigation.loading)
+        val host = NavHostFragment.create(R.navigation.main)
         supportFragmentManager.beginTransaction().replace(R.id.hostContainer, host)
             .setPrimaryNavigationFragment(host).commitAllowingStateLoss()
     }
 
-    override fun openSelectAge() {
-        val host = NavHostFragment.create(R.navigation.select_age)
+    fun openOnboarding() {
+        val host = NavHostFragment.create(R.navigation.onboarding)
         supportFragmentManager.beginTransaction().replace(R.id.hostContainer, host)
             .setPrimaryNavigationFragment(host).commitAllowingStateLoss()
     }
-*/
     private fun loadInterstitialAd() {
         mAdIsLoading = true
         val adRequest = AdRequest.Builder().build()
@@ -80,7 +83,7 @@ class MainActivity : AppCompatActivity() {
 
     fun showInterstitialAd(callback: (() -> Unit)? = null) {
         callback?.invoke()
-        /* if (mInterstitialAd != null) {
+         if (mInterstitialAd != null) {
              mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
                  override fun onAdDismissedFullScreenContent() {
 
@@ -95,7 +98,6 @@ class MainActivity : AppCompatActivity() {
                  override fun onAdShowedFullScreenContent() {
                      callback?.invoke()
                      mInterstitialAd = null
-                     YandexMetrica.reportEvent("InterAdsShow")
                      count = 0
                      loadInterstitialAd()
                  }
@@ -107,6 +109,6 @@ class MainActivity : AppCompatActivity() {
                  count=0
                  loadInterstitialAd()
              }
-         }*/
+         }
     }
 }
