@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "564580815426",
+    "project_id": "iwelogic-minecraft-mods",
+    "storage_bucket": "iwelogic-minecraft-mods.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:564580815426:android:3cb5f586e2379b7384d3db",
+        "android_client_info": {
+          "package_name": "com.iwelogic.minecraft.mods"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "564580815426-q6ujufoeotb9kfdksiilprhqcmjn158t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKSK8eFY_cHMQcdG5YAU-SIbEeELySL6I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "564580815426-q6ujufoeotb9kfdksiilprhqcmjn158t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
