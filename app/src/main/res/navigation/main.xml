@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.iwelogic.minecraft.mods.ui.main.MainFragment"
-        android:label="MainFragment" >
+        android:label="MainFragment">
         <action
             android:id="@+id/action_mainFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.iwelogic.minecraft.mods.ui.details.DetailsFragment"
-        android:label="DetailsFragment" >
+        android:label="DetailsFragment">
         <argument
             android:name="data"
             app:argType="com.iwelogic.minecraft.mods.models.Mod" />
@@ -26,5 +26,12 @@
     <dialog
         android:id="@+id/filterDialog"
         android:name="com.iwelogic.minecraft.mods.ui.main.mods.filter.FilterDialog"
-        android:label="FilterDialog" />
+        android:label="FilterDialog">
+        <argument
+            android:name="key"
+            app:argType="string" />
+        <argument
+            android:name="data"
+            app:argType="com.iwelogic.minecraft.mods.models.FilterValue[]" />
+    </dialog>
 </navigation>

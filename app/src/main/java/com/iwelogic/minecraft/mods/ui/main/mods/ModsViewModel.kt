@@ -7,9 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.iwelogic.minecraft.mods.R
+import com.iwelogic.minecraft.mods.data.MultiMap
 import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.data.Result
+import com.iwelogic.minecraft.mods.models.Filter
+import com.iwelogic.minecraft.mods.models.FilterValue
 import com.iwelogic.minecraft.mods.models.Mod
+import com.iwelogic.minecraft.mods.models.Sort
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.utils.isTrue
@@ -34,29 +38,24 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext context: Con
 
         const val PROGRESS = "progress"
         const val ERROR = "error"
+        const val PAGE_SIZE = 30
     }
-    val sort: MutableLiveData<String> = MutableLiveData("default")
+
+    private var job: Job? = null
+    private val changeObserver: (Any) -> Unit = {
+        reload()
+    }
+    val sort: MutableLiveData<Sort> = MutableLiveData(Sort.DEFAULT)
     val mods: MutableLiveData<MutableList<Mod>> = MutableLiveData(ArrayList())
     val title: MutableLiveData<String> = MutableLiveData()
     val openMod: SingleLiveEvent<Mod> = SingleLiveEvent()
-    val openFilter: SingleLiveEvent<Boolean> = SingleLiveEvent()
+    val openFilter: SingleLiveEvent<List<FilterValue>> = SingleLiveEvent()
     val spanCount: MutableLiveData<Int> = MutableLiveData(1)
-    var job: Job? = null
     var finished = false
+    val filters: MutableLiveData<List<FilterValue>> = MutableLiveData(ArrayList())
 
-    val onSelectSort: (String) -> Unit = {
+    val onSelectSort: (Sort) -> Unit = {
         sort.postValue(it)
-    }
-
-    /*fun checkSort() {
-        val savedSort = context.get()?.readString("sort")
-        if (savedSort != sort.value) {
-            sort.postValue(savedSort)
-        }
-    }*/
-
-    fun onClickFilter(){
-        openFilter.invoke(true)
     }
 
     val onClick: (Mod) -> Unit = {
@@ -69,6 +68,7 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext context: Con
     }
 
     init {
+        filters.value = Filter.getFiltersByCategory(category).map { FilterValue(it, true) }
         load()
         spanCount.postValue(if (category == "skins") 2 else 1)
         title.postValue(
@@ -80,12 +80,43 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext context: Con
                 else -> context.getString(R.string.skins)
             }
         )
+        sort.observeForever(changeObserver)
+        filters.observeForever(changeObserver)
+    }
+
+    fun onClickFilter() {
+        openFilter.invoke(filters.value ?: ArrayList())
     }
 
     private fun load() {
         if (!job?.isActive.isTrue() && mods.value?.none { it.category == ERROR || it.category == PROGRESS }.isTrue() && !finished) {
+            try {
+                val i = 10 / 0
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            Log.w("myLog", "load: XXXX")
             job = viewModelScope.launch {
-                repository.getMods(category, mods.value?.size ?: 0).catch {
+                val queries: MultiMap<String, Any> = MultiMap()
+                queries["property"] = "id"
+                queries["property"] = "installs"
+                queries["property"] = "likes"
+                if (category != "skins") {
+                    queries["property"] = "title"
+                    queries["property"] = "description"
+                    queries["property"] = "fileSize"
+                    queries["property"] = "countImages"
+                    queries["property"] = "version"
+                }
+                queries["pageSize"] = PAGE_SIZE
+                /*       when(sort.value){
+                           fileSize
+                       }*/
+                queries["sortBy"] = sort.value?.query ?: ""
+                queries["where"] = Filter.getQuery(filters.value)
+                queries["offset"] = mods.value?.size ?: 0
+
+                repository.getMods(category, queries).catch {
                     Log.w("myLog", "load2: " + it.message)
                 }.collect { result ->
                     when (result) {
@@ -95,6 +126,7 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext context: Con
                             val data = result.data?.toMutableList()?.onEach { it.category = category } ?: ArrayList()
                             mods.value?.addAll(data)
                             mods.postValue(mods.value)
+                            if (data.size < PAGE_SIZE) finished = true
                         }
                         is Result.Error -> {
                             Log.w("myLog", "load4: " + result.message)
@@ -114,6 +146,20 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext context: Con
         if (status) mods.value?.add(Mod(category = PROGRESS))
         else mods.value?.removeAll { it.category == PROGRESS }
         mods.postValue(mods.value)
+    }
+
+    override fun reload() {
+        job?.cancel()
+        mods.value?.clear()
+        mods.postValue(mods.value)
+        finished = false
+        load()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        sort.removeObserver(changeObserver)
+        filters.removeObserver(changeObserver)
     }
 }
 

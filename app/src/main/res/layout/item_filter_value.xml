@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.content.Context" />
+
+        <variable
+            name="item"
+            type="com.iwelogic.minecraft.mods.models.FilterValue" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:layout_width="match_parent"
+            android:checked="@={item.value}"
+            android:button="@drawable/checkbox_button"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:padding="@dimen/half_default_size"
+            android:text="@{context.getString(item.filter.title)}"/>
+
+    </FrameLayout>
+
+</layout>
+

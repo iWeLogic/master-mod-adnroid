@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -20,19 +21,22 @@
             android:layout_margin="@dimen/double_default_size"
             android:background="@color/white"
             android:orientation="vertical"
-            android:paddingStart="@dimen/default_size"
-            android:paddingTop="@dimen/double_default_size"
-            android:paddingEnd="@dimen/default_size"
-            android:paddingBottom="@dimen/default_size"
+            android:padding="@dimen/default_size"
             tools:ignore="UselessParent">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_default_size"
                 android:fontFamily="@font/roboto_regular"
                 android:letterSpacing="0.04"
+                android:text="Filter"
                 android:textSize="14sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                filters="@{viewModel.items}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <TextView
                 android:layout_width="80dp"
@@ -43,7 +47,9 @@
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="center"
                 android:text="@string/ok"
+                android:onClick="@{() -> viewModel.onClickOk()}"
                 android:textSize="14sp" />
+
         </LinearLayout>
 
     </FrameLayout>

@@ -29,23 +29,9 @@ class Repository @Inject constructor(private val dataSource: DataSource, private
           }.flowOn(Dispatchers.IO)
       }
   */
-    suspend fun getMods(category: String, offset: Int): Flow<Result<List<Mod>>> {
-        val queries: MultiMap<String, Any> = MultiMap()
-        queries["property"] = "id"
-        queries["property"] = "installs"
-        queries["property"] = "likes"
-        if (category != "skins") {
-            queries["property"] = "title"
-            queries["property"] = "description"
-            queries["property"] = "fileSize"
-            queries["property"] = "countImages"
-            queries["property"] = "version"
-        }
-        queries["pageSize"] = 30
-        queries["offset"] = offset
+    suspend fun getMods(category: String, queries: MultiMap<String, Any>): Flow<Result<List<Mod>>> {
         return flow {
             emit(Result.Loading)
-            kotlinx.coroutines.delay(1000)
             emit(dataSource.getMods(category, queries))
             emit(Result.Finish)
         }.flowOn(Dispatchers.IO)

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.DialogFilterBinding
@@ -18,7 +19,16 @@ class FilterDialog : BaseDialog<FilterViewModel>() {
         val binding: DialogFilterBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_filter, container, false)
         binding.lifecycleOwner = this
         viewModel = ViewModelProvider(this).get(FilterViewModel::class.java)
+        viewModel.items.postValue(FilterDialogArgs.fromBundle(requireArguments()).data.toList())
         binding.viewModel = viewModel
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.apply.observe(viewLifecycleOwner) {
+            setFragmentResult(FilterDialogArgs.fromBundle(requireArguments()).key, Bundle().apply { putParcelableArray("value", it.toTypedArray()) })
+            dismiss()
+        }
     }
 }

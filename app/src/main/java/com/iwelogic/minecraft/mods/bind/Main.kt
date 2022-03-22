@@ -1,6 +1,5 @@
 package com.iwelogic.minecraft.mods.bind
 
-import android.util.Log
 import android.view.Gravity
 import android.widget.ImageView
 import androidx.appcompat.widget.PopupMenu
@@ -9,43 +8,25 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.iwelogic.minecraft.mods.R
+import com.iwelogic.minecraft.mods.models.FilterValue
 import com.iwelogic.minecraft.mods.models.Mod
+import com.iwelogic.minecraft.mods.models.Sort
 import com.iwelogic.minecraft.mods.ui.main.mods.ModAdapter
+import com.iwelogic.minecraft.mods.ui.main.mods.filter.FilterValueAdapter
 
 
 object Main {
 
     @BindingAdapter("sort", "onSelect")
     @JvmStatic
-    fun setSort(view: ImageView, sort: String?, onSelect: (String) -> Unit) {
+    fun setSort(view: ImageView, sort: Sort, onSelect: (Sort) -> Unit) {
         view.setOnClickListener {
             val popup = PopupMenu(view.context, view, Gravity.END)
             popup.inflate(R.menu.sort)
-            when (sort) {
-                "likes" -> popup.menu.findItem(R.id.sort_likes).isChecked = true
-                "installs" -> popup.menu.findItem(R.id.sort_installs).isChecked = true
-                "date" -> popup.menu.findItem(R.id.sort_date).isChecked = true
-                else -> popup.menu.findItem(R.id.sort_default).isChecked = true
-            }
+            popup.menu.findItem(sort.menuId).isChecked = true
             popup.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.sort_default -> {
-                        onSelect.invoke("default")
-                        item.isChecked = !item.isChecked
-                    }
-                    R.id.sort_likes -> {
-                        onSelect.invoke("likes")
-                        item.isChecked = !item.isChecked
-                    }
-                    R.id.sort_installs -> {
-                        onSelect.invoke("installs")
-                        item.isChecked = !item.isChecked
-                    }
-                    R.id.sort_date -> {
-                        onSelect.invoke("date")
-                        item.isChecked = !item.isChecked
-                    }
-                }
+                item.isChecked = !item.isChecked
+                onSelect.invoke(Sort.findByMenuId(item.itemId))
                 false
             }
             popup.show()
@@ -66,11 +47,10 @@ object Main {
         }
         val layoutManager = (view.layoutManager as GridLayoutManager)
         layoutManager.spanCount = spanCount
-        if(layoutManager.spanCount == 2){
+        if (layoutManager.spanCount == 2) {
             layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     view.adapter?.let {
-                        Log.w("myLog", "getSpanSize: XXX")
                         return when (it.getItemViewType(position)) {
                             2 -> 1
                             1 -> 1
@@ -83,5 +63,14 @@ object Main {
             }
         }
         (view.adapter as ModAdapter).submitList(mods?.toMutableList())
+    }
+
+    @BindingAdapter("filters")
+    @JvmStatic
+    fun showFilters(view: RecyclerView, filters: List<FilterValue>?) {
+        view.adapter ?: run {
+            view.adapter = FilterValueAdapter()
+        }
+        (view.adapter as FilterValueAdapter).submitList(filters?.toMutableList())
     }
 }

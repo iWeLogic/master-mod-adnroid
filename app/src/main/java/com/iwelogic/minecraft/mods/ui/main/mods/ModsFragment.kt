@@ -1,16 +1,17 @@
 package com.iwelogic.minecraft.mods.ui.main.mods
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentModsBinding
+import com.iwelogic.minecraft.mods.models.FilterValue
 import com.iwelogic.minecraft.mods.ui.base.BaseFragment
 import com.iwelogic.minecraft.mods.ui.main.MainFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,8 +40,11 @@ class ModsFragment : BaseFragment<ModsViewModel>() {
         }
         viewModel.openFilter.observe(viewLifecycleOwner) {
             if (findNavController().currentDestination?.id != R.id.filterDialog) {
-                parentFragment?.parentFragment?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToFilterDialog())
+                parentFragment?.parentFragment?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToFilterDialog("filter_" + viewModel.category, it.toTypedArray()))
             }
+        }
+        parentFragment?.parentFragment?.setFragmentResultListener("filter_" + viewModel.category) { _, bundle ->
+            viewModel.filters.postValue(bundle.getParcelableArray("value")?.map { it as FilterValue })
         }
     }
 }

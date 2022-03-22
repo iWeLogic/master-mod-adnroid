@@ -20,6 +20,18 @@
             app:showAsAction="ifRoom" />
 
         <item
+            android:id="@+id/sort_file_desc"
+            android:orderInCategory="4"
+            android:title="File desc"
+            app:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/sort_file_asc"
+            android:orderInCategory="4"
+            android:title="File asc"
+            app:showAsAction="ifRoom" />
+
+        <item
             android:id="@+id/sort_date"
             android:orderInCategory="4"
             android:title="@string/by_date"
