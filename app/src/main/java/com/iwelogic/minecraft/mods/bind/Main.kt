@@ -1,9 +1,12 @@
 package com.iwelogic.minecraft.mods.bind
 
+import android.util.Log
 import android.view.Gravity
 import android.widget.ImageView
 import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.models.Mod
@@ -49,12 +52,36 @@ object Main {
         }
     }
 
-    @BindingAdapter("mods", "onClick")
+    @BindingAdapter("mods", "onClick", "onScroll", "spanCount")
     @JvmStatic
-    fun showMods(view: RecyclerView, apps: List<Mod>?, onClick: (Mod) -> Unit) {
+    fun showMods(view: RecyclerView, mods: List<Mod>?, onClick: (Mod) -> Unit, onScroll: (Int) -> Unit, spanCount: Int) {
         view.adapter ?: run {
             view.adapter = ModAdapter(onClick)
+            view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    onScroll.invoke((recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition())
+                }
+            })
         }
-        (view.adapter as ModAdapter).submitList(apps?.toMutableList())
+        val layoutManager = (view.layoutManager as GridLayoutManager)
+        layoutManager.spanCount = spanCount
+        if(layoutManager.spanCount == 2){
+            layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    view.adapter?.let {
+                        Log.w("myLog", "getSpanSize: XXX")
+                        return when (it.getItemViewType(position)) {
+                            2 -> 1
+                            1 -> 1
+                            else -> 2
+                        }
+                    } ?: run {
+                        return 0
+                    }
+                }
+            }
+        }
+        (view.adapter as ModAdapter).submitList(mods?.toMutableList())
     }
 }

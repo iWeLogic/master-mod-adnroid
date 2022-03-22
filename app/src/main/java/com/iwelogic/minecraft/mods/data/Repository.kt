@@ -9,9 +9,9 @@ import javax.inject.Inject
 
 class Repository @Inject constructor(private val dataSource: DataSource, private val dataBaseSource: DataBaseSource) {
 
-    fun checkExist(id: String) = dataBaseSource.checkExist(id)
+/*    fun checkExist(id: String) = dataBaseSource.checkExist(id)
 
-    fun getFavouriteItems() = dataBaseSource.getFavouriteItems()
+    fun getFavouriteItems() = dataBaseSource.getFavouriteItems()*/
 
     /*  suspend fun setFavourite(item: BaseItem): Flow<Result<Any>> {
           return flow {
@@ -32,17 +32,20 @@ class Repository @Inject constructor(private val dataSource: DataSource, private
     suspend fun getMods(category: String, offset: Int): Flow<Result<List<Mod>>> {
         val queries: MultiMap<String, Any> = MultiMap()
         queries["property"] = "id"
-        queries["property"] = "title"
-        queries["property"] = "description"
-        queries["property"] = "fileSize"
-        queries["property"] = "countImages"
-        queries["property"] = "version"
         queries["property"] = "installs"
         queries["property"] = "likes"
-        queries["pageSize"] = "30"
+        if (category != "skins") {
+            queries["property"] = "title"
+            queries["property"] = "description"
+            queries["property"] = "fileSize"
+            queries["property"] = "countImages"
+            queries["property"] = "version"
+        }
+        queries["pageSize"] = 30
         queries["offset"] = offset
         return flow {
             emit(Result.Loading)
+            kotlinx.coroutines.delay(1000)
             emit(dataSource.getMods(category, queries))
             emit(Result.Finish)
         }.flowOn(Dispatchers.IO)

@@ -1,18 +1,19 @@
 package com.iwelogic.minecraft.mods.models
 
 import android.os.Parcelable
-import android.util.Log
 import androidx.annotation.NonNull
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
 import androidx.room.ColumnInfo
+import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.iwelogic.minecraft.mods.BuildConfig
 import kotlinx.parcelize.Parcelize
 
+@Entity(tableName = "mods")
 @Parcelize
 data class Mod(
 
@@ -22,37 +23,39 @@ data class Mod(
     var primaryId: String = "",
 
     @field:SerializedName("id")
-    val id: Int? = null,
+    var id: Int? = null,
 
     @field:SerializedName("title")
-    val title: String? = null,
+    var title: String? = null,
 
     @field:SerializedName("description")
-    val description: String? = null,
+    var description: String? = null,
 
     @field:SerializedName("countImages")
-    val countImages: Int? = null,
+    var countImages: Int? = null,
 
     @field:SerializedName("fileSize")
-    val fileSize: Double? = null,
+    var fileSize: Double? = null,
 
     @field:SerializedName("priority")
-    val priority: Int? = null,
+    var priority: Int? = null,
 
     @field:SerializedName("pack")
-    val pack: Int? = null,
+    var pack: Int? = null,
 
     @field:SerializedName("version")
-    val version: String? = null,
+    var version: String? = null,
 
     @field:SerializedName("addDate")
-    val addDate: Int? = null,
+    var addDate: Int? = null,
 
     @field:SerializedName("installs")
-    var _installs: Long? = null,
+    @ColumnInfo(name = "installs")
+    var p_installs: Long? = null,
 
     @field:SerializedName("likes")
-    var _likes: Long? = null,
+    @ColumnInfo(name = "likes")
+    var p_likes: Long? = null,
 
     var category: String? = null,
 
@@ -79,16 +82,16 @@ data class Mod(
             notifyPropertyChanged(BR.progress)
         }
     var installs: Long?
-        @Bindable get() = _installs
+        @Bindable get() = p_installs
         set(value) {
-            _installs = value
+            p_installs = value
             notifyPropertyChanged(BR.installs)
         }
 
     var likes: Long?
-        @Bindable get() = _likes
+        @Bindable get() = p_likes
         set(value) {
-            _likes = value
+            p_likes = value
             notifyPropertyChanged(BR.likes)
         }
 
@@ -123,7 +126,7 @@ data class Mod(
     fun generateVersion(): String {
         return try {
             val i2 = version!!.toInt() / 1000
-            i2.toString() + "." + (version.toInt() - i2 * 1000)
+            i2.toString() + "." + (version!!.toInt() - i2 * 1000)
         } catch (e: Exception) {
             ""
         }
@@ -133,14 +136,16 @@ data class Mod(
         "maps" -> "mcworld"
         "addons" -> "mcaddon"
         "seeds" -> "mcworld"
-        else -> "mcpack"
+        "textures" -> "mcpack"
+        else -> "png"
     }
 
-    fun getFirstImage() = BuildConfig.BACKEND_FILES + "/" + category + "/" + id + "/images/0.jpg"
+    fun getFirstImage() = BuildConfig.BACKEND_FILES + "/" + category + "/" + id + "/images/0.${if (category == "skins") "png" else "jpg"}"
+
 
     fun getImages(): List<String> = (0 until (countImages ?: 0)).map {
         val image = BuildConfig.BACKEND_FILES + "/" + category + "/" + id + "/images/$it.jpg"
-      //  Log.w("myLog", "getImages: " + image)
+        //  Log.w("myLog", "getImages: " + image)
         image
     }
 

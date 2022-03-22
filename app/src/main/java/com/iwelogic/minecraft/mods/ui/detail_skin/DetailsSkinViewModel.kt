@@ -37,7 +37,7 @@ import javax.inject.Inject
 class DetailsSkinViewModel @Inject constructor(private val repository: Repository, @ApplicationContext applicationContext: Context) : StorageViewModel() {
 
     var context: WeakReference<Context> = WeakReference(applicationContext)
-    val item: MutableLiveData<BaseItem> = MutableLiveData()
+    val item: MutableLiveData<Mod> = MutableLiveData()
     val base = "${applicationContext.filesDir?.path}"
     var isFavourite: LiveData<Boolean>? = null
 
@@ -46,7 +46,7 @@ class DetailsSkinViewModel @Inject constructor(private val repository: Repositor
         val file = File("$base/skins/$name.mcpack")
         item.value?.progress = if (file.exists()) 10000 else 0
         item.value?.progressGallery = if (context.get()?.readBoolean(name).isTrue()) 10000 else 0
-        isFavourite = repository.checkExist("${item.value?.category} ${item.value?.pack} ${item.value?.id}")
+    //    isFavourite = repository.checkExist("${item.value?.category} ${item.value?.pack} ${item.value?.id}")
     }
 
     fun onClickDownloadToGallery() {
@@ -65,7 +65,7 @@ class DetailsSkinViewModel @Inject constructor(private val repository: Repositor
             kotlin.runCatching {
                 //downloading image
                 item.value?.progressGallery = 100
-                val connection: HttpURLConnection = URL("${BuildConfig.BACKEND_URL}/skins/${item.value?.id}/file.png").openConnection() as HttpURLConnection
+                val connection: HttpURLConnection = URL(item.value?.getFile()).openConnection() as HttpURLConnection
                 connection.doInput = true
                 connection.connect()
                 val input: InputStream = connection.inputStream
@@ -97,7 +97,7 @@ class DetailsSkinViewModel @Inject constructor(private val repository: Repositor
 
                 //downloading image
                 item.value?.progress = 100
-                val connection: HttpURLConnection = URL("${BuildConfig.BACKEND_URL}/skins/${item.value?.id}/file.png").openConnection() as HttpURLConnection
+                val connection: HttpURLConnection = URL(item.value?.getFile()).openConnection() as HttpURLConnection
                 connection.doInput = true
                 connection.connect()
                 val input: InputStream = connection.inputStream

@@ -1,10 +1,7 @@
 package com.iwelogic.minecraft.mods.data
 
 import android.util.ArrayMap
-import com.iwelogic.minecraft.mods.models.BaseItem
-import com.iwelogic.minecraft.mods.models.BaseResponse
-import com.iwelogic.minecraft.mods.models.Mod
-import com.iwelogic.minecraft.mods.models.ResponseData
+import com.iwelogic.minecraft.mods.models.*
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

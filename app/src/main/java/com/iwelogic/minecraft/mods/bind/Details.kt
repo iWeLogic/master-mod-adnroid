@@ -4,11 +4,9 @@ import android.graphics.drawable.ClipDrawable
 import android.graphics.drawable.LayerDrawable
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
-import com.iwelogic.minecraft.mods.BuildConfig
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.ui.base.SliderAdapter
 import com.iwelogic.minecraft.mods.views.CollapseTextView
-import com.iwelogic.minecraft.mods.models.BaseItem
 import com.iwelogic.minecraft.mods.models.Mod
 import com.smarteist.autoimageslider.SliderView
 

@@ -65,8 +65,14 @@
         app:startDestination="@id/skinsFragment">
         <fragment
             android:id="@+id/skinsFragment"
-            android:name="com.iwelogic.minecraft.mods.ui.main.skins.SkinsFragment"
-            android:label="SkinsFragment" />
+            android:name="com.iwelogic.minecraft.mods.ui.main.mods.ModsFragment"
+            android:label="SkinsFragment">
+            <argument
+                android:name="category"
+                android:defaultValue="skins"
+                app:argType="string" />
+        </fragment>
     </navigation>
+
 
 </navigation>

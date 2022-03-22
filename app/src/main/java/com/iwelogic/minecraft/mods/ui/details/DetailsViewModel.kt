@@ -28,7 +28,7 @@ class DetailsViewModel @Inject constructor(private val repository: Repository, @
     fun checkIsFileExist() {
         val file = File("$base/${item.value?.category}/${item.value?.id}/file.${item.value?.getFileExtension()}")
         item.value?.progress = if (file.exists()) 10000 else 0
-        isFavourite = repository.checkExist("${item.value?.category} ${item.value?.pack} ${item.value?.id}")
+ //       isFavourite = repository.checkExist("${item.value?.category} ${item.value?.pack} ${item.value?.id}")
     }
 
     override fun onCleared() {
