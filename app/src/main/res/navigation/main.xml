@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_mainFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_filterDialog"
+            app:destination="@id/filterDialog" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
@@ -20,4 +23,8 @@
             android:name="data"
             app:argType="com.iwelogic.minecraft.mods.models.Mod" />
     </fragment>
+    <dialog
+        android:id="@+id/filterDialog"
+        android:name="com.iwelogic.minecraft.mods.ui.main.mods.filter.FilterDialog"
+        android:label="FilterDialog" />
 </navigation>

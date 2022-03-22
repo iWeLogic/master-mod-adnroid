@@ -37,5 +37,10 @@ class ModsFragment : BaseFragment<ModsViewModel>() {
                 parentFragment?.parentFragment?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToDetailsFragment(it))
             }
         }
+        viewModel.openFilter.observe(viewLifecycleOwner) {
+            if (findNavController().currentDestination?.id != R.id.filterDialog) {
+                parentFragment?.parentFragment?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToFilterDialog())
+            }
+        }
     }
 }

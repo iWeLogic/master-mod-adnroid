@@ -35,13 +35,29 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext context: Con
         const val PROGRESS = "progress"
         const val ERROR = "error"
     }
-
+    val sort: MutableLiveData<String> = MutableLiveData("default")
     val mods: MutableLiveData<MutableList<Mod>> = MutableLiveData(ArrayList())
     val title: MutableLiveData<String> = MutableLiveData()
     val openMod: SingleLiveEvent<Mod> = SingleLiveEvent()
+    val openFilter: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val spanCount: MutableLiveData<Int> = MutableLiveData(1)
     var job: Job? = null
     var finished = false
+
+    val onSelectSort: (String) -> Unit = {
+        sort.postValue(it)
+    }
+
+    /*fun checkSort() {
+        val savedSort = context.get()?.readString("sort")
+        if (savedSort != sort.value) {
+            sort.postValue(savedSort)
+        }
+    }*/
+
+    fun onClickFilter(){
+        openFilter.invoke(true)
+    }
 
     val onClick: (Mod) -> Unit = {
         openMod.invoke(it)

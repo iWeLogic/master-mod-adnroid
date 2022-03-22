@@ -32,6 +32,22 @@
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
+            <ImageView
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
+                android:scaleType="centerInside"
+                android:onClick="@{() -> viewModel.onClickFilter()}"
+                android:src="@drawable/filter" />
+
+
+            <ImageView
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
+                android:scaleType="centerInside"
+                onSelect="@{viewModel.onSelectSort}"
+                sort="@{viewModel.sort}"
+                android:src="@drawable/sort" />
+
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
