@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import type="com.iwelogic.minecraft.mods.models.Category"/>
 
         <variable
             name="viewModel"
@@ -16,6 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar"
+            android:background="@color/purple_200"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -27,8 +31,119 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/back_details" />
 
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search"
+                query="@{viewModel.query}"
+                queryTextListener="@{viewModel.listener}"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:theme="@style/SearchStyle"
+                app:defaultQueryHint="@string/search"
+                app:iconifiedByDefault="false"
+                app:queryBackground="@color/transparent"
+                app:queryHint="@string/search"
+                app:searchIcon="@null"/>
+
+            <ImageView
+                android:layout_width="@dimen/toolbar"
+                android:layout_height="@dimen/toolbar"
+                android:background="?attr/actionBarItemBackground"
+                android:onClick="@{() -> viewModel.onClickMic()}"
+                android:scaleType="centerInside"
+                android:src="@drawable/mic" />
 
         </LinearLayout>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/quarter_default_size">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/double_default_size"
+                    android:layout_margin="@dimen/quarter_default_size"
+                    android:background="@{viewModel.category.equals(Category.ADDONS) ? @drawable/background_chips_on : @drawable/background_chips_off}"
+                    android:drawablePadding="@dimen/half_default_size"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:onClick="@{() -> viewModel.onSelectCategory(Category.ADDONS)}"
+                    android:paddingStart="12dp"
+                    android:paddingTop="@dimen/quarter_default_size"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="@dimen/quarter_default_size"
+                    android:text="@string/addons"
+                    android:textColor="@color/mainDark"
+                    android:textSize="14sp"
+                    app:drawableStartCompat="@drawable/addons_small" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/double_default_size"
+                    android:layout_margin="@dimen/quarter_default_size"
+                    android:background="@{viewModel.category.equals(Category.MAPS) ? @drawable/background_chips_on : @drawable/background_chips_off}"
+                    android:drawablePadding="@dimen/half_default_size"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:onClick="@{() -> viewModel.onSelectCategory(Category.MAPS)}"
+                    android:paddingStart="12dp"
+                    android:paddingTop="@dimen/quarter_default_size"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="@dimen/quarter_default_size"
+                    android:text="@string/maps"
+                    android:textColor="@color/mainDark"
+                    android:textSize="14sp"
+                    app:drawableStartCompat="@drawable/maps_small" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/double_default_size"
+                    android:layout_margin="@dimen/quarter_default_size"
+                    android:background="@{viewModel.category.equals(Category.TEXTURES) ? @drawable/background_chips_on : @drawable/background_chips_off}"
+                    android:drawablePadding="@dimen/half_default_size"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:onClick="@{() -> viewModel.onSelectCategory(Category.TEXTURES)}"
+                    android:paddingStart="12dp"
+                    android:paddingTop="@dimen/quarter_default_size"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="@dimen/quarter_default_size"
+                    android:text="@string/textures"
+                    android:textColor="@color/mainDark"
+                    android:textSize="14sp"
+                    app:drawableStartCompat="@drawable/textures_small" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/double_default_size"
+                    android:layout_margin="@dimen/quarter_default_size"
+                    android:background="@{viewModel.category.equals(Category.SEEDS) ? @drawable/background_chips_on : @drawable/background_chips_off}"
+                    android:drawablePadding="@dimen/half_default_size"
+                    android:fontFamily="@font/roboto_regular"
+                    android:gravity="center"
+                    android:onClick="@{() -> viewModel.onSelectCategory(Category.SEEDS)}"
+                    android:paddingStart="12dp"
+                    android:paddingTop="@dimen/quarter_default_size"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="@dimen/quarter_default_size"
+                    android:text="@string/seeds"
+                    android:textColor="@color/mainDark"
+                    android:textSize="14sp"
+                    app:drawableStartCompat="@drawable/seeds_small" />
+
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
 
 
     </LinearLayout>
