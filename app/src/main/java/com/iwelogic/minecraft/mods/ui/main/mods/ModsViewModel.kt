@@ -49,6 +49,8 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext context: Con
     val mods: MutableLiveData<MutableList<Mod>> = MutableLiveData(ArrayList())
     val title: MutableLiveData<String> = MutableLiveData()
     val openMod: SingleLiveEvent<Mod> = SingleLiveEvent()
+    val openSearch: SingleLiveEvent<Boolean> = SingleLiveEvent()
+    val openFavorite: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val openFilter: SingleLiveEvent<List<FilterValue>> = SingleLiveEvent()
     val spanCount: MutableLiveData<Int> = MutableLiveData(1)
     var finished = false
@@ -88,14 +90,16 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext context: Con
         openFilter.invoke(filters.value ?: ArrayList())
     }
 
+    fun onClickSearch() {
+        openSearch.invoke(true)
+    }
+
+    fun onClickFavorite() {
+        openFavorite.invoke(true)
+    }
+
     private fun load() {
         if (!job?.isActive.isTrue() && mods.value?.none { it.category == ERROR || it.category == PROGRESS }.isTrue() && !finished) {
-            try {
-                val i = 10 / 0
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            Log.w("myLog", "load: XXXX")
             job = viewModelScope.launch {
                 val queries: MultiMap<String, Any> = MultiMap()
                 queries["property"] = "id"
@@ -107,11 +111,9 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext context: Con
                     queries["property"] = "fileSize"
                     queries["property"] = "countImages"
                     queries["property"] = "version"
+                    queries["property"] = "objectId"
                 }
                 queries["pageSize"] = PAGE_SIZE
-                /*       when(sort.value){
-                           fileSize
-                       }*/
                 queries["sortBy"] = sort.value?.query ?: ""
                 queries["where"] = Filter.getQuery(filters.value)
                 queries["offset"] = mods.value?.size ?: 0

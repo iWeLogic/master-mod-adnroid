@@ -19,12 +19,8 @@ class DataSource @Inject constructor(private val api: Api, @ApplicationContext a
         return getResponse(request = { api.getMods(category, queries) })
     }
 
-    suspend fun increaseInstalls(type: String?, id: String?): Result<BaseResponse> {
-        return getResponse(request = { api.increaseInstalls(type, id) })
-    }
-
-    suspend fun like(type: String?, id: String?, action: String?): Result<BaseResponse> {
-        return getResponse(request = { api.like(type, id, action) })
+    suspend fun updateMod(category: String, mod: Mod): Result<BaseResponse> {
+        return getResponse(request = { api.updateMod(category, mod) })
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")

@@ -1,7 +1,6 @@
 package com.iwelogic.minecraft.mods.ui.main.mods
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,12 +33,22 @@ class ModsFragment : BaseFragment<ModsViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.openMod.observe(viewLifecycleOwner) {
-            if (findNavController().currentDestination?.id != R.id.detailsFragment) {
+            if (parentFragment?.parentFragment?.findNavController()?.currentDestination?.id == R.id.mainFragment) {
                 parentFragment?.parentFragment?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToDetailsFragment(it))
             }
         }
+        viewModel.openFavorite.observe(viewLifecycleOwner) {
+            if (parentFragment?.parentFragment?.findNavController()?.currentDestination?.id == R.id.mainFragment) {
+                parentFragment?.parentFragment?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToFavoriteFragment())
+            }
+        }
+        viewModel.openSearch.observe(viewLifecycleOwner) {
+            if (parentFragment?.parentFragment?.findNavController()?.currentDestination?.id == R.id.mainFragment) {
+                parentFragment?.parentFragment?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToSearchFragment())
+            }
+        }
         viewModel.openFilter.observe(viewLifecycleOwner) {
-            if (findNavController().currentDestination?.id != R.id.filterDialog) {
+            if (parentFragment?.parentFragment?.findNavController()?.currentDestination?.id == R.id.mainFragment) {
                 parentFragment?.parentFragment?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToFilterDialog("filter_" + viewModel.category, it.toTypedArray()))
             }
         }

@@ -1,21 +1,15 @@
 package com.iwelogic.minecraft.mods.data
 
-import android.util.ArrayMap
-import com.iwelogic.minecraft.mods.models.*
+import com.iwelogic.minecraft.mods.models.BaseResponse
+import com.iwelogic.minecraft.mods.models.Mod
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
-import retrofit2.http.QueryMap
+import retrofit2.http.*
 
 interface Api {
 
     @GET("/api/data/{category}")
     suspend fun getMods(@Path("category") category: String, @QueryMap fields: MultiMap<String, Any>): Response<List<Mod>>
 
-    @GET("/api?action=increase&value=installs")
-    suspend fun increaseInstalls(@Query("type") type: String?, @Query("id") id: String?): Response<BaseResponse>
-
-    @GET("/api?value=likes")
-    suspend fun like(@Query("type") type: String?, @Query("id") id: String?, @Query("action") action: String?): Response<BaseResponse>
+    @PUT("/api/data/{category}")
+    suspend fun updateMod(@Path("category") category: String?, @Body mod: Mod): Response<BaseResponse>
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.iwelogic.minecraft.mods.ui.search.SearchViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/toolbar"
+                android:layout_height="@dimen/toolbar"
+                android:background="?attr/actionBarItemBackground"
+                android:onClick="@{() -> viewModel.onClickClose()}"
+                android:scaleType="centerInside"
+                android:src="@drawable/back_details" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>

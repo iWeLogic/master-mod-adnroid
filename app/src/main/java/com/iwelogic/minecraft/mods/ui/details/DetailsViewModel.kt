@@ -1,6 +1,7 @@
 package com.iwelogic.minecraft.mods.ui.details
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -14,6 +15,7 @@ import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.utils.isTrue
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
@@ -28,7 +30,7 @@ class DetailsViewModel @Inject constructor(private val repository: Repository, @
     fun checkIsFileExist() {
         val file = File("$base/${item.value?.category}/${item.value?.id}/file.${item.value?.getFileExtension()}")
         item.value?.progress = if (file.exists()) 10000 else 0
- //       isFavourite = repository.checkExist("${item.value?.category} ${item.value?.pack} ${item.value?.id}")
+        isFavourite = repository.checkExist("${item.value?.category} ${item.value?.pack} ${item.value?.id}")
     }
 
     override fun onCleared() {
@@ -74,18 +76,19 @@ class DetailsViewModel @Inject constructor(private val repository: Repository, @
     }
 
     fun onClickFavourite() {
-        item.value?.let {
-            it.primaryId = "${it.category} ${it.pack} ${it.id}"
+        item.value?.let { mod ->
+            Log.w("myLog", "onClickFavourite: " + mod.id)
+            mod.primaryId = "${mod.category} ${mod.pack} ${mod.id}"
             viewModelScope.launch {
                 if (isFavourite?.value.isTrue()) {
-                    //    repository.removeFromFavourite(it).collect()
-                    item.value?.likes = (item.value?.likes ?: 0) - 1
-                    //   repository.like(item.value?.category, item.value?.id, "decrease").collect()
+                    repository.removeFromFavourite(mod).collect()
+                    mod.likes = mod.likes?.minus(1)
+                    repository.updateMod(mod.category ?: "", mod).collect()
                 } else {
-                    it.favouriteDate = System.currentTimeMillis()
-                    //  repository.setFavourite(it).collect()
-                    item.value?.likes = (item.value?.likes ?: 0) + 1
-                    //  repository.like(item.value?.category, item.value?.id, "increase").collect()
+                    mod.favouriteDate = System.currentTimeMillis()
+                    repository.setFavourite(mod).collect()
+                    mod.likes = mod.likes?.plus(1)
+                    repository.updateMod(mod.category ?: "", mod).collect()
                 }
             }
         }

@@ -36,9 +36,23 @@
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
                 android:scaleType="centerInside"
+                android:onClick="@{() -> viewModel.onClickSearch()}"
+                android:src="@drawable/search" />
+
+            <ImageView
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
+                android:scaleType="centerInside"
+                android:onClick="@{() -> viewModel.onClickFavorite()}"
+                android:src="@drawable/favorite" />
+
+
+            <ImageView
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
+                android:scaleType="centerInside"
                 android:onClick="@{() -> viewModel.onClickFilter()}"
                 android:src="@drawable/filter" />
-
 
             <ImageView
                 android:layout_width="?actionBarSize"

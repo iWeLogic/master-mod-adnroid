@@ -28,6 +28,9 @@ data class Mod(
     @field:SerializedName("title")
     var title: String? = null,
 
+    @field:SerializedName("objectId")
+    var objectId: String? = null,
+
     @field:SerializedName("description")
     var description: String? = null,
 
