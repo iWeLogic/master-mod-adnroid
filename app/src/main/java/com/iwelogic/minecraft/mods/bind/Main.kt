@@ -11,6 +11,7 @@ import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.models.FilterValue
 import com.iwelogic.minecraft.mods.models.Mod
 import com.iwelogic.minecraft.mods.models.Sort
+import com.iwelogic.minecraft.mods.ui.favorite.FavoriteAdapter
 import com.iwelogic.minecraft.mods.ui.main.mods.ModAdapter
 import com.iwelogic.minecraft.mods.ui.main.mods.filter.FilterValueAdapter
 
@@ -72,5 +73,14 @@ object Main {
             view.adapter = FilterValueAdapter()
         }
         (view.adapter as FilterValueAdapter).submitList(filters?.toMutableList())
+    }
+
+    @BindingAdapter("favorites", "onClick")
+    @JvmStatic
+    fun showFavorites(view: RecyclerView, favorites: List<Mod>?, onClick: (Mod) -> Unit) {
+        view.adapter ?: run {
+            view.adapter = FavoriteAdapter(onClick)
+        }
+        (view.adapter as FavoriteAdapter).submitList(favorites?.toMutableList())
     }
 }

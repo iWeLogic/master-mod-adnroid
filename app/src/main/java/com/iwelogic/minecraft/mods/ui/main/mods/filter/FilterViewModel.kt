@@ -1,9 +1,11 @@
 package com.iwelogic.minecraft.mods.ui.main.mods.filter
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import  com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.models.FilterValue
+import com.iwelogic.minecraft.mods.models.Mod
 import  com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel

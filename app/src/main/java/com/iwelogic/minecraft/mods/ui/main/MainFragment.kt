@@ -27,7 +27,9 @@ class MainFragment : BaseFragment<MainViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView.itemIconTintList = null;
         val navController = (childFragmentManager.findFragmentById(R.id.bottomNavigationContainer) as NavHostFragment).navController
-        NavigationUI.setupWithNavController(view.findViewById<BottomNavigationView>(R.id.bottomNavigationView), navController)
+        NavigationUI.setupWithNavController(bottomNavigationView, navController)
     }
 }
