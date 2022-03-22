@@ -15,8 +15,8 @@ class DataSource @Inject constructor(private val api: Api, @ApplicationContext a
 
     var context: WeakReference<Context> = WeakReference(applicationContext)
 
-    suspend fun getMods(queries: MultiMap<String, Any>): Result<List<Mod>> {
-        return getResponse(request = { api.getMods(queries) })
+    suspend fun getMods(category: String, queries: MultiMap<String, Any>): Result<List<Mod>> {
+        return getResponse(request = { api.getMods(category, queries) })
     }
 
     suspend fun increaseInstalls(type: String?, id: String?): Result<BaseResponse> {

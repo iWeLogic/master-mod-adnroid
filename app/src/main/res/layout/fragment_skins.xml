@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.iwelogic.minecraft.mods.ui.main.mods.ModsViewModel" />
+            type="com.iwelogic.minecraft.mods.ui.main.skins.SkinsViewModel" />
     </data>
 
     <LinearLayout
@@ -28,19 +28,17 @@
                 android:layout_marginEnd="@dimen/default_size"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@{viewModel.title}"
+                android:text="@string/skins"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
-            mods="@{viewModel.mods}"
-            onClick="@{viewModel.onClick}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2" />
 
     </LinearLayout>
 </layout>

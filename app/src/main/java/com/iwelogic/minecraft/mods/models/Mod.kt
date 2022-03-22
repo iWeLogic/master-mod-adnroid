@@ -140,7 +140,7 @@ data class Mod(
 
     fun getImages(): List<String> = (0 until (countImages ?: 0)).map {
         val image = BuildConfig.BACKEND_FILES + "/" + category + "/" + id + "/images/$it.jpg"
-        Log.w("myLog", "getImages: " + image)
+      //  Log.w("myLog", "getImages: " + image)
         image
     }
 

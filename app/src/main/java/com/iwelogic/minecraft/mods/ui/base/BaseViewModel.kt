@@ -10,7 +10,7 @@ open class BaseViewModel : ViewModel() {
     val close: SingleLiveEvent<Boolean> = SingleLiveEvent()
 
     fun onClickClose() {
-        //  navigator?.close()
+        close.invoke(true)
     }
 
     fun onClickRetry() {

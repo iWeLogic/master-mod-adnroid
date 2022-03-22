@@ -29,7 +29,7 @@ class Repository @Inject constructor(private val dataSource: DataSource, private
           }.flowOn(Dispatchers.IO)
       }
   */
-    suspend fun getMods(offset: Int): Flow<Result<List<Mod>>> {
+    suspend fun getMods(category: String, offset: Int): Flow<Result<List<Mod>>> {
         val queries: MultiMap<String, Any> = MultiMap()
         queries["property"] = "id"
         queries["property"] = "title"
@@ -43,7 +43,7 @@ class Repository @Inject constructor(private val dataSource: DataSource, private
         queries["offset"] = offset
         return flow {
             emit(Result.Loading)
-            emit(dataSource.getMods(queries))
+            emit(dataSource.getMods(category, queries))
             emit(Result.Finish)
         }.flowOn(Dispatchers.IO)
     }

@@ -7,13 +7,14 @@ import com.iwelogic.minecraft.mods.models.Mod
 import com.iwelogic.minecraft.mods.models.ResponseData
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 interface Api {
 
-    @GET("/api/data/addons")
-    suspend fun getMods(@QueryMap fields: MultiMap<String, Any>): Response<List<Mod>>
+    @GET("/api/data/{category}")
+    suspend fun getMods(@Path("category") category: String, @QueryMap fields: MultiMap<String, Any>): Response<List<Mod>>
 
     @GET("/api?action=increase&value=installs")
     suspend fun increaseInstalls(@Query("type") type: String?, @Query("id") id: String?): Response<BaseResponse>

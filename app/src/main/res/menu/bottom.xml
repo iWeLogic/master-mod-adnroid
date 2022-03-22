@@ -16,7 +16,7 @@
         android:icon="@drawable/textures"
         android:title="@string/textures" />
 
-<!--    <item
+    <item
         android:id="@+id/seeds"
         android:icon="@drawable/seeds"
         android:title="@string/seeds" />
@@ -24,6 +24,6 @@
     <item
         android:id="@+id/skins"
         android:icon="@drawable/skins"
-        android:title="@string/skins" />-->
+        android:title="@string/skins" />
 
 </menu>

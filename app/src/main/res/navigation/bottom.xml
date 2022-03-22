@@ -10,7 +10,12 @@
         <fragment
             android:id="@+id/addonsFragment"
             android:name="com.iwelogic.minecraft.mods.ui.main.mods.ModsFragment"
-            android:label="AddonsFragment" />
+            android:label="AddonsFragment">
+            <argument
+                android:name="category"
+                android:defaultValue="addons"
+                app:argType="string" />
+        </fragment>
     </navigation>
 
     <navigation
@@ -19,7 +24,12 @@
         <fragment
             android:id="@+id/mapsFragment"
             android:name="com.iwelogic.minecraft.mods.ui.main.mods.ModsFragment"
-            android:label="MapsFragment" />
+            android:label="MapsFragment">
+            <argument
+                android:name="category"
+                android:defaultValue="maps"
+                app:argType="string" />
+        </fragment>
     </navigation>
 
     <navigation
@@ -28,6 +38,35 @@
         <fragment
             android:id="@+id/texturesFragment"
             android:name="com.iwelogic.minecraft.mods.ui.main.mods.ModsFragment"
-            android:label="TexturesFragment" />
+            android:label="TexturesFragment">
+            <argument
+                android:name="category"
+                android:defaultValue="textures"
+                app:argType="string" />
+        </fragment>
     </navigation>
+
+    <navigation
+        android:id="@+id/seeds"
+        app:startDestination="@id/seedsFragment">
+        <fragment
+            android:id="@+id/seedsFragment"
+            android:name="com.iwelogic.minecraft.mods.ui.main.mods.ModsFragment"
+            android:label="SeedsFragment">
+            <argument
+                android:name="category"
+                android:defaultValue="seeds"
+                app:argType="string" />
+        </fragment>
+    </navigation>
+
+    <navigation
+        android:id="@+id/skins"
+        app:startDestination="@id/skinsFragment">
+        <fragment
+            android:id="@+id/skinsFragment"
+            android:name="com.iwelogic.minecraft.mods.ui.main.skins.SkinsFragment"
+            android:label="SkinsFragment" />
+    </navigation>
+
 </navigation>

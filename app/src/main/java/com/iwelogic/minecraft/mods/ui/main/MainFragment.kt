@@ -28,16 +28,6 @@ class MainFragment : BaseFragment<MainViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navController = (childFragmentManager.findFragmentById(R.id.bottomNavigationContainer) as NavHostFragment).navController
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            viewModel.title.postValue(
-                when (destination.id) {
-                    R.id.addonsFragment -> view.context.getString(R.string.addons)
-                    R.id.mapsFragment -> view.context.getString(R.string.maps)
-                    R.id.texturesFragment -> view.context.getString(R.string.textures)
-                    else -> "asdas"
-                }
-            )
-        }
         NavigationUI.setupWithNavController(view.findViewById<BottomNavigationView>(R.id.bottomNavigationView), navController)
 
     }
