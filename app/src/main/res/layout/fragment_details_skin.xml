@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        image="@{BuildConfig.BACKEND_URL + `/skins/` + viewModel.item.id + `/0.png`}"
+                        image="@{viewModel.item.getImage()}"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:padding="@dimen/default_size"
@@ -70,7 +70,7 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/roboto_medium"
                         android:lines="1"
-                        android:text="@{viewModel.item.getFormattedDownloads()}"
+                        counter="@{viewModel.item.installs}"
                         android:textSize="16sp" />
 
                     <ImageView
@@ -88,7 +88,7 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/roboto_medium"
                         android:lines="1"
-                        android:text="@{viewModel.item.getFormattedLikes()}"
+                        counter="@{viewModel.item.likes}"
                         android:textSize="16sp" />
 
                 </LinearLayout>

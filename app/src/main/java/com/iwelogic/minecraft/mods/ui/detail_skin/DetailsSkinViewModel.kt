@@ -13,9 +13,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
-import com.iwelogic.minecraft.mods.BuildConfig
 import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.models.*
+import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.ui.base.storage.StorageViewModel
 import com.iwelogic.minecraft.mods.utils.isTrue
 import com.iwelogic.minecraft.mods.utils.readBoolean
@@ -23,6 +23,7 @@ import com.iwelogic.minecraft.mods.utils.writeBoolean
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.zeroturnaround.zip.ZipUtil
 import java.io.*
@@ -40,22 +41,23 @@ class DetailsSkinViewModel @Inject constructor(private val repository: Repositor
     val item: MutableLiveData<Mod> = MutableLiveData()
     val base = "${applicationContext.filesDir?.path}"
     var isFavourite: LiveData<Boolean>? = null
+    val openHelp: SingleLiveEvent<Boolean> = SingleLiveEvent()
 
     fun checkIsFileExist() {
         val name = "skin_n${item.value?.id}"
         val file = File("$base/skins/$name.mcpack")
         item.value?.progress = if (file.exists()) 10000 else 0
         item.value?.progressGallery = if (context.get()?.readBoolean(name).isTrue()) 10000 else 0
-    //    isFavourite = repository.checkExist("${item.value?.category} ${item.value?.pack} ${item.value?.id}")
+        isFavourite = repository.checkExist("${item.value?.category} ${item.value?.pack} ${item.value?.id}")
     }
 
     fun onClickDownloadToGallery() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             downloadImageToGalley()
         } else {
-          /*  navigator?.checkPermissionAction {
-                downloadImageToGalley()
-            }*/
+            /*  navigator?.checkPermissionAction {
+                  downloadImageToGalley()
+              }*/
         }
     }
 
@@ -78,83 +80,84 @@ class DetailsSkinViewModel @Inject constructor(private val repository: Repositor
                 if (status) {
                     context.get()?.writeBoolean(name, true)
                     item.value?.progressGallery = 10000
-                   // repository.increaseInstalls("skins", item.value?.id).collect()
+                    // repository.increaseInstalls("skins", item.value?.id).collect()
                     item.value?.installs = (item.value?.installs ?: 0) + 1
                 } else {
                     item.value?.progressGallery = 0
                 }
             }.onFailure {
-               // navigator?.showNoConnectionDownloadGallery()
+                // navigator?.showNoConnectionDownloadGallery()
                 item.value?.progressGallery = 0
             }
         }
     }
 
     fun downloadToMinecraft() {
-      //  navigator?.showInterstitialAd()
-        viewModelScope.launch(Dispatchers.IO) {
-            kotlin.runCatching {
+        //  navigator?.showInterstitialAd()
+        item.value?.let { mod ->
+            viewModelScope.launch(Dispatchers.IO) {
+                kotlin.runCatching {
+                    //downloading image
+                    mod.progress = 100
+                    val connection: HttpURLConnection = URL(mod.getFile()).openConnection() as HttpURLConnection
+                    connection.doInput = true
+                    connection.connect()
+                    val input: InputStream = connection.inputStream
+                    val image = BitmapFactory.decodeStream(input)
+                    mod.progress = 3000
 
-                //downloading image
-                item.value?.progress = 100
-                val connection: HttpURLConnection = URL(item.value?.getFile()).openConnection() as HttpURLConnection
-                connection.doInput = true
-                connection.connect()
-                val input: InputStream = connection.inputStream
-                val image = BitmapFactory.decodeStream(input)
-                item.value?.progress = 3000
+                    //creating files
+                    val name = "skin_n${mod.id}"
+                    val dir = File("$base/skins/${mod.id}/$name").apply { mkdirs() }
+                    val fileSkins = File("${dir.absolutePath}/skins.json")
+                    val fileManifest = File("${dir.absolutePath}/manifest.json")
+                    val fileImage = File("${dir.absolutePath}/$name.png")
+                    val filePack = File("$base/skins/$name.mcpack")
+                    mod.progress = 4000
 
-                //creating files
-                val name = "skin_n${item.value?.id}"
-                val dir = File("$base/skins/${item.value?.id}/$name").apply { mkdirs() }
-                val fileSkins = File("${dir.absolutePath}/skins.json")
-                val fileManifest = File("${dir.absolutePath}/manifest.json")
-                val fileImage = File("${dir.absolutePath}/$name.png")
-                val filePack = File("$base/skins/$name.mcpack")
-                item.value?.progress = 4000
-
-                //writings data into skins.json
-                val skins = Skins().apply {
-                    serializeName = name
-                    localizationName = name
-                    skins = listOf(SkinsItem().apply {
+                    //writings data into skins.json
+                    val skins = Skins().apply {
+                        serializeName = name
                         localizationName = name
-                        geometry = "geometry.$name.$name"
-                        texture = "$name.png"
-                        type = "free"
-                    })
-                }
-                writeFile(fileSkins, Gson().toJson(skins))
-                item.value?.progress = 6000
-
-                //writing data into manifest.json
-                val manifest = Manifest().apply {
-                    formatVersion = 1
-                    header = Header().apply {
-                        this.name = name
-                        uuid = UUID.randomUUID().toString()
-                        version = listOf(1, 0, 0)
+                        skins = listOf(SkinsItem().apply {
+                            localizationName = name
+                            geometry = "geometry.$name.$name"
+                            texture = "$name.png"
+                            type = "free"
+                        })
                     }
-                    modules = listOf(ModulesItem().apply {
-                        type = "skin_pack"
-                        uuid = UUID.randomUUID().toString()
-                        version = listOf(1, 0, 0)
-                    })
+                    writeFile(fileSkins, Gson().toJson(skins))
+                    mod.progress = 6000
+
+                    //writing data into manifest.json
+                    val manifest = Manifest().apply {
+                        formatVersion = 1
+                        header = Header().apply {
+                            this.name = name
+                            uuid = UUID.randomUUID().toString()
+                            version = listOf(1, 0, 0)
+                        }
+                        modules = listOf(ModulesItem().apply {
+                            type = "skin_pack"
+                            uuid = UUID.randomUUID().toString()
+                            version = listOf(1, 0, 0)
+                        })
+                    }
+                    writeFile(fileManifest, Gson().toJson(manifest))
+                    mod.progress = 8000
+
+                    //saving image
+                    image.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(fileImage))
+
+                    //compressing into mcpack
+                    ZipUtil.pack(dir, filePack, true)
+                    mod.progress = 10000
+                    mod.installs = mod.installs?.plus(1)
+                    repository.updateMod(mod.category ?: "", mod).collect()
+                }.onFailure {
+                    //  navigator?.showNoConnectionDownloadMinecraft()
+                    mod.progress = 0
                 }
-                writeFile(fileManifest, Gson().toJson(manifest))
-                item.value?.progress = 8000
-
-                //saving image
-                image.compress(Bitmap.CompressFormat.PNG, 100, FileOutputStream(fileImage))
-
-                //compressing into mcpack
-                ZipUtil.pack(dir, filePack, true)
-                item.value?.progress = 10000
-             //   repository.increaseInstalls("skins", item.value?.id).collect()
-                item.value?.installs = (item.value?.installs ?: 0) + 1
-            }.onFailure {
-              //  navigator?.showNoConnectionDownloadMinecraft()
-                item.value?.progress = 0
             }
         }
     }
@@ -209,31 +212,32 @@ class DetailsSkinViewModel @Inject constructor(private val repository: Repositor
 
     fun onClickInstall() {
         when {
-         /*   getMinecraftVersion() == 0 -> navigator?.showInstallMinecraft()
-            getMinecraftVersion() > 1012 -> navigator?.install(File("$base/skins/skin_n${item.value?.id}.mcpack").path)
-            else -> navigator?.showMessageDialog(context.get()?.getString(R.string.install_skin_through_gallery_title), context.get()?.getString(R.string.install_skin_through_gallery_body))
-     */   }
+            /*   getMinecraftVersion() == 0 -> navigator?.showInstallMinecraft()
+               getMinecraftVersion() > 1012 -> navigator?.install(File("$base/skins/skin_n${item.value?.id}.mcpack").path)
+               else -> navigator?.showMessageDialog(context.get()?.getString(R.string.install_skin_through_gallery_title), context.get()?.getString(R.string.install_skin_through_gallery_body))
+        */
+        }
     }
 
     fun onClickFavourite() {
-        item.value?.let {
-            it.primaryId = "${it.category} ${it.pack} ${it.id}"
+        item.value?.let { mod ->
+            mod.primaryId = "${mod.category} ${mod.pack} ${mod.id}"
             viewModelScope.launch {
                 if (isFavourite?.value.isTrue()) {
-              //      repository.removeFromFavourite(it).collect()
-                    item.value?.likes = (item.value?.likes ?: 0) - 1
-               //     repository.like(item.value?.category, item.value?.id, "decrease").collect()
+                    repository.removeFromFavourite(mod).collect()
+                    mod.likes = mod.likes?.minus(1)
+                    repository.updateMod(mod.category ?: "", mod).collect()
                 } else {
-                    it.favouriteDate = System.currentTimeMillis()
-               //     repository.setFavourite(it).collect()
-                    item.value?.likes = (item.value?.likes ?: 0) + 1
-               //     repository.like(item.value?.category, item.value?.id, "increase").collect()
+                    mod.favouriteDate = System.currentTimeMillis()
+                    repository.setFavourite(mod).collect()
+                    mod.likes = mod.likes?.plus(1)
+                    repository.updateMod(mod.category ?: "", mod).collect()
                 }
             }
         }
     }
 
-    fun onClickHelp(){
-     //   item.value?.category?.let { navigator?.openHelp(it) }
+    fun onClickHelp() {
+        openHelp.invoke(true)
     }
 }

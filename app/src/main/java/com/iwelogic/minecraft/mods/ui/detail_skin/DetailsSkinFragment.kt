@@ -1,6 +1,7 @@
 package com.iwelogic.minecraft.mods.ui.detail_skin
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
@@ -17,6 +19,7 @@ import com.google.android.gms.ads.nativead.NativeAdView
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentDetailsSkinBinding
 import com.iwelogic.minecraft.mods.ui.base.storage.StorageFragment
+import com.iwelogic.minecraft.mods.ui.details.DetailsFragmentDirections
 import com.iwelogic.minecraft.mods.utils.AddHelper
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,7 +33,8 @@ class DetailsSkinFragment : StorageFragment<DetailsSkinViewModel>() {
         val binding: FragmentDetailsSkinBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_details_skin, container, false)
         binding.lifecycleOwner = this
         viewModel = ViewModelProvider(this).get(DetailsSkinViewModel::class.java)
-       // viewModel.item.value = DetailsSkinFragmentArgs.fromBundle(requireArguments()).data
+        viewModel.item.value = DetailsSkinFragmentArgs.fromBundle(requireArguments()).data
+        Log.w("myLog", "onCreateView: " + viewModel.item.value)
         viewModel.checkIsFileExist()
         binding.viewModel = viewModel
         return binding.root
@@ -39,40 +43,12 @@ class DetailsSkinFragment : StorageFragment<DetailsSkinViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         refreshAd(view)
-    }
-/*
-    override fun install(filepath: String) {
-        try {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.setDataAndType(FileProvider.getUriForFile(requireContext(), requireContext().packageName + ".fileprovider", File(filepath)), "application/octet-stream")
-            intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            startActivity(intent)
-            context?.writeBoolean(Const.STATUS_MOD_INSTALLED, true)
-        } catch (e: Exception) {
-            NoMinecraftDialog().show(childFragmentManager, "NoMinecraftDialog")
+        viewModel.openHelp.observe(viewLifecycleOwner) {
+            if (findNavController().currentDestination?.id == R.id.detailsFragment) {
+                findNavController().navigate(DetailsSkinFragmentDirections.actionDetailsSkinFragmentToHelpFragment())
+            }
         }
     }
-
-    override fun showNoConnectionDownloadGallery() {
-        NoInternetActionDialog().apply {
-            onClickRetry = {
-                this@DetailsSkinFragment.viewModel.downloadImageToGalley()
-            }
-        }.show(childFragmentManager, "NoInternetDialog")
-    }
-
-    override fun showNoConnectionDownloadMinecraft() {
-        NoInternetActionDialog().apply {
-            onClickRetry = {
-                this@DetailsSkinFragment.viewModel.downloadToMinecraft()
-            }
-        }.show(childFragmentManager, "NoInternetDialog")
-    }
-
-    override fun showInstallMinecraft() {
-        NoMinecraftDialog().show(childFragmentManager, "NoMinecraftDialog")
-    }*/
 
     private fun refreshAd(view: View) {
         adView?.parent?.let {
@@ -115,20 +91,8 @@ class DetailsSkinFragment : StorageFragment<DetailsSkinViewModel>() {
         }
     }
 
-   /* override fun openHelp(screen: String) {
-        catchAll {
-            findNavController().navigate(DetailsSkinFragmentDirections.actionGlobalHelpFragment(screen))
-        }
-    }
-*/
     override fun onDestroy() {
         currentNativeAd?.destroy()
         super.onDestroy()
     }
-
-/*    override fun close() {
-        showInterstitialAd {
-            super.close()
-        }
-    }*/
 }

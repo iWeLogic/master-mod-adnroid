@@ -145,6 +145,16 @@
 
         </HorizontalScrollView>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            mods="@{viewModel.mods}"
+            onClick="@{viewModel.onClick}"
+            onScroll="@{viewModel.onScroll}"
+            app:spanCount="@{1}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
     </LinearLayout>
+    
 </layout>

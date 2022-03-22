@@ -143,7 +143,7 @@ data class Mod(
         else -> "png"
     }
 
-    fun getFirstImage() = BuildConfig.BACKEND_FILES + "/" + category + "/" + id + "/images/0.${if (category == "skins") "png" else "jpg"}"
+    fun getImage() = BuildConfig.BACKEND_FILES + "/" + category + "/" + id + "/images/0.${if (category == "skins") "png" else "jpg"}"
 
 
     fun getImages(): List<String> = (0 until (countImages ?: 0)).map {

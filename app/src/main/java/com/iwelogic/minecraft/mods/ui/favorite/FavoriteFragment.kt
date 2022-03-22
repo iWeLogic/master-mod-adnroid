@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentFavoriteBinding
+import com.iwelogic.minecraft.mods.models.Category
 import com.iwelogic.minecraft.mods.ui.base.BaseFragment
 import com.iwelogic.minecraft.mods.ui.main.MainFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +20,7 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding: FragmentFavoriteBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorite, container, false)
         binding.lifecycleOwner = this
-        viewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
+        viewModel = ViewModelProvider(this)[FavoriteViewModel::class.java]
         binding.viewModel = viewModel
         return binding.root
     }
@@ -27,8 +28,14 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.openMod.observe(viewLifecycleOwner) {
-            if (findNavController().currentDestination?.id == R.id.favoriteFragment) {
-                findNavController().navigate(FavoriteFragmentDirections.actionFavoriteFragmentToDetailsFragment(it))
+            if (it.category == Category.SKINS.id) {
+                if (findNavController().currentDestination?.id == R.id.favoriteFragment) {
+                    findNavController().navigate(FavoriteFragmentDirections.actionFavoriteFragmentToDetailsSkinFragment(it))
+                }
+            } else {
+                if (findNavController().currentDestination?.id == R.id.favoriteFragment) {
+                    findNavController().navigate(FavoriteFragmentDirections.actionFavoriteFragmentToDetailsFragment(it))
+                }
             }
         }
     }

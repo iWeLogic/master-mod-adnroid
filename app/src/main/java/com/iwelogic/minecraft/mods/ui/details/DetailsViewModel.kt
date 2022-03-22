@@ -12,6 +12,7 @@ import com.androidnetworking.interfaces.DownloadListener
 import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.models.Mod
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
+import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.utils.isTrue
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -26,6 +27,7 @@ class DetailsViewModel @Inject constructor(private val repository: Repository, @
     val item: MutableLiveData<Mod> = MutableLiveData()
     var isFavourite: LiveData<Boolean>? = null
     val base = "${applicationContext.filesDir?.path}"
+    val openHelp: SingleLiveEvent<Boolean> = SingleLiveEvent()
 
     fun checkIsFileExist() {
         val file = File("$base/${item.value?.category}/${item.value?.id}/file.${item.value?.getFileExtension()}")
@@ -77,7 +79,6 @@ class DetailsViewModel @Inject constructor(private val repository: Repository, @
 
     fun onClickFavourite() {
         item.value?.let { mod ->
-            Log.w("myLog", "onClickFavourite: " + mod.id)
             mod.primaryId = "${mod.category} ${mod.pack} ${mod.id}"
             viewModelScope.launch {
                 if (isFavourite?.value.isTrue()) {
@@ -95,6 +96,6 @@ class DetailsViewModel @Inject constructor(private val repository: Repository, @
     }
 
     fun onClickHelp() {
-        // item.value?.category?.let { navigator?.openHelp(it) }
+        openHelp.invoke(true)
     }
 }

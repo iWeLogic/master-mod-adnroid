@@ -2,6 +2,7 @@ package com.iwelogic.minecraft.mods.bind
 
 import android.view.Gravity
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
@@ -36,7 +37,7 @@ object Main {
 
     @BindingAdapter("mods", "onClick", "onScroll", "spanCount")
     @JvmStatic
-    fun showMods(view: RecyclerView, mods: List<Mod>?, onClick: (Mod) -> Unit, onScroll: (Int) -> Unit, spanCount: Int) {
+    fun showMods(view: RecyclerView, mods: List<Mod>?, onClick: (Mod) -> Unit, onScroll: (Int) -> Unit, spanCount: Int?) {
         view.adapter ?: run {
             view.adapter = ModAdapter(onClick)
             view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -46,24 +47,45 @@ object Main {
                 }
             })
         }
-        val layoutManager = (view.layoutManager as GridLayoutManager)
-        layoutManager.spanCount = spanCount
-        if (layoutManager.spanCount == 2) {
-            layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    view.adapter?.let {
-                        return when (it.getItemViewType(position)) {
-                            2 -> 1
-                            1 -> 1
-                            else -> 2
+        spanCount?.let {
+            val layoutManager = (view.layoutManager as GridLayoutManager)
+            layoutManager.spanCount = spanCount
+            if (layoutManager.spanCount == 2) {
+                layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        view.adapter?.let {
+                            return when (it.getItemViewType(position)) {
+                                2 -> 1
+                                1 -> 1
+                                else -> 2
+                            }
+                        } ?: run {
+                            return 0
                         }
-                    } ?: run {
-                        return 0
                     }
                 }
             }
         }
         (view.adapter as ModAdapter).submitList(mods?.toMutableList())
+    }
+
+    @BindingAdapter("counter")
+    @JvmStatic
+    fun showCounter(view: TextView, counter: Long?) {
+        view.text = convertBigNumbers(counter)
+    }
+
+    private fun convertBigNumbers(value: Long?): String {
+        value?.let {
+            return when (it) {
+                in 0L..999L -> it.toString()
+                in 1000L..99999L -> "${String.format("%.1f", it.toFloat() / 1000).replace(".0", "")} k"
+                in 100000L..999999L -> "${it / 1000} k"
+                else -> "${String.format("%.1f", it.toFloat() / 100000).replace(".0", "")} m"
+            }
+        } ?: run {
+            return ""
+        }
     }
 
     @BindingAdapter("filters")

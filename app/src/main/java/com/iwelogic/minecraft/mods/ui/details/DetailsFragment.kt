@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
@@ -15,7 +16,9 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentDetailsBinding
+import com.iwelogic.minecraft.mods.models.Category
 import com.iwelogic.minecraft.mods.ui.base.BaseFragment
+import com.iwelogic.minecraft.mods.ui.favorite.FavoriteFragmentDirections
 import com.iwelogic.minecraft.mods.utils.AddHelper
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,6 +41,11 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         refreshAd(view)
+        viewModel.openHelp.observe(viewLifecycleOwner) {
+            if (findNavController().currentDestination?.id == R.id.detailsFragment) {
+                findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToHelpFragment())
+            }
+        }
     }
 
 /*    override fun install(filepath: String) {

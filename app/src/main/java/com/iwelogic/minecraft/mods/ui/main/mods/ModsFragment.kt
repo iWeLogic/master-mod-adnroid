@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentModsBinding
+import com.iwelogic.minecraft.mods.models.Category
 import com.iwelogic.minecraft.mods.models.FilterValue
 import com.iwelogic.minecraft.mods.ui.base.BaseFragment
 import com.iwelogic.minecraft.mods.ui.main.MainFragmentDirections
@@ -33,8 +34,14 @@ class ModsFragment : BaseFragment<ModsViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.openMod.observe(viewLifecycleOwner) {
-            if (parentFragment?.parentFragment?.findNavController()?.currentDestination?.id == R.id.mainFragment) {
-                parentFragment?.parentFragment?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToDetailsFragment(it))
+            if (it.category == Category.SKINS.id) {
+                if (parentFragment?.parentFragment?.findNavController()?.currentDestination?.id == R.id.mainFragment) {
+                    parentFragment?.parentFragment?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToDetailsSkinFragment(it))
+                }
+            } else {
+                if (parentFragment?.parentFragment?.findNavController()?.currentDestination?.id == R.id.mainFragment) {
+                    parentFragment?.parentFragment?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToDetailsFragment(it))
+                }
             }
         }
         viewModel.openFavorite.observe(viewLifecycleOwner) {

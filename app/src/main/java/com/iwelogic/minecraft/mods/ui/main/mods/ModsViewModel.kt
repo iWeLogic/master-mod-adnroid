@@ -105,13 +105,13 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext context: Con
                 queries["property"] = "id"
                 queries["property"] = "installs"
                 queries["property"] = "likes"
+                queries["property"] = "objectId"
                 if (category != "skins") {
                     queries["property"] = "title"
                     queries["property"] = "description"
                     queries["property"] = "fileSize"
                     queries["property"] = "countImages"
                     queries["property"] = "version"
-                    queries["property"] = "objectId"
                 }
                 queries["pageSize"] = PAGE_SIZE
                 queries["sortBy"] = sort.value?.query ?: ""
