@@ -62,6 +62,7 @@
             <ImageView
                 onSelect="@{viewModel.onSelectSort}"
                 sort="@{viewModel.sort}"
+                category="@{viewModel.category}"
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
                 android:background="?attr/actionBarItemBackground"

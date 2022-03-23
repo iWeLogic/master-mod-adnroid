@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/sort_date"
+            android:orderInCategory="1"
+            android:title="@string/date"
+            app:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/sort_likes"
+            android:orderInCategory="2"
+            android:title="@string/likes"
+            app:showAsAction="ifRoom" />
+
+        <item
+            android:id="@+id/sort_downloads"
+            android:orderInCategory="3"
+            android:title="@string/downloads"
+            app:showAsAction="ifRoom" />
+
+    </group>
+
+</menu>

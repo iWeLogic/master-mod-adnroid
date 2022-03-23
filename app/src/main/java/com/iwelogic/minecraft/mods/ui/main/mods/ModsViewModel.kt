@@ -55,7 +55,7 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
     val openFilter: SingleLiveEvent<List<FilterValue>> = SingleLiveEvent()
     val spanCount: MutableLiveData<Int> = MutableLiveData(1)
     var finished = false
-    val filters: MutableLiveData<List<FilterValue>> = MutableLiveData(ArrayList())
+    private val filters: MutableLiveData<List<FilterValue>> = MutableLiveData(ArrayList())
 
     val onSelectSort: (Sort) -> Unit = {
         sort.postValue(it)
