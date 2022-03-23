@@ -1,4 +1,4 @@
-package com.iwelogic.minecraft.mods.ui.base.storage.permission
+package com.iwelogic.minecraft.mods.ui.base_details.permission
 
 import android.os.Bundle
 import android.view.LayoutInflater

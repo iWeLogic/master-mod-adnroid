@@ -1,11 +1,10 @@
-package com.iwelogic.minecraft.mods.ui.base.storage
+package com.iwelogic.minecraft.mods.ui.base_details
 
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.activity.result.ActivityResultLauncher
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader

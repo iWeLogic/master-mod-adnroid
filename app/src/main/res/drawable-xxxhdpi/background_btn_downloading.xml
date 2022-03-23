@@ -1,8 +1,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/background_btn_downloading_white" />
+            android:src="@drawable/button_downloading_black" />
     </item>
     <item android:id="@+id/clip_drawable">
         <clip
@@ -10,7 +11,7 @@
             android:gravity="start">
             <bitmap
                 android:gravity="center"
-                android:src="@drawable/background_btn_downloading_blue" />
+                android:src="@drawable/button_downloading_white" />
         </clip>
     </item>
 

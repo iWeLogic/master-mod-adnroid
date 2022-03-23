@@ -2,6 +2,7 @@ package com.iwelogic.minecraft.mods.bind
 
 import android.graphics.drawable.ClipDrawable
 import android.graphics.drawable.LayerDrawable
+import android.util.Log
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.iwelogic.minecraft.mods.R
@@ -35,7 +36,8 @@ object Details {
     @BindingAdapter("progress")
     @JvmStatic
     fun setProgress(view: ImageView, progress: Int) {
-        val mClipDrawable = (view.drawable as LayerDrawable).findDrawableByLayerId(R.id.clip_drawable) as ClipDrawable
+        Log.w("myLog", "setProgress: BUTTON" + progress)
+        val mClipDrawable = (view.background as LayerDrawable).findDrawableByLayerId(R.id.clip_drawable) as ClipDrawable
         mClipDrawable.level = progress
         view.isEnabled = progress != 0 || progress != 10000
     }

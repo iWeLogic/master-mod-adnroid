@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.iwelogic.minecraft.mods.ui.base.storage.permission_two.PermissionTwoViewModel" />
+            type="com.iwelogic.minecraft.mods.ui.base_details.permission_two.PermissionTwoViewModel" />
     </data>
 
     <FrameLayout

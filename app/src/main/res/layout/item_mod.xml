@@ -20,7 +20,6 @@
             android:layout_marginTop="@dimen/half_default_size"
             android:layout_marginEnd="@dimen/default_size"
             android:layout_marginBottom="@dimen/half_default_size"
-            app:cardCornerRadius="@dimen/quarter_default_size"
             app:cardElevation="@dimen/quarter_default_size">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -57,10 +56,11 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
                             android:ellipsize="end"
-                            android:fontFamily="@font/roboto_medium"
+                            android:fontFamily="@font/minecraft_regular"
                             android:lines="1"
                             android:text="@{item.title}"
-                            android:textSize="14sp" />
+                            android:textColor="@color/black"
+                            android:textSize="17sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -74,12 +74,12 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="10"
-                                android:drawablePadding="2dp"
+                                android:drawablePadding="@dimen/half_default_size"
                                 android:ellipsize="end"
-                                android:fontFamily="@font/roboto_regular"
+                                android:fontFamily="@font/minecraft_regular"
                                 android:lines="1"
                                 android:text="@{item.fileSize + ` Mb`}"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
                                 app:drawableStartCompat="@drawable/folder" />
 
                             <TextView
@@ -87,12 +87,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/quarter_default_size"
                                 android:layout_weight="7"
-                                android:drawablePadding="2dp"
+                                android:drawablePadding="@dimen/half_default_size"
                                 android:ellipsize="end"
-                                android:fontFamily="@font/roboto_regular"
+                                android:fontFamily="@font/minecraft_regular"
                                 android:lines="1"
                                 android:text="@{item.getFormattedDownloads()}"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
                                 app:drawableStartCompat="@drawable/download" />
 
                             <TextView
@@ -100,26 +100,14 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/quarter_default_size"
                                 android:layout_weight="7"
-                                android:drawablePadding="2dp"
+                                android:drawablePadding="@dimen/half_default_size"
                                 android:ellipsize="end"
-                                android:fontFamily="@font/roboto_regular"
+                                android:gravity="center_vertical"
+                                android:fontFamily="@font/minecraft_regular"
                                 android:lines="1"
                                 android:text="@{item.getFormattedLikes()}"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
                                 app:drawableStartCompat="@drawable/favorite_small" />
-
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/quarter_default_size"
-                                android:layout_weight="8"
-                                android:drawablePadding="2dp"
-                                android:ellipsize="end"
-                                android:fontFamily="@font/roboto_regular"
-                                android:lines="1"
-                                android:text="@{item.getVersion() + `+`}"
-                                android:textSize="12sp"
-                                app:drawableStartCompat="@drawable/version" />
 
                         </LinearLayout>
 

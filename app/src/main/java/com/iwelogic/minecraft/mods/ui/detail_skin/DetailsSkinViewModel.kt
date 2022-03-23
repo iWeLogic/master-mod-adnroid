@@ -9,17 +9,13 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.models.*
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
-import com.iwelogic.minecraft.mods.ui.base.storage.BaseDetailsViewModel
-import com.iwelogic.minecraft.mods.utils.isTrue
-import com.iwelogic.minecraft.mods.utils.readBoolean
+import com.iwelogic.minecraft.mods.ui.base_details.BaseDetailsViewModel
 import com.iwelogic.minecraft.mods.utils.writeBoolean
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -28,7 +24,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.zeroturnaround.zip.ZipUtil
 import java.io.*
-import java.lang.ref.WeakReference
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*

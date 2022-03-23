@@ -3,27 +3,27 @@
 
     <item
         android:id="@+id/addons"
-        android:icon="@drawable/addons"
+        android:icon="@drawable/bottom_addons"
         android:title="@string/addons" />
 
     <item
         android:id="@+id/maps"
-        android:icon="@drawable/maps"
+        android:icon="@drawable/bottom_maps"
         android:title="@string/maps" />
 
     <item
         android:id="@+id/textures"
-        android:icon="@drawable/textures"
+        android:icon="@drawable/bottom_textures"
         android:title="@string/textures" />
 
     <item
         android:id="@+id/seeds"
-        android:icon="@drawable/seeds"
+        android:icon="@drawable/bottom_seeds"
         android:title="@string/seeds" />
 
     <item
         android:id="@+id/skins"
-        android:icon="@drawable/skins"
+        android:icon="@drawable/bottom_skins"
         android:title="@string/skins" />
 
 </menu>

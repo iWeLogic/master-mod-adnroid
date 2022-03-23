@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="@color/purple_200"
+            android:background="@drawable/background_bottom_line"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -27,40 +27,45 @@
                 android:layout_marginStart="@dimen/default_size"
                 android:layout_marginEnd="@dimen/default_size"
                 android:layout_weight="1"
+                android:fontFamily="@font/minecraft_bold"
                 android:gravity="center_vertical"
                 android:text="@{viewModel.title}"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
 
             <ImageView
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
-                android:scaleType="centerInside"
                 android:onClick="@{() -> viewModel.onClickSearch()}"
-                android:src="@drawable/search" />
+                android:scaleType="centerInside"
+                android:src="@drawable/search"
+                app:tint="@color/green" />
 
             <ImageView
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
-                android:scaleType="centerInside"
                 android:onClick="@{() -> viewModel.onClickFavorite()}"
-                android:src="@drawable/favorite" />
+                android:scaleType="centerInside"
+                android:src="@drawable/favorite"
+                app:tint="@color/green" />
 
 
             <ImageView
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
-                android:scaleType="centerInside"
                 android:onClick="@{() -> viewModel.onClickFilter()}"
-                android:src="@drawable/filter" />
+                android:scaleType="centerInside"
+                android:src="@drawable/filter"
+                app:tint="@color/green" />
 
             <ImageView
-                android:layout_width="?actionBarSize"
-                android:layout_height="?actionBarSize"
-                android:scaleType="centerInside"
                 onSelect="@{viewModel.onSelectSort}"
                 sort="@{viewModel.sort}"
-                android:src="@drawable/sort" />
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
+                android:scaleType="centerInside"
+                android:src="@drawable/sort"
+                app:tint="@color/green" />
 
         </LinearLayout>
 

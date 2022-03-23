@@ -4,8 +4,14 @@
         <item name="android:windowBackground">@color/transparent</item>
     </style>
 
-    <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
-        <item name="android:textSize">10sp</item>
+    <style name="BottomNavigationViewText" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/minecraft_regular</item>
+    </style>
+
+    <style name="BottomNavigationViewTextActive" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/minecraft_regular</item>
     </style>
 
     <style name="SearchStyle">

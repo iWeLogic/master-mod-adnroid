@@ -75,9 +75,10 @@
                     android:layout_marginStart="@dimen/default_size"
                     android:layout_marginTop="@dimen/half_default_size"
                     android:layout_marginEnd="@dimen/default_size"
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/minecraft_bold"
                     android:text="@{viewModel.item.title}"
-                    android:textSize="24sp" />
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -92,14 +93,14 @@
                         android:layout_height="20dp"
                         android:layout_marginEnd="2dp"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/folder" />
+                        android:src="@drawable/file_size" />
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="9"
                         android:ellipsize="end"
-                        android:fontFamily="@font/roboto_medium"
+                        android:fontFamily="@font/minecraft_regular"
                         android:lines="1"
                         android:text="@{viewModel.item.fileSize + ` Mb`}"
                         android:textSize="16sp" />
@@ -140,61 +141,46 @@
                         counter="@{viewModel.item.likes}"
                         android:textSize="16sp" />
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="2dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/version" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/quarter_default_size"
-                        android:layout_weight="7"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/roboto_medium"
-                        android:lines="1"
-                        android:text="@{viewModel.item.getVersion() + `+`}"
-                        android:textSize="16sp" />
-
                 </LinearLayout>
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageButton
                     progress="@{viewModel.item.progress}"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginStart="@dimen/default_size"
                     android:layout_marginTop="@dimen/default_size"
                     android:layout_marginEnd="@dimen/default_size"
                     android:layout_marginBottom="@dimen/half_default_size"
-                    android:src="@drawable/background_btn_downloading"
+                    android:background="@drawable/background_btn_downloading"
                     android:visibility="@{viewModel.item.progress > 0 &amp; viewModel.item.progress &lt; 10000 ? View.VISIBLE : View.GONE}" />
 
-                <ImageView
-                    android:layout_width="match_parent"
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/default_size"
                     android:layout_marginTop="@dimen/default_size"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/default_size"
                     android:layout_marginEnd="@dimen/default_size"
                     android:layout_marginBottom="@dimen/half_default_size"
                     android:onClick="@{() -> viewModel.download()}"
-                    android:src="@drawable/background_btn_download"
+                    android:background="@drawable/button_download_combine"
                     android:visibility="@{viewModel.item.progress == 0 ? View.VISIBLE : View.GONE}" />
 
-                <ImageView
-                    android:layout_width="match_parent"
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/default_size"
                     android:layout_marginTop="@dimen/default_size"
+                    android:layout_gravity="center"
                     android:layout_marginEnd="@dimen/default_size"
                     android:layout_marginBottom="@dimen/half_default_size"
                     android:onClick="@{() -> viewModel.onClickInstall()}"
-                    android:src="@drawable/background_btn_install"
+                    android:background="@drawable/button_install_combine"
                     android:visibility="@{viewModel.item.progress == 10000 ? View.VISIBLE : View.GONE}" />
 
                 <com.iwelogic.minecraft.mods.views.CollapseTextView
-                    body="@{viewModel.item.description}"
+                    body="@{viewModel.item.description + `\n Version ` + viewModel.item.getVersion()}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/default_size"

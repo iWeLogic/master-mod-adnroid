@@ -1,4 +1,4 @@
-package com.iwelogic.minecraft.mods.ui.base.storage.permission_two
+package com.iwelogic.minecraft.mods.ui.base_details.permission_two
 
 import android.content.Intent
 import android.net.Uri

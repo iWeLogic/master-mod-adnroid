@@ -1,4 +1,4 @@
-package com.iwelogic.minecraft.mods.ui.base.storage
+package com.iwelogic.minecraft.mods.ui.base_details
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -25,10 +25,10 @@ abstract class BaseDetailsViewModel(val repository: Repository, applicationConte
     var context: WeakReference<Context> = WeakReference(applicationContext)
 
     fun checkIsFileExist() {
-        val name = "skin_n${item.value?.id}"
-        val file = File("$base/skins/$name.mcpack")
+        val file = File("$base/${item.value?.category}/${item.value?.id}/file.${item.value?.getFileExtension()}")
         item.value?.progress = if (file.exists()) 10000 else 0
-        item.value?.progressGallery = if (context.get()?.readBoolean(name).isTrue()) 10000 else 0
+        isFavourite = repository.checkExist("${item.value?.category} ${item.value?.pack} ${item.value?.id}")
+        item.value?.progressGallery = if (context.get()?.readBoolean("${item.value?.category}_${item.value?.id}").isTrue()) 10000 else 0
         isFavourite = repository.checkExist("${item.value?.category} ${item.value?.pack} ${item.value?.id}")
     }
 
