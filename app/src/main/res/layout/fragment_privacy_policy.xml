@@ -26,17 +26,12 @@
                 android:background="?attr/actionBarItemBackground"
                 android:onClick="@{() -> viewModel.onClickClose()}"
                 android:scaleType="centerInside"
-                android:src="@drawable/back" />
+                android:src="@drawable/back"
+                android:contentDescription="@string/back" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:fontFamily="@font/minecraft_bold"
-                android:gravity="center_vertical"
-                android:text="Privacy policy"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                style="@style/Header"
+                android:text="@string/privacy_policy" />
 
         </LinearLayout>
 

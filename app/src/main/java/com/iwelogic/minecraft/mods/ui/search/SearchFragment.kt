@@ -26,7 +26,6 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
 
     private var resultVoiceSearch: ActivityResultLauncher<Intent>? = null
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding: FragmentSearchBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         binding.lifecycleOwner = this

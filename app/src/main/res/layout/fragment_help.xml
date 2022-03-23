@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -15,18 +16,25 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar"
-            android:background="@color/purple_200"
+            android:layout_height="?actionBarSize"
+            android:background="@drawable/background_bottom_line"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
 
             <ImageView
-                android:layout_width="@dimen/toolbar"
-                android:layout_height="@dimen/toolbar"
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
                 android:background="?attr/actionBarItemBackground"
+                android:contentDescription="@string/back"
                 android:onClick="@{() -> viewModel.onClickClose()}"
                 android:scaleType="centerInside"
-                android:src="@drawable/back_details" />
+                android:src="@drawable/back" />
+
+            <TextView
+                style="@style/Header"
+                android:layout_marginStart="@dimen/half_default_size"
+                android:text="@string/help" />
 
         </LinearLayout>
 

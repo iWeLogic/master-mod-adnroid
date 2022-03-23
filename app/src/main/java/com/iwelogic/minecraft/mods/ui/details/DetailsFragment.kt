@@ -2,6 +2,7 @@ package com.iwelogic.minecraft.mods.ui.details
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentDetailsBinding
+import com.iwelogic.minecraft.mods.models.DialogData
 import com.iwelogic.minecraft.mods.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,7 +39,23 @@ class DetailsFragment : BaseFragment<DetailsViewModel>() {
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 startActivity(intent)
             } catch (e: ActivityNotFoundException) {
-                //     NoMinecraftDialog().show(childFragmentManager, "NoMinecraftDialog")
+                context?.let { context ->
+                    viewModel.showDialog.invoke(
+                        DialogData(
+                            title = context.getString(R.string.minecraft_isnt_installed_title),
+                            message = context.getString(R.string.minecraft_isnt_installed_body),
+                            buttonRightTitle = context.getString(R.string.install),
+                            buttonLeftTitle = context.getString(R.string.no),
+                            onClickRight = {
+                                try {
+                                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.mojang.minecraftpe")))
+                                } catch (e: ActivityNotFoundException) {
+                                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.mojang.minecraftpe")))
+                                }
+                            }
+                        )
+                    )
+                }
             }
         }
     }

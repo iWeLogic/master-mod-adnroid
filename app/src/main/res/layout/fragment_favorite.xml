@@ -31,14 +31,9 @@
                 android:src="@drawable/back" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/Header"
                 android:layout_marginStart="@dimen/half_default_size"
-                android:fontFamily="@font/minecraft_bold"
-                android:gravity="center_vertical"
-                android:text="@string/favorite"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:text="@string/favorite" />
 
         </LinearLayout>
 

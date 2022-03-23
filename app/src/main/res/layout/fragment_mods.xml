@@ -26,46 +26,42 @@
             android:orientation="horizontal">
 
             <TextView
+                style="@style/Header"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/default_size"
                 android:layout_marginEnd="@dimen/default_size"
                 android:layout_weight="1"
                 android:ellipsize="end"
-                android:fontFamily="@font/minecraft_bold"
-                android:gravity="center_vertical"
                 android:lines="1"
-                android:text="@{viewModel.title}"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:text="@{viewModel.title}" />
 
             <ImageView
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
                 android:background="?attr/actionBarItemBackground"
+                android:contentDescription="@string/search"
                 android:onClick="@{() -> viewModel.onClickSearch()}"
                 android:scaleType="centerInside"
                 android:src="@drawable/search"
-                android:visibility="@{viewModel.category.equals(Category.SKINS.id) ? View.GONE : View.VISIBLE}"
-                android:contentDescription="@string/search" />
+                android:visibility="@{viewModel.category.equals(Category.SKINS.id) ? View.GONE : View.VISIBLE}" />
 
             <ImageView
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
                 android:background="?attr/actionBarItemBackground"
+                android:contentDescription="@string/favorite"
                 android:onClick="@{() -> viewModel.onClickFavorite()}"
                 android:scaleType="centerInside"
-                android:src="@drawable/favorite"
-                android:contentDescription="@string/favorite" />
+                android:src="@drawable/favorite" />
 
             <ImageView
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
                 android:background="?attr/actionBarItemBackground"
+                android:contentDescription="@string/filter"
                 android:onClick="@{() -> viewModel.onClickFilter()}"
                 android:scaleType="centerInside"
-                android:src="@drawable/filter"
-                android:contentDescription="@string/filter" />
+                android:src="@drawable/filter" />
 
             <ImageView
                 category="@{viewModel.category}"
@@ -74,10 +70,10 @@
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
                 android:background="?attr/actionBarItemBackground"
+                android:contentDescription="@string/sorting"
                 android:scaleType="centerInside"
                 android:src="@drawable/sort"
-                app:tint="@color/black"
-                android:contentDescription="@string/sorting" />
+                app:tint="@color/black" />
 
         </LinearLayout>
 

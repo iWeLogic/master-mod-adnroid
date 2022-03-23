@@ -22,11 +22,8 @@
             android:layout_weight="1" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/minecraft_bold"
+            style="@style/Header"
             android:text="@string/welcome"
-            android:textColor="@color/black"
             android:textSize="24sp" />
 
         <LinearLayout
@@ -40,12 +37,8 @@
             android:padding="@dimen/default_size">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/minecraft_bold"
-                android:text="Enter your age"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+                style="@style/Header"
+                android:text="@string/enter_your_age" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -103,7 +96,7 @@
             android:layout_marginBottom="@dimen/default_size"
             android:onClick="@{() -> viewModel.onClickPrivacyPolicy()}"
             android:fontFamily="@font/minecraft_regular"
-            android:text="@string/privacy_policy"
+            android:text="@string/privacy_policy_underlined"
             android:padding="@dimen/half_default_size"
             android:textColor="@color/black" />
 
