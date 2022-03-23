@@ -1,5 +1,7 @@
 package com.iwelogic.minecraft.mods.ui.detail_skin
 
+import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,7 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.ads.AdListener
@@ -18,16 +24,21 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentDetailsSkinBinding
-import com.iwelogic.minecraft.mods.ui.base.storage.StorageFragment
-import com.iwelogic.minecraft.mods.ui.details.DetailsFragmentDirections
+import com.iwelogic.minecraft.mods.ui.base.BaseFragment
+import com.iwelogic.minecraft.mods.ui.base.Const
+import com.iwelogic.minecraft.mods.ui.base.storage.BaseDetailsFragment
+import com.iwelogic.minecraft.mods.ui.base.storage.permission.PermissionDialog
+import com.iwelogic.minecraft.mods.ui.base.storage.permission_two.PermissionTwoDialog
 import com.iwelogic.minecraft.mods.utils.AddHelper
+import com.iwelogic.minecraft.mods.utils.writeBoolean
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
 
 @AndroidEntryPoint
-class DetailsSkinFragment : StorageFragment<DetailsSkinViewModel>() {
+class DetailsSkinFragment : BaseDetailsFragment<DetailsSkinViewModel>() {
 
-    var adView: NativeAdView? = null
-    var currentNativeAd: NativeAd? = null
+    private var requestPermissionStorage: ActivityResultLauncher<String>? = null
+    private var permissionAction: (() -> Unit)? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding: FragmentDetailsSkinBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_details_skin, container, false)
@@ -40,59 +51,73 @@ class DetailsSkinFragment : StorageFragment<DetailsSkinViewModel>() {
         return binding.root
     }
 
+    /*  override fun checkPermissionAction(action: () -> Unit) {
+       permissionAction = action
+       activity?.let {
+           if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(it, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+               requestPermissionStorage?.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+           } else {
+               action.invoke()
+           }
+       }
+   }*/
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         refreshAd(view)
+
+        setFragmentResultListener("provide") { _, _ ->
+            permissionAction?.let {
+                //    checkPermissionAction(it)
+            }
+        }
+
+        requestPermissionStorage = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                permissionAction?.invoke()
+            } else {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    PermissionDialog().show(childFragmentManager, "PermissionDialog")
+                } else {
+                    PermissionTwoDialog().show(childFragmentManager, "PermissionTwoDialog")
+                }
+            }
+        }
+
         viewModel.openHelp.observe(viewLifecycleOwner) {
             if (findNavController().currentDestination?.id == R.id.detailsFragment) {
                 findNavController().navigate(DetailsSkinFragmentDirections.actionDetailsSkinFragmentToHelpFragment())
             }
         }
-    }
 
-    private fun refreshAd(view: View) {
-        adView?.parent?.let {
-            (it as ViewGroup).removeAllViews()
-            view.findViewById<FrameLayout>(R.id.ad_frame)?.addView(adView)
-        } ?: run {
-            context?.let {
-                val builder = AdLoader.Builder(it, it.getString(R.string.ad_native))
-
-                builder.forNativeAd { nativeAd ->
-                    activity?.let {
-                        if (requireActivity().isDestroyed || requireActivity().isFinishing || requireActivity().isChangingConfigurations) {
-                            nativeAd.destroy()
-                            return@forNativeAd
-                        }
-                        currentNativeAd?.destroy()
-                        currentNativeAd = nativeAd
-                        if (adView == null) {
-                            adView = layoutInflater.inflate(R.layout.layout_native_ad, view as FrameLayout, false) as NativeAdView
-                            nativeAd.images.firstOrNull()?.let {
-                                adView?.findViewById<ImageView>(R.id.imageAd)?.setImageDrawable(it.drawable)
-                            }
-                        }
-                        AddHelper.populateUnifiedNativeAdView(nativeAd, adView!!)
-                        adView?.parent?.let { parent ->
-                            (parent as ViewGroup).removeAllViews()
-                        }
-                        view.findViewById<FrameLayout>(R.id.ad_frame)?.addView(adView)
-                    }
-                }
-
-                val adLoader = builder.withAdListener(object : AdListener() {
-                    override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-
-                    }
-                }).build()
-
-                adLoader.loadAd(AdRequest.Builder().build())
+        viewModel.openInstall.observe(viewLifecycleOwner) {
+            try {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.setDataAndType(FileProvider.getUriForFile(requireContext(), requireContext().packageName + ".fileprovider", File(it)), "application/octet-stream")
+                intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                startActivity(intent)
+                context?.writeBoolean(Const.STATUS_MOD_INSTALLED, true)
+            } catch (e: Exception) {
+             //   NoMinecraftDialog().show(childFragmentManager, "NoMinecraftDialog")
             }
         }
-    }
 
-    override fun onDestroy() {
-        currentNativeAd?.destroy()
-        super.onDestroy()
+        viewModel.openInstallMinecraft.observe(viewLifecycleOwner) {
+        //    NoMinecraftDialog().show(childFragmentManager, "NoMinecraftDialog")
+        }
+
+        viewModel.openMessageDialog.observe(viewLifecycleOwner) {
+            /*MessageDialog().apply {
+                arguments = Bundle().apply {
+                    putString("title", title)
+                    putString("body", body)
+                }
+            }.show(childFragmentManager, "MessageDialog")*/
+        }
+
+        viewModel.openCheckPermission.observe(viewLifecycleOwner) {
+
+        }
     }
 }

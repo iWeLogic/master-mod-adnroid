@@ -13,10 +13,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
+import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.models.*
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
-import com.iwelogic.minecraft.mods.ui.base.storage.StorageViewModel
+import com.iwelogic.minecraft.mods.ui.base.storage.BaseDetailsViewModel
 import com.iwelogic.minecraft.mods.utils.isTrue
 import com.iwelogic.minecraft.mods.utils.readBoolean
 import com.iwelogic.minecraft.mods.utils.writeBoolean
@@ -35,29 +36,21 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class DetailsSkinViewModel @Inject constructor(private val repository: Repository, @ApplicationContext applicationContext: Context) : StorageViewModel() {
+class DetailsSkinViewModel @Inject constructor(repository: Repository, @ApplicationContext applicationContext: Context) : BaseDetailsViewModel(repository, applicationContext) {
 
-    var context: WeakReference<Context> = WeakReference(applicationContext)
-    val item: MutableLiveData<Mod> = MutableLiveData()
-    val base = "${applicationContext.filesDir?.path}"
-    var isFavourite: LiveData<Boolean>? = null
-    val openHelp: SingleLiveEvent<Boolean> = SingleLiveEvent()
 
-    fun checkIsFileExist() {
-        val name = "skin_n${item.value?.id}"
-        val file = File("$base/skins/$name.mcpack")
-        item.value?.progress = if (file.exists()) 10000 else 0
-        item.value?.progressGallery = if (context.get()?.readBoolean(name).isTrue()) 10000 else 0
-        isFavourite = repository.checkExist("${item.value?.category} ${item.value?.pack} ${item.value?.id}")
-    }
+    val openInstallMinecraft: SingleLiveEvent<Boolean> = SingleLiveEvent()
+    val openInstall: SingleLiveEvent<String> = SingleLiveEvent()
+    val openMessageDialog: SingleLiveEvent<DialogTexts> = SingleLiveEvent()
+    val openCheckPermission: SingleLiveEvent<() -> Unit> = SingleLiveEvent()
 
     fun onClickDownloadToGallery() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             downloadImageToGalley()
         } else {
-            /*  navigator?.checkPermissionAction {
-                  downloadImageToGalley()
-              }*/
+            openCheckPermission.invoke {
+                downloadImageToGalley()
+            }
         }
     }
 
@@ -211,33 +204,10 @@ class DetailsSkinViewModel @Inject constructor(private val repository: Repositor
     }
 
     fun onClickInstall() {
-        when {
-            /*   getMinecraftVersion() == 0 -> navigator?.showInstallMinecraft()
-               getMinecraftVersion() > 1012 -> navigator?.install(File("$base/skins/skin_n${item.value?.id}.mcpack").path)
-               else -> navigator?.showMessageDialog(context.get()?.getString(R.string.install_skin_through_gallery_title), context.get()?.getString(R.string.install_skin_through_gallery_body))
-        */
+        when (getMinecraftVersion()) {
+            0 -> openInstallMinecraft.invoke(true)
+            1012 -> openInstall.invoke(File("$base/skins/skin_n${item.value?.id}.mcpack").path)
+            else -> openMessageDialog.invoke(DialogTexts(context.get()?.getString(R.string.install_skin_through_gallery_title), context.get()?.getString(R.string.install_skin_through_gallery_body)))
         }
-    }
-
-    fun onClickFavourite() {
-        item.value?.let { mod ->
-            mod.primaryId = "${mod.category} ${mod.pack} ${mod.id}"
-            viewModelScope.launch {
-                if (isFavourite?.value.isTrue()) {
-                    repository.removeFromFavourite(mod).collect()
-                    mod.likes = mod.likes?.minus(1)
-                    repository.updateMod(mod.category ?: "", mod).collect()
-                } else {
-                    mod.favouriteDate = System.currentTimeMillis()
-                    repository.setFavourite(mod).collect()
-                    mod.likes = mod.likes?.plus(1)
-                    repository.updateMod(mod.category ?: "", mod).collect()
-                }
-            }
-        }
-    }
-
-    fun onClickHelp() {
-        openHelp.invoke(true)
     }
 }

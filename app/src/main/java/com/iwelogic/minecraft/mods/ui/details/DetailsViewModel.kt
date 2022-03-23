@@ -13,6 +13,7 @@ import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.models.Mod
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
+import com.iwelogic.minecraft.mods.ui.base.storage.BaseDetailsViewModel
 import com.iwelogic.minecraft.mods.utils.isTrue
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -22,23 +23,8 @@ import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailsViewModel @Inject constructor(private val repository: Repository, @ApplicationContext applicationContext: Context) : BaseViewModel() {
+class DetailsViewModel @Inject constructor(repository: Repository, @ApplicationContext applicationContext: Context) : BaseDetailsViewModel(repository, applicationContext) {
 
-    val item: MutableLiveData<Mod> = MutableLiveData()
-    var isFavourite: LiveData<Boolean>? = null
-    val base = "${applicationContext.filesDir?.path}"
-    val openHelp: SingleLiveEvent<Boolean> = SingleLiveEvent()
-
-    fun checkIsFileExist() {
-        val file = File("$base/${item.value?.category}/${item.value?.id}/file.${item.value?.getFileExtension()}")
-        item.value?.progress = if (file.exists()) 10000 else 0
-        isFavourite = repository.checkExist("${item.value?.category} ${item.value?.pack} ${item.value?.id}")
-    }
-
-    override fun onCleared() {
-        AndroidNetworking.cancelAll()
-        super.onCleared()
-    }
 
     fun download() {
         if (item.value?.progress != 0) return
@@ -75,27 +61,5 @@ class DetailsViewModel @Inject constructor(private val repository: Repository, @
 
     fun onClickInstall() {
         //   navigator?.install(File("$base/${item.value?.category}/${item.value?.id}/file.${item.value?.getFileExtension()}").path)
-    }
-
-    fun onClickFavourite() {
-        item.value?.let { mod ->
-            mod.primaryId = "${mod.category} ${mod.pack} ${mod.id}"
-            viewModelScope.launch {
-                if (isFavourite?.value.isTrue()) {
-                    repository.removeFromFavourite(mod).collect()
-                    mod.likes = mod.likes?.minus(1)
-                    repository.updateMod(mod.category ?: "", mod).collect()
-                } else {
-                    mod.favouriteDate = System.currentTimeMillis()
-                    repository.setFavourite(mod).collect()
-                    mod.likes = mod.likes?.plus(1)
-                    repository.updateMod(mod.category ?: "", mod).collect()
-                }
-            }
-        }
-    }
-
-    fun onClickHelp() {
-        openHelp.invoke(true)
     }
 }
