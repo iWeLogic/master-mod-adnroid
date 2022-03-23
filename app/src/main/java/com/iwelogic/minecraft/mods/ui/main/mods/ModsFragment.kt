@@ -60,7 +60,7 @@ class ModsFragment : BaseFragment<ModsViewModel>() {
             }
         }
         parentFragment?.parentFragment?.setFragmentResultListener("filter_" + viewModel.category) { _, bundle ->
-            viewModel.filters.postValue(bundle.getParcelableArray("value")?.map { it as FilterValue })
+            viewModel.setNewFilters(bundle.getParcelableArray("value")?.map { it as FilterValue } ?: ArrayList())
         }
     }
 }

@@ -16,6 +16,7 @@ import com.iwelogic.minecraft.mods.models.Mod
 import com.iwelogic.minecraft.mods.models.Sort
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
+import com.iwelogic.minecraft.mods.utils.deepCopy
 import com.iwelogic.minecraft.mods.utils.isTrue
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -87,7 +88,7 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext context: Con
     }
 
     fun onClickFilter() {
-        openFilter.invoke(filters.value ?: ArrayList())
+        openFilter.invoke(filters.value.deepCopy() ?: ArrayList())
     }
 
     fun onClickSearch() {
@@ -96,6 +97,14 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext context: Con
 
     fun onClickFavorite() {
         openFavorite.invoke(true)
+    }
+
+    fun setNewFilters(newFilters: List<FilterValue>) {
+        for (i in newFilters.indices) {
+            if (newFilters[i].value != filters.value?.get(i)?.value) {
+                filters.postValue(newFilters)
+            }
+        }
     }
 
     private fun load() {
