@@ -1,5 +1,6 @@
 package com.iwelogic.minecraft.mods.ui.search
 
+import android.content.Context
 import android.util.Log
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.MutableLiveData
@@ -14,6 +15,7 @@ import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.ui.main.mods.ModsViewModel
 import com.iwelogic.minecraft.mods.utils.isTrue
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
@@ -22,7 +24,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val repository: Repository) : BaseViewModel() {
+class SearchViewModel @Inject constructor(private val repository: Repository, @ApplicationContext applicationContext: Context) : BaseViewModel(applicationContext) {
 
     val title: MutableLiveData<String> = MutableLiveData("")
     val mods: MutableLiveData<MutableList<Mod>> = MutableLiveData(ArrayList())

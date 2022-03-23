@@ -13,9 +13,8 @@ import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 @HiltViewModel
-class OnboardingModel @Inject constructor(@ApplicationContext applicationContext: Context) : BaseViewModel() {
+class OnboardingModel @Inject constructor(@ApplicationContext applicationContext: Context) : BaseViewModel(applicationContext) {
 
-    var context: WeakReference<Context> = WeakReference(applicationContext)
     var age: MutableLiveData<Int> = MutableLiveData(-1)
     var openMain: SingleLiveEvent<Boolean> = SingleLiveEvent()
     var openUrl: SingleLiveEvent<String> = SingleLiveEvent()

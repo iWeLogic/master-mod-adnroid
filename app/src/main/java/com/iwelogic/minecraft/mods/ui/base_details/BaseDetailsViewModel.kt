@@ -16,13 +16,12 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.lang.ref.WeakReference
 
-abstract class BaseDetailsViewModel(val repository: Repository, applicationContext: Context) : BaseViewModel() {
+abstract class BaseDetailsViewModel(val repository: Repository, applicationContext: Context) : BaseViewModel(applicationContext) {
 
     var isFavourite: LiveData<Boolean>? = null
     val openHelp: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val base = "${applicationContext.filesDir?.path}"
     val item: MutableLiveData<Mod> = MutableLiveData()
-    var context: WeakReference<Context> = WeakReference(applicationContext)
 
     fun checkIsFileExist() {
         val file = File("$base/${item.value?.category}/${item.value?.id}/file.${item.value?.getFileExtension()}")

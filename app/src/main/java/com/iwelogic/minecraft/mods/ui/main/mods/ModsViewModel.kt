@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class ModsViewModel @AssistedInject constructor(@ApplicationContext context: Context, private val repository: Repository, @Assisted val category: String) : BaseViewModel() {
+class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, private val repository: Repository, @Assisted val category: String) : BaseViewModel(applicationContext) {
 
     companion object {
         fun provideFactory(assistedFactory: ModsViewModelFactory, category: String): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
@@ -76,11 +76,11 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext context: Con
         spanCount.postValue(if (category == "skins") 2 else 1)
         title.postValue(
             when (category) {
-                "addons" -> context.getString(R.string.addons)
-                "maps" -> context.getString(R.string.maps)
-                "textures" -> context.getString(R.string.textures)
-                "seeds" -> context.getString(R.string.seeds)
-                else -> context.getString(R.string.skins)
+                "addons" -> applicationContext.getString(R.string.addons)
+                "maps" -> applicationContext.getString(R.string.maps)
+                "textures" -> applicationContext.getString(R.string.textures)
+                "seeds" -> applicationContext.getString(R.string.seeds)
+                else -> applicationContext.getString(R.string.skins)
             }
         )
         sort.observeForever(changeObserver)

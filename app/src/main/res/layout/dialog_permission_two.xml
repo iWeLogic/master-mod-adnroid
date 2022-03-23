@@ -4,9 +4,7 @@
 
     <data>
 
-        <variable
-            name="viewModel"
-            type="com.iwelogic.minecraft.mods.ui.base_details.permission_two.PermissionTwoViewModel" />
+
     </data>
 
     <FrameLayout
@@ -51,7 +49,6 @@
                     android:layout_marginEnd="@dimen/default_size"
                     android:background="?attr/actionBarItemBackground"
                     android:fontFamily="@font/roboto_medium"
-                    android:onClick="@{() -> viewModel.onClickClose()}"
                     android:padding="@dimen/half_default_size"
                     android:text="@string/no"
                     android:textColor="@color/main"

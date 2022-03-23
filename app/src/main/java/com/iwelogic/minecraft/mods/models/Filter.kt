@@ -1,7 +1,11 @@
 package com.iwelogic.minecraft.mods.models
 
 import android.os.Parcelable
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
+import androidx.databinding.library.baseAdapters.BR
 import com.iwelogic.minecraft.mods.R
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -76,4 +80,16 @@ enum class Filter(val id: String, val title: Int, val category: String) : Parcel
 }
 
 @Parcelize
-data class FilterValue(var filter: Filter, var value: Boolean) : Parcelable
+data class FilterValue(var filter: Filter, var _value: Boolean) : BaseObservable(), Parcelable {
+
+    @IgnoredOnParcel
+    var valueChangeObserver: (() -> Unit)? = null
+
+    var value: Boolean
+        @Bindable get() = _value
+        set(value) {
+            valueChangeObserver?.invoke()
+            _value = value
+            notifyPropertyChanged(BR.value)
+        }
+}

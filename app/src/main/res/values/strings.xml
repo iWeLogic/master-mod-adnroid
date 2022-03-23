@@ -120,4 +120,8 @@
     <string name="privacy_policy"><u>Privacy policy</u></string>
     <string name="welcome">Welcome!</string>
     <string name="enter_age">Put your age</string>
+    <string name="filter">Filter</string>
+    <string name="cancel">Cancel</string>
+    <string name="apply">Apply</string>
+    <string name="you_should_select_at_least_one_category">You should select at least one category</string>
 </resources>

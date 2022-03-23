@@ -48,14 +48,15 @@ class CollapseTextView : LinearLayout {
         }
 
         val httpPattern = Pattern.compile("[a-z]+://[^ \\n]*")
-        Linkify.addLinks( bodyView, httpPattern, "")
-        Linkify.addLinks( bodyView, Pattern.compile("[0-9]?(\\+[0-9]+[\\- .]*)?(\\([0-9]+\\)[\\- .]*)?([0-9][0-9\\- .]+[0-9])"), "tel:", Linkify.sPhoneNumberMatchFilter, Linkify.sPhoneNumberTransformFilter)
+        Linkify.addLinks(bodyView, httpPattern, "")
+        Linkify.addLinks(bodyView, Pattern.compile("[0-9]?(\\+[0-9]+[\\- .]*)?(\\([0-9]+\\)[\\- .]*)?([0-9][0-9\\- .]+[0-9])"), "tel:", Linkify.sPhoneNumberMatchFilter, Linkify.sPhoneNumberTransformFilter)
         bodyView.movementMethod = LinkMovementMethod.getInstance()
     }
 
-    fun setBody(text: String){
+    fun setBody(text: String) {
         findViewById<TextView>(R.id.body).text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
     }
+
     private fun expandView(view: View) {
         isActiveAnimation = true
         view.visibility = VISIBLE

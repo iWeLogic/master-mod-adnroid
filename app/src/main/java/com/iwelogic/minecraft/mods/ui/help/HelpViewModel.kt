@@ -8,5 +8,5 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @HiltViewModel
-class HelpViewModel @Inject constructor(private val repository: Repository) : BaseViewModel() {
+class HelpViewModel @Inject constructor(private val repository: Repository, @ApplicationContext applicationContext: Context) : BaseViewModel(applicationContext) {
 }

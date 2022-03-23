@@ -1,10 +1,13 @@
 package com.iwelogic.minecraft.mods.ui.base
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.lang.ref.WeakReference
 
-open class BaseViewModel : ViewModel() {
+open class BaseViewModel(applicationContext: Context) : ViewModel() {
 
+    var context: WeakReference<Context> = WeakReference(applicationContext)
     var progress: MutableLiveData<Boolean> = MutableLiveData(false)
     var error: MutableLiveData<Boolean> = MutableLiveData(false)
     val close: SingleLiveEvent<Boolean> = SingleLiveEvent()

@@ -18,8 +18,6 @@ import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentDetailsSkinBinding
 import com.iwelogic.minecraft.mods.ui.base.Const
 import com.iwelogic.minecraft.mods.ui.base_details.BaseDetailsFragment
-import com.iwelogic.minecraft.mods.ui.base_details.permission.PermissionDialog
-import com.iwelogic.minecraft.mods.ui.base_details.permission_two.PermissionTwoDialog
 import com.iwelogic.minecraft.mods.utils.writeBoolean
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
@@ -67,9 +65,9 @@ class DetailsSkinFragment : BaseDetailsFragment<DetailsSkinViewModel>() {
                 permissionAction?.invoke()
             } else {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    PermissionDialog().show(childFragmentManager, "PermissionDialog")
+             //       PermissionDialog().show(childFragmentManager, "PermissionDialog")
                 } else {
-                    PermissionTwoDialog().show(childFragmentManager, "PermissionTwoDialog")
+               //     PermissionTwoDialog().show(childFragmentManager, "PermissionTwoDialog")
                 }
             }
         }

@@ -21,6 +21,7 @@
             android:checked="@={item.value}"
             android:fontFamily="@font/minecraft_regular"
             android:minHeight="0dp"
+            android:textSize="15sp"
             android:padding="@dimen/half_default_size"
             android:text="@{context.getString(item.filter.title)}"
             android:textColor="@color/black" />
@@ -28,4 +29,3 @@
     </FrameLayout>
 
 </layout>
-

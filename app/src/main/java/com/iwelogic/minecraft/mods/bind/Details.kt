@@ -19,7 +19,6 @@ object Details {
         item?.let {
             if (imageSlider.sliderAdapter == null) {
                 val sliderAdapter = SliderAdapter()
-                val count = item.countImages ?: 0
                 sliderAdapter.renewItems(item.getImages())
                 imageSlider.setSliderAdapter(sliderAdapter)
             }
