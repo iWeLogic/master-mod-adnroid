@@ -1,24 +1,13 @@
 <resources>
     <string name="app_name">MinecraftMods</string>
 
-    <string name="main">Main</string>
-    <string name="app_loading_text">developed\nby aloe</string>
     <string name="something_went_wrong">Something went wrong</string>
 
     <string name="addons">Addons</string>
     <string name="maps">Maps</string>
     <string name="textures">Textures</string>
     <string name="seeds">Seeds</string>
-    <string name="buildings">Buildings</string>
     <string name="skins">Skins</string>
-
-    <string name="by_default">By default</string>
-    <string name="by_likes">By likes</string>
-    <string name="by_downloads">By downloads</string>
-    <string name="by_date">By date</string>
-
-    <string name="no_internet_connection">Internet connection missing</string>
-    <string name="no_internet_connection_text">Internet connection required for app</string>
 
     //Categories
     <string name="addons_0">Furniture &amp; Decoration</string>
@@ -75,51 +64,17 @@
     <string name="skins_10">Anime</string>
     <string name="skins_11">Other</string>
 
-    <string name="settings">SETTINGS</string>
-    <string name="retry">RETRY</string>
     <string name="description">Description</string>
-    <string name="ok">OK</string>
 
     <string name="install_skin_through_gallery_title">Install skin through Gallery</string>
     <string name="install_skin_through_gallery_body">Minecraft version is not supported. Install skin through Gallery and put it in game</string>
-    <string name="permission_one_title">Permission required</string>
-    <string name="permission_one_body">Access to memory required for file downloading. Grant permission?</string>
-    <string name="permission_two_body">Access to memory should be granted in phone settings for file downloading. Open settings?</string>
-    <string name="no">NO</string>
-    <string name="provide">PERMIT</string>
-    <string name="minecraft_isnt_installed_title">Minecraft is not installed</string>
-    <string name="minecraft_isnt_installed_body">Install Minecraft?</string>
-    <string name="install">INSTALL</string>
     <string name="favorite">Favorite</string>
     <string name="search">Search</string>
-    <string name="enter_your_birthdate">Insert your birthdate</string>
-    <string name="help">Help</string>
-
-    <string name="instructions_for_addons_and_textures">Instruction for addons and textures installation</string>
-    <string name="instruction_addon_one">1. Download addon or texture</string>
-    <string name="instruction_addon_two">2. Install addon or texture</string>
-    <string name="instruction_addon_three">3. Edit your world</string>
-    <string name="instruction_addon_four">4. Choose \"Resource packs\". Add downloaded addon by pressing the button \"Activate\". Repeat these actions by choosing \"Behavior packs\".</string>
-
-    <string name="instructions_for_maps_and_seeds">Instruction for maps and seeds installation</string>
-    <string name="instruction_maps_one">1. \"External storage\" should be chosen in settings for maps downloading.</string>
-    <string name="instruction_maps_two">2. Download map or seed</string>
-    <string name="instruction_maps_three">3. Install map or seed</string>
-    <string name="instruction_maps_four">4. Map will be available in section \"Worlds\"</string>
-
-    <string name="instructions_for_skins">Instruction for skins installation</string>
-    <string name="instruction_skins_one">1. Choose where skin should be saved</string>
-    <string name="instruction_skins_two">2. Install skin</string>
-    <string name="instruction_skins_three">3. Install skin in game</string>
-
-    <string name="voice_recognition_error_title">Voice input error</string>
-    <string name="voice_recognition_error_body">Sorry, voice input is not supported on your device</string>
 
     <string name="confirm">Confirm</string>
     <string name="click_confirm">By clicking \"CONFIRM\" you accept</string>
     <string name="privacy_policy"><u>Privacy policy</u></string>
     <string name="welcome">Welcome!</string>
-    <string name="enter_age">Put your age</string>
     <string name="filter">Filter</string>
     <string name="cancel">Cancel</string>
     <string name="apply">Apply</string>
