@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="HardcodedText">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
+        <variable
+            name="viewModel"
+            type="com.iwelogic.minecraft.mods.ui.base.BaseViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/double_default_size"
+        android:visibility="@{TextUtils.isEmpty(viewModel.error) ? View.GONE : View.VISIBLE}"
+        tools:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:fontFamily="@font/minecraft_bold"
+            android:text="No connection to server"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/half_default_size"
+            android:text="@{viewModel.error}"
+            android:textSize="18sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/double_default_size"
+            android:paddingStart="@dimen/double_default_size"
+            android:paddingEnd="@dimen/double_default_size"
+            android:onClick="@{() -> viewModel.onReload()}"
+            android:background="@drawable/background_button"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:fontFamily="@font/minecraft_bold"
+            android:text="Reload" />
+
+    </LinearLayout>
+
+</layout>

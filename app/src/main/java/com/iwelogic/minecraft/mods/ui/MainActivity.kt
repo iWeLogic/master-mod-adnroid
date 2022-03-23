@@ -2,6 +2,7 @@ package com.iwelogic.minecraft.mods.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -65,6 +66,7 @@ class MainActivity : AppCompatActivity() {
             object : InterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
                     super.onAdFailedToLoad(adError)
+                    Log.w("myLog", "onAdFailedToLoad: " + adError.message)
                     count++
                     if (count < 3) loadInterstitialAd()
                     else {
@@ -75,6 +77,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    Log.w("myLog", "onAdLoaded: " )
                     mInterstitialAd = interstitialAd
                     mAdIsLoading = false
                 }
@@ -82,14 +85,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showInterstitialAd(callback: (() -> Unit)? = null) {
-        callback?.invoke()
          if (mInterstitialAd != null) {
              mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
                  override fun onAdDismissedFullScreenContent() {
-
+                     Log.w("myLog", "onAdDismissedFullScreenContent: " )
                  }
 
                  override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+                     Log.w("myLog", "onAdFailedToShowFullScreenContent: ")
                      count = 0
                      callback?.invoke()
                      loadInterstitialAd()
@@ -97,6 +100,7 @@ class MainActivity : AppCompatActivity() {
 
                  override fun onAdShowedFullScreenContent() {
                      callback?.invoke()
+                     Log.w("myLog", "onAdShowedFullScreenContent: ")
                      mInterstitialAd = null
                      count = 0
                      loadInterstitialAd()

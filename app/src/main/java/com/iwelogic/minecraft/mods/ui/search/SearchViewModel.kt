@@ -1,7 +1,6 @@
 package com.iwelogic.minecraft.mods.ui.search
 
 import android.content.Context
-import android.util.Log
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -31,11 +30,13 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
     var category: MutableLiveData<Category> = MutableLiveData(Category.ADDONS)
     var query: MutableLiveData<String> = MutableLiveData("")
     val openMod: SingleLiveEvent<Mod> = SingleLiveEvent()
+    val openVoiceSearch: SingleLiveEvent<Boolean> = SingleLiveEvent()
+    val hideKeyboard: SingleLiveEvent<Boolean> = SingleLiveEvent()
     private var jobRefresh: Job? = null
     private var job: Job? = null
     var finished = false
     private val changeObserver: (Any) -> Unit = {
-        reload()
+        onReload()
     }
 
     init {
@@ -44,16 +45,14 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
             jobRefresh?.cancel()
             jobRefresh = viewModelScope.launch {
                 delay(500)
-                reload()
+                onReload()
             }
         }
     }
 
     var listener = object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(newText: String?): Boolean {
-            if (!newText.isNullOrEmpty() && newText.length > 2) {
-                //  navigator?.hideKeyboard()
-            }
+            if (!newText.isNullOrEmpty() && newText.length > 2) hideKeyboard.postValue(true)
             query.postValue(newText)
             return true
         }
@@ -69,7 +68,7 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
     }
 
     fun onClickMic() {
-        //navigator?.openVoiceSearchDialog()
+        openVoiceSearch.invoke(true)
     }
 
     val onScroll: (Int) -> Unit = {
@@ -101,39 +100,44 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
                 queries["offset"] = mods.value?.size ?: 0
 
                 repository.getMods(category.value?.id ?: "", queries).catch {
-                    Log.w("myLog", "load2: " + it.message)
+                    showProgressInList(false)
+                    progress.postValue(false)
+                    error.postValue(it.message)
                 }.collect { result ->
                     when (result) {
-                        is Result.Loading -> showProgress(true)
-                        is Result.Finish -> showProgress(false)
+                        is Result.Loading -> {
+                            error.postValue(null)
+                            if (mods.value.isNullOrEmpty()) progress.postValue(true)
+                            else showProgressInList(true)
+                        }
+                        is Result.Finish -> {
+                            showProgressInList(false)
+                            progress.postValue(false)
+                        }
                         is Result.Success -> {
                             val data = result.data?.toMutableList()?.onEach { it.category = category.value?.id } ?: ArrayList()
                             mods.value?.addAll(data)
                             mods.postValue(mods.value)
                             if (data.size < ModsViewModel.PAGE_SIZE) finished = true
                         }
-                        is Result.Error -> {
-                            Log.w("myLog", "load4: " + result.message)
-                            /*  when (result.code) {
-                              Result.Error.Code.NOT_CONFIRMED -> warning.postValue(result.message)
-                              Result.Error.Code.WRONG_EMAIL_OR_PASSWORD -> passwordError.postValue(result.message)
-                              else -> warning.postValue(result.message)
-                          }*/
-                        }
+                        is Result.Error -> error.postValue(result.message)
+
                     }
                 }
             }
         }
     }
 
-    private fun showProgress(status: Boolean) {
+    private fun showProgressInList(status: Boolean) {
         if (status) mods.value?.add(Mod(category = ModsViewModel.PROGRESS))
         else mods.value?.removeAll { it.category == ModsViewModel.PROGRESS }
         mods.postValue(mods.value)
     }
 
-    override fun reload() {
+    override fun onReload() {
         job?.cancel()
+        showProgressInList(false)
+        progress.postValue(false)
         mods.value?.clear()
         mods.postValue(mods.value)
         finished = false

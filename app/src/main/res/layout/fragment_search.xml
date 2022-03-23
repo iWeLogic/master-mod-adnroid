@@ -4,7 +4,7 @@
 
     <data>
 
-        <import type="com.iwelogic.minecraft.mods.models.Category"/>
+        <import type="com.iwelogic.minecraft.mods.models.Category" />
 
         <variable
             name="viewModel"
@@ -13,8 +13,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                 app:iconifiedByDefault="false"
                 app:queryBackground="@color/transparent"
                 app:queryHint="@string/search"
-                app:searchIcon="@null"/>
+                app:searchIcon="@null" />
 
             <ImageView
                 android:layout_width="@dimen/toolbar"
@@ -142,16 +142,30 @@
 
         </HorizontalScrollView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
-            mods="@{viewModel.mods}"
-            onClick="@{viewModel.onClick}"
-            onScroll="@{viewModel.onScroll}"
-            app:spanCount="@{1}"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list"
+                mods="@{viewModel.mods}"
+                onClick="@{viewModel.onClick}"
+                onScroll="@{viewModel.onScroll}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="@{1}" />
+
+            <include
+                layout="@layout/layout_progress"
+                app:progress="@{viewModel.progress}" />
+
+            <include
+                layout="@layout/layout_error"
+                app:viewModel="@{viewModel.getBase()}" />
+
+        </FrameLayout>
 
     </LinearLayout>
-    
+
 </layout>

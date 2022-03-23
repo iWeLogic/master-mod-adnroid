@@ -46,7 +46,8 @@
                 android:onClick="@{() -> viewModel.onClickSearch()}"
                 android:scaleType="centerInside"
                 android:src="@drawable/search"
-                android:visibility="@{viewModel.category.equals(Category.SKINS.id) ? View.GONE : View.VISIBLE}" />
+                android:visibility="@{viewModel.category.equals(Category.SKINS.id) ? View.GONE : View.VISIBLE}"
+                android:contentDescription="@string/search" />
 
             <ImageView
                 android:layout_width="?actionBarSize"
@@ -54,7 +55,8 @@
                 android:background="?attr/actionBarItemBackground"
                 android:onClick="@{() -> viewModel.onClickFavorite()}"
                 android:scaleType="centerInside"
-                android:src="@drawable/favorite" />
+                android:src="@drawable/favorite"
+                android:contentDescription="@string/favorite" />
 
             <ImageView
                 android:layout_width="?actionBarSize"
@@ -62,7 +64,8 @@
                 android:background="?attr/actionBarItemBackground"
                 android:onClick="@{() -> viewModel.onClickFilter()}"
                 android:scaleType="centerInside"
-                android:src="@drawable/filter" />
+                android:src="@drawable/filter"
+                android:contentDescription="@string/filter" />
 
             <ImageView
                 category="@{viewModel.category}"
@@ -73,19 +76,34 @@
                 android:background="?attr/actionBarItemBackground"
                 android:scaleType="centerInside"
                 android:src="@drawable/sort"
-                app:tint="@color/black" />
+                app:tint="@color/black"
+                android:contentDescription="@string/sorting" />
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
-            mods="@{viewModel.mods}"
-            onClick="@{viewModel.onClick}"
-            onScroll="@{viewModel.onScroll}"
-            spanCount="@{viewModel.spanCount}"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list"
+                mods="@{viewModel.mods}"
+                onClick="@{viewModel.onClick}"
+                onScroll="@{viewModel.onScroll}"
+                spanCount="@{viewModel.spanCount}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
+            <include
+                layout="@layout/layout_progress"
+                app:progress="@{viewModel.progress}" />
+
+            <include
+                layout="@layout/layout_error"
+                app:viewModel="@{viewModel.getBase()}" />
+
+        </FrameLayout>
 
     </LinearLayout>
 

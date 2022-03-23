@@ -23,7 +23,7 @@ class MainViewModel @Inject constructor(@ApplicationContext applicationContext: 
             val requestConfiguration = MobileAds.getRequestConfiguration()
                 .toBuilder()
                 .setMaxAdContentRating(it)
-                .setTestDeviceIds(listOf("5571260002C1C3A1FD32D49B3E5332C1", "81AC2F5CC6A169492DFD647D9F39B4AA"))
+                .setTestDeviceIds(listOf("5571260002C1C3A1FD32D49B3E5332C1"))
                 .build()
             MobileAds.setRequestConfiguration(requestConfiguration)
             openMain.invoke(true)

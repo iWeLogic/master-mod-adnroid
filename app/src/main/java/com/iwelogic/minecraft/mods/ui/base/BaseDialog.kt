@@ -78,16 +78,7 @@ open class BaseDialog<VM : BaseViewModel> : DialogFragment() {
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        viewModel.navigator = null
-    }
 
-    override fun showInterstitialAd(callback: (() -> Unit)?) {
-        activity?.let {
-            (it as MainActivity).showInterstitialAd(callback)
-        }
-    }
 
     override fun show(manager: FragmentManager, tag: String?) {
         manager.beginTransaction().add(this, tag).commitAllowingStateLoss()

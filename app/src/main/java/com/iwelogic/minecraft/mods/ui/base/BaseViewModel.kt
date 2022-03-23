@@ -9,18 +9,19 @@ open class BaseViewModel(applicationContext: Context) : ViewModel() {
 
     var context: WeakReference<Context> = WeakReference(applicationContext)
     var progress: MutableLiveData<Boolean> = MutableLiveData(false)
-    var error: MutableLiveData<Boolean> = MutableLiveData(false)
+    var error: MutableLiveData<String> = MutableLiveData("")
     val close: SingleLiveEvent<Boolean> = SingleLiveEvent()
+    val showInterstitial: SingleLiveEvent<() -> Unit> = SingleLiveEvent()
 
     fun onClickClose() {
         close.invoke(true)
     }
 
     fun onClickRetry() {
-        reload()
+        onReload()
     }
 
-    open fun reload() {
+    open fun onReload() {
 
     }
 
