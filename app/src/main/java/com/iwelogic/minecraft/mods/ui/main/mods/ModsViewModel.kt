@@ -46,7 +46,7 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
     private val changeObserver: (Any) -> Unit = {
         reload()
     }
-    val sort: MutableLiveData<Sort> = MutableLiveData(Sort.DEFAULT)
+    val sort: MutableLiveData<Sort> = MutableLiveData(Sort.DATE)
     val mods: MutableLiveData<MutableList<Mod>> = MutableLiveData(ArrayList())
     val title: MutableLiveData<String> = MutableLiveData()
     val openMod: SingleLiveEvent<Mod> = SingleLiveEvent()

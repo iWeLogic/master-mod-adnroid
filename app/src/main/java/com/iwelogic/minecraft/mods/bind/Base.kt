@@ -32,8 +32,8 @@ object Base {
         searchView.setQuery(query, false)
         val txtSearch = searchView.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
         txtSearch.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
-        txtSearch.setTextColor(ContextCompat.getColor(searchView.context, R.color.white))
-        txtSearch.setHintTextColor(ContextCompat.getColor(searchView.context, R.color.white50))
+        txtSearch.setTextColor(ContextCompat.getColor(searchView.context, R.color.black))
+        txtSearch.setHintTextColor(ContextCompat.getColor(searchView.context, R.color.black50))
         val searchClose = searchView.findViewById(androidx.appcompat.R.id.search_close_btn) as ImageView
         searchClose.setImageResource(R.drawable.clear)
     }

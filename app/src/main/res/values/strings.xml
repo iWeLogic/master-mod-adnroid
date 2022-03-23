@@ -124,4 +124,9 @@
     <string name="cancel">Cancel</string>
     <string name="apply">Apply</string>
     <string name="you_should_select_at_least_one_category">You should select at least one category</string>
+    <string name="file_size_max">File size max</string>
+    <string name="file_size_min">File size min</string>
+    <string name="date">Date</string>
+    <string name="likes">Likes</string>
+    <string name="downloads">Downloads</string>
 </resources>

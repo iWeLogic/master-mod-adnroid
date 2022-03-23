@@ -38,14 +38,15 @@
             <ImageView
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
+                android:background="?attr/actionBarItemBackground"
                 android:onClick="@{() -> viewModel.onClickSearch()}"
                 android:scaleType="centerInside"
-                android:src="@drawable/search"
-                app:tint="@color/darkIcons" />
+                android:src="@drawable/search" />
 
             <ImageView
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
+                android:background="?attr/actionBarItemBackground"
                 android:onClick="@{() -> viewModel.onClickFavorite()}"
                 android:scaleType="centerInside"
                 android:src="@drawable/favorite" />
@@ -53,19 +54,20 @@
             <ImageView
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
+                android:background="?attr/actionBarItemBackground"
                 android:onClick="@{() -> viewModel.onClickFilter()}"
                 android:scaleType="centerInside"
-                android:src="@drawable/filter"
-                app:tint="@color/darkIcons" />
+                android:src="@drawable/filter" />
 
             <ImageView
                 onSelect="@{viewModel.onSelectSort}"
                 sort="@{viewModel.sort}"
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
+                android:background="?attr/actionBarItemBackground"
                 android:scaleType="centerInside"
                 android:src="@drawable/sort"
-                app:tint="@color/darkIcons" />
+                app:tint="@color/black" />
 
         </LinearLayout>
 
