@@ -25,6 +25,7 @@
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
                 android:background="?attr/actionBarItemBackground"
+                android:contentDescription="@string/back"
                 android:onClick="@{() -> viewModel.onClickClose()}"
                 android:scaleType="centerInside"
                 android:src="@drawable/back" />
@@ -41,13 +42,30 @@
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
-            favorites="@{viewModel.mods}"
-            onClick="@{viewModel.onClick}"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/default_size"
+                android:layout_marginStart="@dimen/half_default_size"
+                android:fontFamily="@font/minecraft_regular"
+                android:text="@{viewModel.message}"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list"
+                favorites="@{viewModel.mods}"
+                onClick="@{viewModel.onClick}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </FrameLayout>
 
     </LinearLayout>
 

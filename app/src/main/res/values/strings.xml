@@ -84,4 +84,6 @@
     <string name="date">Date</string>
     <string name="likes">Likes</string>
     <string name="downloads">Downloads</string>
+    <string name="favorite_is_empty">Favorite is empty</string>
+    <string name="back">Back</string>
 </resources>

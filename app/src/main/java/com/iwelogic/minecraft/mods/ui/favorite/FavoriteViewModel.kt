@@ -2,6 +2,7 @@ package com.iwelogic.minecraft.mods.ui.favorite
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.models.Mod
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
@@ -15,9 +16,15 @@ class FavoriteViewModel @Inject constructor(private val repository: Repository, 
 
     val mods: MutableLiveData<MutableList<Mod>> = MutableLiveData(ArrayList())
     val openMod: SingleLiveEvent<Mod> = SingleLiveEvent()
+    val message: MutableLiveData<String> = MutableLiveData("")
 
     fun load() {
         repository.getFavouriteItems().observeForever {
+            if(it.isEmpty()){
+                message.postValue(context.get()?.getString(R.string.favorite_is_empty))
+            } else {
+                message.postValue(null)
+            }
             mods.postValue(it?.toMutableList())
         }
     }
