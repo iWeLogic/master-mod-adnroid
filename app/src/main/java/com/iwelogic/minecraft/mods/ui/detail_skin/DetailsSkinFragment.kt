@@ -2,6 +2,7 @@ package com.iwelogic.minecraft.mods.ui.detail_skin
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResultListener
@@ -31,24 +33,22 @@ class DetailsSkinFragment : BaseDetailsFragment<DetailsSkinViewModel>() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding: FragmentDetailsSkinBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_details_skin, container, false)
         binding.lifecycleOwner = this
-        viewModel = ViewModelProvider(this).get(DetailsSkinViewModel::class.java)
+        viewModel = ViewModelProvider(this)[DetailsSkinViewModel::class.java]
         viewModel.item.value = DetailsSkinFragmentArgs.fromBundle(requireArguments()).data
-        Log.w("myLog", "onCreateView: " + viewModel.item.value)
         viewModel.checkIsFileExist()
         binding.viewModel = viewModel
         return binding.root
     }
 
-    /*  override fun checkPermissionAction(action: () -> Unit) {
-       permissionAction = action
-       activity?.let {
-           if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(it, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-               requestPermissionStorage?.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-           } else {
-               action.invoke()
-           }
-       }
-   }*/
+    private fun checkPermissionAction() {
+        activity?.let {
+            if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(it, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                requestPermissionStorage?.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            } else {
+                permissionAction?.invoke()
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,7 +56,7 @@ class DetailsSkinFragment : BaseDetailsFragment<DetailsSkinViewModel>() {
 
         setFragmentResultListener("provide") { _, _ ->
             permissionAction?.let {
-                //    checkPermissionAction(it)
+                checkPermissionAction()
             }
         }
 
@@ -79,6 +79,7 @@ class DetailsSkinFragment : BaseDetailsFragment<DetailsSkinViewModel>() {
         }
 
         viewModel.openInstall.observe(viewLifecycleOwner) {
+            Log.w("myLog", "openInstall" )
             try {
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.setDataAndType(FileProvider.getUriForFile(requireContext(), requireContext().packageName + ".fileprovider", File(it)), "application/octet-stream")
@@ -87,15 +88,18 @@ class DetailsSkinFragment : BaseDetailsFragment<DetailsSkinViewModel>() {
                 startActivity(intent)
                 context?.writeBoolean(Const.STATUS_MOD_INSTALLED, true)
             } catch (e: Exception) {
+                Log.w("myLog", "openInstall: " + e.message)
              //   NoMinecraftDialog().show(childFragmentManager, "NoMinecraftDialog")
             }
         }
 
         viewModel.openInstallMinecraft.observe(viewLifecycleOwner) {
+            Log.w("myLog", "openInstallMinecraft: ")
         //    NoMinecraftDialog().show(childFragmentManager, "NoMinecraftDialog")
         }
 
         viewModel.openMessageDialog.observe(viewLifecycleOwner) {
+            Log.w("myLog", "openMessageDialog: ")
             /*MessageDialog().apply {
                 arguments = Bundle().apply {
                     putString("title", title)
@@ -105,7 +109,8 @@ class DetailsSkinFragment : BaseDetailsFragment<DetailsSkinViewModel>() {
         }
 
         viewModel.openCheckPermission.observe(viewLifecycleOwner) {
-
+            permissionAction = it
+            checkPermissionAction()
         }
     }
 }

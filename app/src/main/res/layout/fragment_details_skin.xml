@@ -93,46 +93,51 @@
 
                 </LinearLayout>
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageButton
                     progress="@{viewModel.item.progress}"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_size"
-                    android:src="@drawable/background_btn_downloading_to_minecraft"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/default_size"
+                    android:layout_marginTop="@dimen/default_size"
+                    android:layout_marginEnd="@dimen/default_size"
+                    android:layout_marginBottom="@dimen/half_default_size"
+                    android:background="@drawable/background_btn_downloading"
                     android:visibility="@{viewModel.item.progress > 0 &amp; viewModel.item.progress &lt; 10000 ? View.VISIBLE : View.GONE}" />
 
-                <ImageView
-                    android:layout_width="match_parent"
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_size"
-                    android:onClick="@{() -> viewModel.downloadToMinecraft()}"
-                    android:src="@drawable/background_btn_download_to_minecraft"
+                    android:layout_marginTop="@dimen/default_size"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/default_size"
+                    android:layout_marginEnd="@dimen/default_size"
+                    android:layout_marginBottom="@dimen/half_default_size"
+                    android:onClick="@{() -> viewModel.onClickDownloadToMinecraft()}"
+                    android:background="@drawable/button_download_combine"
                     android:visibility="@{viewModel.item.progress == 0 ? View.VISIBLE : View.GONE}" />
 
-                <ImageView
-                    android:layout_width="match_parent"
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_size"
+                    android:layout_marginStart="@dimen/default_size"
+                    android:layout_marginTop="@dimen/default_size"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/default_size"
+                    android:layout_marginBottom="@dimen/half_default_size"
                     android:onClick="@{() -> viewModel.onClickInstall()}"
-                    android:src="@drawable/background_btn_install_to_minecraft"
+                    android:background="@drawable/button_install_combine"
                     android:visibility="@{viewModel.item.progress == 10000 ? View.VISIBLE : View.GONE}" />
 
                 <ImageView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginStart="@dimen/default_size"
                     android:layout_marginEnd="@dimen/default_size"
+                    android:layout_marginTop="@dimen/half_default_size"
                     android:onClick="@{() -> viewModel.onClickDownloadToGallery()}"
-                    android:src="@drawable/background_btn_download_to_gallery"
-                    android:visibility="@{viewModel.item.progressGallery &lt; 10000 ? View.VISIBLE : View.GONE}" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/default_size"
-                    android:layout_marginEnd="@dimen/default_size"
-                    android:src="@drawable/background_btn_downloaded_to_gallery"
-                    android:visibility="@{viewModel.item.progressGallery == 10000 ? View.VISIBLE : View.GONE}" />
+                    android:src="@drawable/button_download_to_gallery" />
 
                 <FrameLayout
                     android:id="@+id/ad_frame"

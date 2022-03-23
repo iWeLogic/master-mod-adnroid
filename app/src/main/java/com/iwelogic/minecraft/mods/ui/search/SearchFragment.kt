@@ -28,13 +28,11 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.openMod.observe(viewLifecycleOwner) {
-            if (it.category == Category.SKINS.id) {
-                if (findNavController().currentDestination?.id == R.id.favoriteFragment) {
-                    findNavController().navigate(FavoriteFragmentDirections.actionFavoriteFragmentToDetailsSkinFragment(it))
-                }
-            } else {
-                if (findNavController().currentDestination?.id == R.id.favoriteFragment) {
-                    findNavController().navigate(FavoriteFragmentDirections.actionFavoriteFragmentToDetailsFragment(it))
+            if (findNavController().currentDestination?.id == R.id.searchFragment) {
+                if (it.category == Category.SKINS.id) {
+                    findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsSkinFragment(it))
+                } else {
+                    findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(it))
                 }
             }
         }

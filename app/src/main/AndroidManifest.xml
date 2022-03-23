@@ -4,6 +4,15 @@
     package="com.iwelogic.minecraft.mods">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+
+    <queries>
+        <package android:name="com.mojang.minecraftpe" />
+    </queries>
 
     <application
         android:name=".App"

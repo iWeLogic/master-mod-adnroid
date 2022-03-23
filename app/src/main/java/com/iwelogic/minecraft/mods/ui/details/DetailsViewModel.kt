@@ -62,4 +62,6 @@ class DetailsViewModel @Inject constructor(repository: Repository, @ApplicationC
     fun onClickInstall() {
        openInstall.invoke(File("$base/${item.value?.category}/${item.value?.id}/file.${item.value?.getFileExtension()}"))
     }
+
+    override fun getFile() = File("$base/${item.value?.category}/${item.value?.id}/file.${item.value?.getFileExtension()}")
 }

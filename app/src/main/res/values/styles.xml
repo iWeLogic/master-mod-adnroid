@@ -11,7 +11,7 @@
     </style>
 
     <style name="SearchStyle">
-        <item name="colorAccent">@color/white</item>
+        <item name="colorAccent">@color/black</item>
     </style>
 
     <style name="AppTheme.TextAppearance.Popup" parent="TextAppearance.MaterialComponents.Caption">

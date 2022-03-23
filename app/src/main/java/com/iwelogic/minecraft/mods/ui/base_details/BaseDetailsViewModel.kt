@@ -1,6 +1,7 @@
 package com.iwelogic.minecraft.mods.ui.base_details
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -23,11 +24,10 @@ abstract class BaseDetailsViewModel(val repository: Repository, applicationConte
     val base = "${applicationContext.filesDir?.path}"
     val item: MutableLiveData<Mod> = MutableLiveData()
 
+    abstract fun getFile(): File
+
     fun checkIsFileExist() {
-        val file = File("$base/${item.value?.category}/${item.value?.id}/file.${item.value?.getFileExtension()}")
-        item.value?.progress = if (file.exists()) 10000 else 0
-        isFavourite = repository.checkExist("${item.value?.category} ${item.value?.pack} ${item.value?.id}")
-        item.value?.progressGallery = if (context.get()?.readBoolean("${item.value?.category}_${item.value?.id}").isTrue()) 10000 else 0
+        item.value?.progress = if (getFile().exists()) 10000 else 0
         isFavourite = repository.checkExist("${item.value?.category} ${item.value?.pack} ${item.value?.id}")
     }
 

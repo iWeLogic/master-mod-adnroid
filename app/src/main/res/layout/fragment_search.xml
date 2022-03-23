@@ -75,7 +75,7 @@
                     android:layout_margin="@dimen/quarter_default_size"
                     android:background="@{viewModel.category.equals(Category.ADDONS) ? @drawable/background_chips_on : @drawable/background_chips_off}"
                     android:drawablePadding="@dimen/half_default_size"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/minecraft_regular"
                     android:gravity="center"
                     android:onClick="@{() -> viewModel.onSelectCategory(Category.ADDONS)}"
                     android:paddingStart="12dp"
@@ -83,9 +83,8 @@
                     android:paddingEnd="12dp"
                     android:paddingBottom="@dimen/quarter_default_size"
                     android:text="@string/addons"
-                    android:textColor="@color/mainDark"
-                    android:textSize="14sp"
-                    app:drawableStartCompat="@drawable/addons_small" />
+                    android:textColor="@{viewModel.category.equals(Category.ADDONS) ? @color/white : @color/black}"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -93,7 +92,7 @@
                     android:layout_margin="@dimen/quarter_default_size"
                     android:background="@{viewModel.category.equals(Category.MAPS) ? @drawable/background_chips_on : @drawable/background_chips_off}"
                     android:drawablePadding="@dimen/half_default_size"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/minecraft_regular"
                     android:gravity="center"
                     android:onClick="@{() -> viewModel.onSelectCategory(Category.MAPS)}"
                     android:paddingStart="12dp"
@@ -101,9 +100,8 @@
                     android:paddingEnd="12dp"
                     android:paddingBottom="@dimen/quarter_default_size"
                     android:text="@string/maps"
-                    android:textColor="@color/mainDark"
-                    android:textSize="14sp"
-                    app:drawableStartCompat="@drawable/maps_small" />
+                    android:textColor="@{viewModel.category.equals(Category.MAPS) ? @color/white : @color/black}"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -111,7 +109,7 @@
                     android:layout_margin="@dimen/quarter_default_size"
                     android:background="@{viewModel.category.equals(Category.TEXTURES) ? @drawable/background_chips_on : @drawable/background_chips_off}"
                     android:drawablePadding="@dimen/half_default_size"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/minecraft_regular"
                     android:gravity="center"
                     android:onClick="@{() -> viewModel.onSelectCategory(Category.TEXTURES)}"
                     android:paddingStart="12dp"
@@ -119,9 +117,8 @@
                     android:paddingEnd="12dp"
                     android:paddingBottom="@dimen/quarter_default_size"
                     android:text="@string/textures"
-                    android:textColor="@color/mainDark"
-                    android:textSize="14sp"
-                    app:drawableStartCompat="@drawable/textures_small" />
+                    android:textColor="@{viewModel.category.equals(Category.TEXTURES) ? @color/white : @color/black}"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -129,7 +126,7 @@
                     android:layout_margin="@dimen/quarter_default_size"
                     android:background="@{viewModel.category.equals(Category.SEEDS) ? @drawable/background_chips_on : @drawable/background_chips_off}"
                     android:drawablePadding="@dimen/half_default_size"
-                    android:fontFamily="@font/roboto_regular"
+                    android:fontFamily="@font/minecraft_regular"
                     android:gravity="center"
                     android:onClick="@{() -> viewModel.onSelectCategory(Category.SEEDS)}"
                     android:paddingStart="12dp"
@@ -137,9 +134,8 @@
                     android:paddingEnd="12dp"
                     android:paddingBottom="@dimen/quarter_default_size"
                     android:text="@string/seeds"
-                    android:textColor="@color/mainDark"
-                    android:textSize="14sp"
-                    app:drawableStartCompat="@drawable/seeds_small" />
+                    android:textColor="@{viewModel.category.equals(Category.SEEDS) ? @color/white : @color/black}"
+                    android:textSize="16sp" />
 
 
             </LinearLayout>

@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -34,6 +35,7 @@ object Base {
         txtSearch.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
         txtSearch.setTextColor(ContextCompat.getColor(searchView.context, R.color.black))
         txtSearch.setHintTextColor(ContextCompat.getColor(searchView.context, R.color.black50))
+        txtSearch.typeface = ResourcesCompat.getFont(searchView.context, R.font.minecraft_regular)
         val searchClose = searchView.findViewById(androidx.appcompat.R.id.search_close_btn) as ImageView
         searchClose.setImageResource(R.drawable.clear)
     }

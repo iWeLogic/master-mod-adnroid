@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.iwelogic.minecraft.mods.R
@@ -33,7 +34,6 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailsSkinViewModel @Inject constructor(repository: Repository, @ApplicationContext applicationContext: Context) : BaseDetailsViewModel(repository, applicationContext) {
 
-
     val openInstallMinecraft: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val openInstall: SingleLiveEvent<String> = SingleLiveEvent()
     val openMessageDialog: SingleLiveEvent<DialogTexts> = SingleLiveEvent()
@@ -49,29 +49,31 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
         }
     }
 
-    fun downloadImageToGalley() {
+    private fun downloadImageToGalley() {
+        Log.w("myLog", "downloadImageToGalley: ")
 //        navigator?.showInterstitialAd()
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
                 //downloading image
-                item.value?.progressGallery = 100
-                val connection: HttpURLConnection = URL(item.value?.getFile()).openConnection() as HttpURLConnection
-                connection.doInput = true
-                connection.connect()
-                val input: InputStream = connection.inputStream
-                val image = BitmapFactory.decodeStream(input)
-                item.value?.progressGallery = 5000
-                val name = "skin_n${item.value?.id}"
-
-                //saving image
-                val status = saveImage(image, "$name.png")
-                if (status) {
-                    context.get()?.writeBoolean(name, true)
-                    item.value?.progressGallery = 10000
-                    // repository.increaseInstalls("skins", item.value?.id).collect()
-                    item.value?.installs = (item.value?.installs ?: 0) + 1
-                } else {
-                    item.value?.progressGallery = 0
+                item.value?.let { mod ->
+                    mod.progressGallery = 100
+                    val connection: HttpURLConnection = URL(mod.getFile()).openConnection() as HttpURLConnection
+                    connection.doInput = true
+                    connection.connect()
+                    val input: InputStream = connection.inputStream
+                    val image = BitmapFactory.decodeStream(input)
+                    mod.progressGallery = 5000
+                    val name = "skin_${mod.id}"
+                    //saving image
+                    val status = saveImage(image, "$name.png")
+                    if (status) {
+                        context.get()?.writeBoolean(name, true)
+                        mod.progressGallery = 10000
+                        mod.installs = mod.installs?.plus(1)
+                        repository.updateMod(mod.category ?: "", mod).collect()
+                    } else {
+                        mod.progressGallery = 0
+                    }
                 }
             }.onFailure {
                 // navigator?.showNoConnectionDownloadGallery()
@@ -80,7 +82,7 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
         }
     }
 
-    fun downloadToMinecraft() {
+    fun onClickDownloadToMinecraft() {
         //  navigator?.showInterstitialAd()
         item.value?.let { mod ->
             viewModelScope.launch(Dispatchers.IO) {
@@ -95,8 +97,9 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
                     mod.progress = 3000
 
                     //creating files
-                    val name = "skin_n${mod.id}"
-                    val dir = File("$base/skins/${mod.id}/$name").apply { mkdirs() }
+                    val name = "skin_${mod.id}"
+
+                    val dir = File("$base/${item.value?.category}/${mod.id}/$name").apply { mkdirs() }
                     val fileSkins = File("${dir.absolutePath}/skins.json")
                     val fileManifest = File("${dir.absolutePath}/manifest.json")
                     val fileImage = File("${dir.absolutePath}/$name.png")
@@ -184,7 +187,7 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
                 if (!file.exists()) {
                     file.mkdir()
                 }
-                val image = File(file, "$name.png")
+                val image = File(file, name)
                 FileOutputStream(image)
             }
             saved = bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
@@ -201,8 +204,10 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
     fun onClickInstall() {
         when (getMinecraftVersion()) {
             0 -> openInstallMinecraft.invoke(true)
-            1012 -> openInstall.invoke(File("$base/skins/skin_n${item.value?.id}.mcpack").path)
+            in 1012..9999 -> openInstall.invoke(File("$base/skins/skin_${item.value?.id}.mcpack").path)
             else -> openMessageDialog.invoke(DialogTexts(context.get()?.getString(R.string.install_skin_through_gallery_title), context.get()?.getString(R.string.install_skin_through_gallery_body)))
         }
     }
+
+    override fun getFile() = File("$base/skins/skin_${item.value?.id}.mcpack")
 }

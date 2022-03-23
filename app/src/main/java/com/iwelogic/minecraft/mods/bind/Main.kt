@@ -1,6 +1,5 @@
 package com.iwelogic.minecraft.mods.bind
 
-import android.util.Log
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
@@ -25,7 +24,6 @@ object Main {
     @JvmStatic
     fun setSort(view: ImageView, sort: Sort, onSelect: (Sort) -> Unit, category: String) {
         view.setOnClickListener {
-            Log.w("myLog", "setSort: " + category)
             val popup = PopupMenu(view.context, view, Gravity.END)
             popup.inflate(if (category == Category.SKINS.id) R.menu.sort_skins else R.menu.sort)
             popup.menu.findItem(sort.menuId).isChecked = true

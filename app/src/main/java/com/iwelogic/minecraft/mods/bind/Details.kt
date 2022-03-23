@@ -35,7 +35,6 @@ object Details {
     @BindingAdapter("progress")
     @JvmStatic
     fun setProgress(view: ImageView, progress: Int) {
-        Log.w("myLog", "setProgress: BUTTON" + progress)
         val mClipDrawable = (view.background as LayerDrawable).findDrawableByLayerId(R.id.clip_drawable) as ClipDrawable
         mClipDrawable.level = progress
         view.isEnabled = progress != 0 || progress != 10000
