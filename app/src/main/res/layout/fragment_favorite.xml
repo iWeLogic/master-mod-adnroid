@@ -42,6 +42,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
             favorites="@{viewModel.mods}"
             onClick="@{viewModel.onClick}"
             android:layout_width="match_parent"

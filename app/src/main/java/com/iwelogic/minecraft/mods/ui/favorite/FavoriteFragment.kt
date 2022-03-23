@@ -22,6 +22,7 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>() {
         binding.lifecycleOwner = this
         viewModel = ViewModelProvider(this)[FavoriteViewModel::class.java]
         binding.viewModel = viewModel
+        viewModel.load()
         return binding.root
     }
 

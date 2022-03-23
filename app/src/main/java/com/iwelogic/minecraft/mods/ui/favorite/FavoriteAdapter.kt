@@ -8,21 +8,21 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.ItemModBinding
-import com.iwelogic.minecraft.mods.databinding.ItemSkinBinding
+import com.iwelogic.minecraft.mods.databinding.ItemSkinFavoriteBinding
 import com.iwelogic.minecraft.mods.models.Mod
 
 class FavoriteAdapter(private val onClick: (Mod) -> Unit) : ListAdapter<Mod, RecyclerView.ViewHolder>(COMPARATOR) {
 
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<Mod>() {
-            override fun areItemsTheSame(oldItem: Mod, newItem: Mod): Boolean = oldItem === newItem
+            override fun areItemsTheSame(oldItem: Mod, newItem: Mod): Boolean = oldItem.id == newItem.id
             override fun areContentsTheSame(oldItem: Mod, newItem: Mod): Boolean = oldItem == newItem
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            2 -> SkinViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_skin, parent, false))
+            2 -> SkinViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_skin_favorite, parent, false))
             else -> ModViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_mod, parent, false))
         }
     }
@@ -46,7 +46,7 @@ class FavoriteAdapter(private val onClick: (Mod) -> Unit) : ListAdapter<Mod, Rec
         }
     }
 
-    inner class SkinViewHolder(private val binding: ItemSkinBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class SkinViewHolder(private val binding: ItemSkinFavoriteBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Mod) {
             binding.item = item
             binding.root.setOnClickListener {

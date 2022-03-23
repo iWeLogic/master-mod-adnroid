@@ -32,7 +32,7 @@
                     android:background="@color/white"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="32:22"
+                    app:layout_constraintDimensionRatio="30:20"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -79,6 +79,7 @@
                                 android:fontFamily="@font/minecraft_regular"
                                 android:lines="1"
                                 android:text="@{item.fileSize + ` Mb`}"
+                                android:textColor="@color/black"
                                 android:textSize="14sp"
                                 app:drawableStartCompat="@drawable/folder" />
 
@@ -92,6 +93,7 @@
                                 android:fontFamily="@font/minecraft_regular"
                                 android:lines="1"
                                 android:text="@{item.getFormattedDownloads()}"
+                                android:textColor="@color/black"
                                 android:textSize="14sp"
                                 app:drawableStartCompat="@drawable/download" />
 
@@ -102,8 +104,9 @@
                                 android:layout_weight="7"
                                 android:drawablePadding="@dimen/half_default_size"
                                 android:ellipsize="end"
-                                android:gravity="center_vertical"
                                 android:fontFamily="@font/minecraft_regular"
+                                android:textColor="@color/black"
+                                android:gravity="center_vertical"
                                 android:lines="1"
                                 android:text="@{item.getFormattedLikes()}"
                                 android:textSize="14sp"

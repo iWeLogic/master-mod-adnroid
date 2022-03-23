@@ -16,7 +16,7 @@ class FavoriteViewModel @Inject constructor(private val repository: Repository, 
     val mods: MutableLiveData<MutableList<Mod>> = MutableLiveData(ArrayList())
     val openMod: SingleLiveEvent<Mod> = SingleLiveEvent()
 
-    init {
+    fun load() {
         repository.getFavouriteItems().observeForever {
             mods.postValue(it?.toMutableList())
         }

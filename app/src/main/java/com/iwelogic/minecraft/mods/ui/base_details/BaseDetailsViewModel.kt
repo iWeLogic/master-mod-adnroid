@@ -41,8 +41,8 @@ abstract class BaseDetailsViewModel(val repository: Repository, applicationConte
                     repository.updateMod(mod.category ?: "", mod).collect()
                 } else {
                     mod.favouriteDate = System.currentTimeMillis()
-                    repository.setFavourite(mod).collect()
                     mod.likes = mod.likes?.plus(1)
+                    repository.setFavourite(mod).collect()
                     repository.updateMod(mod.category ?: "", mod).collect()
                 }
             }

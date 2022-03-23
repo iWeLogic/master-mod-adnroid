@@ -4,6 +4,10 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <import type="com.iwelogic.minecraft.mods.models.Category" />
+
         <variable
             name="viewModel"
             type="com.iwelogic.minecraft.mods.ui.main.mods.ModsViewModel" />
@@ -41,7 +45,8 @@
                 android:background="?attr/actionBarItemBackground"
                 android:onClick="@{() -> viewModel.onClickSearch()}"
                 android:scaleType="centerInside"
-                android:src="@drawable/search" />
+                android:src="@drawable/search"
+                android:visibility="@{viewModel.category.equals(Category.SKINS.id) ? View.GONE : View.VISIBLE}" />
 
             <ImageView
                 android:layout_width="?actionBarSize"
@@ -60,9 +65,9 @@
                 android:src="@drawable/filter" />
 
             <ImageView
+                category="@{viewModel.category}"
                 onSelect="@{viewModel.onSelectSort}"
                 sort="@{viewModel.sort}"
-                category="@{viewModel.category}"
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
                 android:background="?attr/actionBarItemBackground"
