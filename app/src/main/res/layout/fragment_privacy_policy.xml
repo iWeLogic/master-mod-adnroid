@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.iwelogic.minecraft.mods.ui.favorite.FavoriteViewModel" />
+            type="com.iwelogic.minecraft.mods.ui.privacy_policy.PrivacyPolicyViewModel" />
     </data>
 
     <LinearLayout
@@ -32,22 +31,29 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/half_default_size"
+                android:ellipsize="end"
                 android:fontFamily="@font/minecraft_bold"
                 android:gravity="center_vertical"
-                android:text="@string/favorite"
+                android:text="Privacy policy"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            favorites="@{viewModel.mods}"
-            onClick="@{viewModel.onClick}"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:clipToPadding="false"
+            android:padding="@dimen/default_size">
+
+            <TextView
+                html="@{viewModel.text}"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
-
 </layout>

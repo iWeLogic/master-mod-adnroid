@@ -27,11 +27,13 @@
                 android:layout_marginStart="@dimen/default_size"
                 android:layout_marginEnd="@dimen/default_size"
                 android:layout_weight="1"
+                android:ellipsize="end"
                 android:fontFamily="@font/minecraft_bold"
                 android:gravity="center_vertical"
+                android:lines="1"
                 android:text="@{viewModel.title}"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <ImageView
                 android:layout_width="?actionBarSize"
@@ -39,16 +41,14 @@
                 android:onClick="@{() -> viewModel.onClickSearch()}"
                 android:scaleType="centerInside"
                 android:src="@drawable/search"
-                app:tint="@color/green" />
+                app:tint="@color/darkIcons" />
 
             <ImageView
                 android:layout_width="?actionBarSize"
                 android:layout_height="?actionBarSize"
                 android:onClick="@{() -> viewModel.onClickFavorite()}"
                 android:scaleType="centerInside"
-                android:src="@drawable/favorite"
-                app:tint="@color/green" />
-
+                android:src="@drawable/favorite" />
 
             <ImageView
                 android:layout_width="?actionBarSize"
@@ -56,7 +56,7 @@
                 android:onClick="@{() -> viewModel.onClickFilter()}"
                 android:scaleType="centerInside"
                 android:src="@drawable/filter"
-                app:tint="@color/green" />
+                app:tint="@color/darkIcons" />
 
             <ImageView
                 onSelect="@{viewModel.onSelectSort}"
@@ -65,7 +65,7 @@
                 android:layout_height="?actionBarSize"
                 android:scaleType="centerInside"
                 android:src="@drawable/sort"
-                app:tint="@color/green" />
+                app:tint="@color/darkIcons" />
 
         </LinearLayout>
 

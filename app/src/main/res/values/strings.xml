@@ -90,7 +90,7 @@
     <string name="minecraft_isnt_installed_title">Minecraft is not installed</string>
     <string name="minecraft_isnt_installed_body">Install Minecraft?</string>
     <string name="install">INSTALL</string>
-    <string name="favourite">Favourite</string>
+    <string name="favorite">Favorite</string>
     <string name="search">Search</string>
     <string name="enter_your_birthdate">Insert your birthdate</string>
     <string name="help">Help</string>

@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
         <variable
             name="viewModel"
-            type="com.iwelogic.minecraft.mods.ui.onboarding.OnboardingModel" />
+            type="com.iwelogic.minecraft.mods.ui.onboarding.OnboardingViewModel" />
 
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
         android:background="@color/background"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <androidx.legacy.widget.Space
@@ -24,11 +23,11 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:fontFamily="@font/roboto_medium"
-            android:textColor="@color/white"
-            android:textSize="20sp"
             android:layout_height="wrap_content"
-            android:text="@string/welcome" />
+            android:fontFamily="@font/minecraft_bold"
+            android:text="@string/welcome"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,79 +35,53 @@
             android:layout_marginStart="@dimen/double_default_size"
             android:layout_marginTop="@dimen/default_size"
             android:layout_marginEnd="@dimen/double_default_size"
-            android:background="@color/white"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="@dimen/default_size">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:fontFamily="@font/roboto_medium"
-                android:textSize="20sp"
                 android:layout_height="wrap_content"
-                android:text="@string/enter_age" />
+                android:fontFamily="@font/minecraft_bold"
+                android:text="Enter your age"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
-            <FrameLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_size"
+                android:background="@drawable/background_icon"
+                android:fontFamily="@font/minecraft_bold"
+                android:gravity="center"
+                android:text="@{`` + viewModel.age}"
+                android:textColor="@color/black"
+                android:textSize="50sp" />
+
+            <SeekBar
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_size">
+                android:layout_height="90dp"
+                android:layout_marginStart="@dimen/half_default_size"
+                android:layout_marginEnd="@dimen/half_default_size"
+                android:max="67"
+                android:progress="@={viewModel.age}"
+                android:progressDrawable="@drawable/progress"
+                android:splitTrack="false"
+                android:thumb="@drawable/thumb" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <androidx.legacy.widget.Space
-                        android:id="@+id/left"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:id="@+id/value"
-                        android:layout_width="40dp"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:background="@drawable/bubble"
-                        android:gravity="center"
-                        android:textSize="14sp"
-                        android:paddingBottom="7dp"
-                        android:text="-"
-                        tools:ignore="HardcodedText" />
-
-                    <androidx.legacy.widget.Space
-                        android:id="@+id/right"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                </LinearLayout>
-
-                <SeekBar
-                    android:id="@+id/seekbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="90dp"
-                    android:max="63"
-                    android:layout_marginBottom="-8dp"
-                    android:layout_marginStart="@dimen/half_default_size"
-                    android:layout_marginEnd="@dimen/half_default_size"
-                    android:progress="32"
-                    android:progressDrawable="@drawable/progress"
-                    android:splitTrack="false"
-                    android:thumb="@drawable/thumb" />
-
-            </FrameLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_medium"
-                android:background="@color/transparent"
+                android:background="@drawable/background_button"
                 android:enabled="@{viewModel.age != -1}"
+                android:fontFamily="@font/minecraft_regular"
                 android:onClick="@{() -> viewModel.onClickOk()}"
-                android:paddingStart="@dimen/default_size"
-                android:paddingEnd="@dimen/default_size"
+                android:paddingStart="@dimen/double_default_size"
+                android:paddingEnd="@dimen/double_default_size"
                 android:text="@string/confirm"
-                android:textColor="@color/text_btn" />
+                android:textAllCaps="false"
+                android:textColor="@color/black" />
 
         </LinearLayout>
 
@@ -120,16 +93,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white70"
-            android:text="@string/click_confirm" />
+            android:text="@string/click_confirm"
+            android:fontFamily="@font/minecraft_regular"
+            android:textColor="@color/black" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/default_size"
-            android:textColor="@color/white70"
             android:onClick="@{() -> viewModel.onClickPrivacyPolicy()}"
-            android:text="@string/privacy_policy" />
+            android:fontFamily="@font/minecraft_regular"
+            android:text="@string/privacy_policy"
+            android:padding="@dimen/half_default_size"
+            android:textColor="@color/black" />
 
     </LinearLayout>
 

@@ -198,13 +198,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar"
+            android:layout_height="?actionBarSize"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="@dimen/toolbar"
-                android:layout_height="@dimen/toolbar"
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
                 android:background="?attr/actionBarItemBackground"
                 android:onClick="@{() -> viewModel.onClickClose()}"
                 android:scaleType="centerInside"
@@ -216,20 +216,19 @@
                 android:layout_weight="1" />
 
             <ImageView
-                android:layout_width="@dimen/toolbar"
-                android:layout_height="@dimen/toolbar"
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
                 android:background="?attr/actionBarItemBackground"
                 android:onClick="@{() -> viewModel.onClickHelp()}"
                 android:scaleType="centerInside"
                 android:src="@drawable/help" />
 
             <ImageView
-                android:layout_width="@dimen/toolbar"
-                android:layout_height="@dimen/toolbar"
-                android:background="?attr/actionBarItemBackground"
+                android:layout_width="?actionBarSize"
+                android:layout_height="?actionBarSize"
                 android:onClick="@{() -> viewModel.onClickFavourite()}"
                 android:scaleType="centerInside"
-                android:src="@{viewModel.isFavourite ? @drawable/favourite_on : @drawable/favourite_off}" />
+                android:src="@{viewModel.isFavourite ? @drawable/favorite_on : @drawable/favorite_off}" />
 
         </LinearLayout>
 

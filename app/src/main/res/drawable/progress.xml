@@ -17,10 +17,10 @@
                     android:drawable="@android:color/transparent" />
                 <item>
                     <shape android:shape="rectangle"
-                        android:tint="@color/main">
+                        android:tint="@color/darkIcons">
                         <corners android:radius="8dp"/>
                         <size android:height="4dp" />
-                        <solid android:color="@color/main" />
+                        <solid android:color="@color/darkIcons" />
                     </shape>
                 </item>
             </selector>

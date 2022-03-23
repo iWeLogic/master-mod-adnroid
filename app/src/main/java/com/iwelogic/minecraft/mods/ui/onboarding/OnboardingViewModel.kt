@@ -13,11 +13,11 @@ import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 @HiltViewModel
-class OnboardingModel @Inject constructor(@ApplicationContext applicationContext: Context) : BaseViewModel(applicationContext) {
+class OnboardingViewModel @Inject constructor(@ApplicationContext applicationContext: Context) : BaseViewModel(applicationContext) {
 
-    var age: MutableLiveData<Int> = MutableLiveData(-1)
+    var age: MutableLiveData<Int> = MutableLiveData(33)
     var openMain: SingleLiveEvent<Boolean> = SingleLiveEvent()
-    var openUrl: SingleLiveEvent<String> = SingleLiveEvent()
+    var openUrl: SingleLiveEvent<Boolean> = SingleLiveEvent()
 
     fun onClickOk() {
         val contentRating = when (age.value) {
@@ -33,6 +33,6 @@ class OnboardingModel @Inject constructor(@ApplicationContext applicationContext
     }
 
     fun onClickPrivacyPolicy() {
-        openUrl.invoke("http://aloe.h1n.ru/privacy.html")
+        openUrl.invoke(true)
     }
 }

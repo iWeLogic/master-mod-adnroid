@@ -7,6 +7,14 @@
     <fragment
         android:id="@+id/onboardingFragment"
         android:name="com.iwelogic.minecraft.mods.ui.onboarding.OnboardingFragment"
-        android:label="OnboardingFragment" />
+        android:label="OnboardingFragment" >
+        <action
+            android:id="@+id/action_onboardingFragment_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.iwelogic.minecraft.mods.ui.privacy_policy.PrivacyPolicyFragment"
+        android:label="PrivacyPolicyFragment" />
 
 </navigation>

@@ -8,6 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="red">#E91E63</color>
     <color name="green">#35A850</color>
+    <color name="gray3">#686868</color>
+    <color name="darkIcons">#4A4A4A</color>
 
     <color name="main">#00838F</color>
     <color name="mainDark">#005662</color>

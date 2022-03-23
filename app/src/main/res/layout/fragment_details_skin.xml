@@ -177,7 +177,7 @@
                 android:background="?attr/actionBarItemBackground"
                 android:onClick="@{() -> viewModel.onClickFavourite()}"
                 android:scaleType="centerInside"
-                android:src="@{viewModel.isFavourite ? @drawable/favourite_on : @drawable/favourite_off}" />
+                android:src="@{viewModel.isFavourite ? @drawable/favorite_on : @drawable/favorite_off}" />
 
         </LinearLayout>
 
