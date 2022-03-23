@@ -12,7 +12,7 @@ open class BaseViewModel(applicationContext: Context) : ViewModel() {
     var progress: MutableLiveData<Boolean> = MutableLiveData(false)
     var error: MutableLiveData<String> = MutableLiveData("")
     val close: SingleLiveEvent<Boolean> = SingleLiveEvent()
-    val showInterstitial: SingleLiveEvent<() -> Unit> = SingleLiveEvent()
+    val showInterstitial: SingleLiveEvent<(() -> Unit)?> = SingleLiveEvent()
     val showDialog: SingleLiveEvent<DialogData> = SingleLiveEvent()
 
     fun onClickClose() {

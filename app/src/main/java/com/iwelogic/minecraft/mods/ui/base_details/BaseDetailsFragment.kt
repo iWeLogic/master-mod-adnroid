@@ -6,10 +6,8 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.iwelogic.minecraft.mods.R
@@ -62,17 +60,7 @@ abstract class BaseDetailsFragment<VM : BaseDetailsViewModel> : BaseFragment<VM>
                     }
                 }
 
-                val adLoader = builder.withAdListener(object : AdListener() {
-                    override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-
-                    }
-
-                    override fun onAdLoaded() {
-                        super.onAdLoaded()
-                    }
-                }).build()
-
-                adLoader.loadAd(AdRequest.Builder().build())
+                builder.build().loadAd(AdRequest.Builder().build())
             }
         }
     }
@@ -81,37 +69,4 @@ abstract class BaseDetailsFragment<VM : BaseDetailsViewModel> : BaseFragment<VM>
         currentNativeAd?.destroy()
         super.onDestroy()
     }
-
-/*    override fun close() {
-        showInterstitialAd {
-            super.close()
-        }
-    }*/
-
-    /*    override fun install(filepath: String) {
-        try {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.setDataAndType(FileProvider.getUriForFile(requireContext(), requireContext().packageName + ".fileprovider", File(filepath)), "application/octet-stream")
-            intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            startActivity(intent)
-            context?.writeBoolean(STATUS_MOD_INSTALLED, true)
-        } catch (e: ActivityNotFoundException) {
-            //     NoMinecraftDialog().show(childFragmentManager, "NoMinecraftDialog")
-        }
-    }
-
-    override fun openHelp(screen: String) {
-        catchAll {
-            //    findNavController().navigate(DetailsFragmentDirections.actionGlobalHelpFragment(screen))
-        }
-    }*/
-
-/*    override fun openNoConnection() {
-        NoInternetActionDialog().apply {
-            onClickRetry = {
-                this@DetailsFragment.viewModel.download()
-            }
-        }.show(childFragmentManager, "NoInternetDialog")
-    }*/
 }

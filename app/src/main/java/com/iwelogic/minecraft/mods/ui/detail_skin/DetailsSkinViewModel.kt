@@ -1,15 +1,13 @@
 package com.iwelogic.minecraft.mods.ui.detail_skin
 
-import android.content.ContentResolver
-import android.content.ContentValues
-import android.content.Context
+import android.content.*
 import android.content.pm.PackageInfo
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.iwelogic.minecraft.mods.R
@@ -30,13 +28,11 @@ import java.net.URL
 import java.util.*
 import javax.inject.Inject
 
-
 @HiltViewModel
 class DetailsSkinViewModel @Inject constructor(repository: Repository, @ApplicationContext applicationContext: Context) : BaseDetailsViewModel(repository, applicationContext) {
 
-    val openInstallMinecraft: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val openInstall: SingleLiveEvent<String> = SingleLiveEvent()
-    val openMessageDialog: SingleLiveEvent<DialogTexts> = SingleLiveEvent()
+    val openIntent: SingleLiveEvent<Intent> = SingleLiveEvent()
     val openCheckPermission: SingleLiveEvent<() -> Unit> = SingleLiveEvent()
 
     fun onClickDownloadToGallery() {
@@ -50,8 +46,7 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
     }
 
     private fun downloadImageToGalley() {
-        Log.w("myLog", "downloadImageToGalley: ")
-//        navigator?.showInterstitialAd()
+        showInterstitial.invoke(null)
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
                 //downloading image
@@ -76,14 +71,20 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
                     }
                 }
             }.onFailure {
-                // navigator?.showNoConnectionDownloadGallery()
+                showDialog.invoke(
+                    DialogData(
+                        title = context.get()?.getString(R.string.no_internet_connection),
+                        message = context.get()?.getString(R.string.no_internet_connection_text),
+                        buttonRightTitle = context.get()?.getString(R.string.ok)
+                    )
+                )
                 item.value?.progressGallery = 0
             }
         }
     }
 
     fun onClickDownloadToMinecraft() {
-        //  navigator?.showInterstitialAd()
+        showInterstitial.invoke(null)
         item.value?.let { mod ->
             viewModelScope.launch(Dispatchers.IO) {
                 kotlin.runCatching {
@@ -146,7 +147,13 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
                     mod.installs = mod.installs?.plus(1)
                     repository.updateMod(mod.category ?: "", mod).collect()
                 }.onFailure {
-                    //  navigator?.showNoConnectionDownloadMinecraft()
+                    showDialog.invoke(
+                        DialogData(
+                            title = context.get()?.getString(R.string.no_internet_connection),
+                            message = context.get()?.getString(R.string.no_internet_connection_text),
+                            buttonRightTitle = context.get()?.getString(R.string.ok)
+                        )
+                    )
                     mod.progress = 0
                 }
             }
@@ -203,10 +210,34 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
 
     fun onClickInstall() {
         when (getMinecraftVersion()) {
-            0 -> openInstallMinecraft.invoke(true)
+            0 -> showDialogNeedInstallMinecraft()
             in 1012..9999 -> openInstall.invoke(File("$base/skins/skin_${item.value?.id}.mcpack").path)
-            else -> openMessageDialog.invoke(DialogTexts(context.get()?.getString(R.string.install_skin_through_gallery_title), context.get()?.getString(R.string.install_skin_through_gallery_body)))
+            else -> showDialog.invoke(
+                DialogData(
+                    title = context.get()?.getString(R.string.install_skin_through_gallery_title),
+                    message = context.get()?.getString(R.string.download_skin_to_gallery_body),
+                    buttonRightTitle = context.get()?.getString(R.string.ok)
+                )
+            )
         }
+    }
+
+    fun showDialogNeedInstallMinecraft(){
+        showDialog.invoke(
+            DialogData(
+                title = context.get()?.getString(R.string.minecraft_isnt_installed_title),
+                message = context.get()?.getString(R.string.minecraft_isnt_installed_body),
+                buttonRightTitle = context.get()?.getString(R.string.install),
+                buttonLeftTitle = context.get()?.getString(R.string.no),
+                onClickRight = {
+                    try {
+                        openIntent.invoke(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.mojang.minecraftpe")))
+                    } catch (e: ActivityNotFoundException) {
+                        openIntent.invoke(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.mojang.minecraftpe")))
+                    }
+                }
+            )
+        )
     }
 
     override fun getFile() = File("$base/skins/skin_${item.value?.id}.mcpack")

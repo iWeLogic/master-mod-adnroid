@@ -67,7 +67,7 @@
     <string name="description">Description</string>
 
     <string name="install_skin_through_gallery_title">Install skin through Gallery</string>
-    <string name="install_skin_through_gallery_body">Minecraft version is not supported. Install skin through Gallery and put it in game</string>
+    <string name="download_skin_to_gallery_body">Minecraft version is not supported. Download skin to Gallery and put it in game</string>
     <string name="favorite">Favorite</string>
     <string name="search">Search</string>
 
@@ -90,15 +90,22 @@
     <string name="ok">OK</string>
     <string name="no">NO</string>
     <string name="install">Install</string>
+    <string name="permit">Permit</string>
+    <string name="reload">Reload</string>
+    <string name="help">Help</string>
+    <string name="enter_your_age">Enter your age</string>
+    <string name="privacy_policy">Privacy policy</string>
 
     <string name="voice_recognition_error_title">Voice input error</string>
     <string name="voice_recognition_error_body">Sorry, voice input is not supported on your device</string>
     <string name="minecraft_isnt_installed_title">Minecraft is not installed</string>
     <string name="minecraft_isnt_installed_body">Install Minecraft?</string>
-    <string name="enter_your_age">Enter your age</string>
-    <string name="privacy_policy">Privacy policy</string>
-    <string name="help">Help</string>
     <string name="no_connection_to_server">No connection to the server</string>
-    <string name="reload">Reload</string>
+    <string name="no_internet_connection">Internet connection missing</string>
+    <string name="no_internet_connection_text">Internet connection required for app</string>
+    <string name="permission_one_title">Permission required</string>
+    <string name="permission_one_body">Access to memory required for file downloading. Grant permission?</string>
+    <string name="permission_two_body">Access to memory should be granted in phone settings for file downloading. Open settings?</string>
+
 
 </resources>

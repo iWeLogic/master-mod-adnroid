@@ -4,7 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentDetailsSkinBinding
+import com.iwelogic.minecraft.mods.models.DialogData
 import com.iwelogic.minecraft.mods.ui.base.Const
 import com.iwelogic.minecraft.mods.ui.base_details.BaseDetailsFragment
 import com.iwelogic.minecraft.mods.utils.writeBoolean
@@ -65,9 +66,25 @@ class DetailsSkinFragment : BaseDetailsFragment<DetailsSkinViewModel>() {
                 permissionAction?.invoke()
             } else {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-             //       PermissionDialog().show(childFragmentManager, "PermissionDialog")
+                    DialogData(
+                        title = context?.getString(R.string.permission_one_title),
+                        message = context?.getString(R.string.permission_one_body),
+                        buttonRightTitle = context?.getString(R.string.permit),
+                        buttonLeftTitle = context?.getString(R.string.no),
+                        onClickRight = {
+                            checkPermissionAction()
+                        }
+                    )
                 } else {
-               //     PermissionTwoDialog().show(childFragmentManager, "PermissionTwoDialog")
+                    DialogData(
+                        title = context?.getString(R.string.permission_one_title),
+                        message = context?.getString(R.string.permission_two_body),
+                        buttonRightTitle = context?.getString(R.string.permit),
+                        buttonLeftTitle = context?.getString(R.string.no),
+                        onClickRight = {
+                            startActivity(Intent(Settings.ACTION_SETTINGS))
+                        }
+                    )
                 }
             }
         }
@@ -79,7 +96,6 @@ class DetailsSkinFragment : BaseDetailsFragment<DetailsSkinViewModel>() {
         }
 
         viewModel.openInstall.observe(viewLifecycleOwner) {
-            Log.w("myLog", "openInstall" )
             try {
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.setDataAndType(FileProvider.getUriForFile(requireContext(), requireContext().packageName + ".fileprovider", File(it)), "application/octet-stream")
@@ -88,24 +104,12 @@ class DetailsSkinFragment : BaseDetailsFragment<DetailsSkinViewModel>() {
                 startActivity(intent)
                 context?.writeBoolean(Const.STATUS_MOD_INSTALLED, true)
             } catch (e: Exception) {
-                Log.w("myLog", "openInstall: " + e.message)
-             //   NoMinecraftDialog().show(childFragmentManager, "NoMinecraftDialog")
+                viewModel.showDialogNeedInstallMinecraft()
             }
         }
 
-        viewModel.openInstallMinecraft.observe(viewLifecycleOwner) {
-            Log.w("myLog", "openInstallMinecraft: ")
-        //    NoMinecraftDialog().show(childFragmentManager, "NoMinecraftDialog")
-        }
-
-        viewModel.openMessageDialog.observe(viewLifecycleOwner) {
-            Log.w("myLog", "openMessageDialog: ")
-            /*MessageDialog().apply {
-                arguments = Bundle().apply {
-                    putString("title", title)
-                    putString("body", body)
-                }
-            }.show(childFragmentManager, "MessageDialog")*/
+        viewModel.openIntent.observe(viewLifecycleOwner) {
+            startActivity(it)
         }
 
         viewModel.openCheckPermission.observe(viewLifecycleOwner) {
