@@ -87,4 +87,9 @@
     <string name="favorite_is_empty">Favorite is empty</string>
     <string name="back">Back</string>
     <string name="sorting">Sorting</string>
+    <string name="ok">OK</string>
+
+    <string name="voice_recognition_error_title">Voice input error</string>
+    <string name="voice_recognition_error_body">Sorry, voice input is not supported on your device</string>
+
 </resources>

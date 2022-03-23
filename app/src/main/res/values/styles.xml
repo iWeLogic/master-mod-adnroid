@@ -21,4 +21,8 @@
         <item name="android:button">@drawable/checkbox_button</item>
     </style>
 
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@color/transparent</item>
+    </style>
+
 </resources>
