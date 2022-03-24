@@ -113,6 +113,7 @@
                         android:src="@drawable/download" />
 
                     <TextView
+                        counter="@{viewModel.item.installs}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/quarter_default_size"
@@ -120,7 +121,6 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/roboto_medium"
                         android:lines="1"
-                        counter="@{viewModel.item.installs}"
                         android:textSize="16sp" />
 
                     <ImageView
@@ -131,6 +131,7 @@
                         android:src="@drawable/favorite_small" />
 
                     <TextView
+                        counter="@{viewModel.item.likes}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/quarter_default_size"
@@ -138,7 +139,6 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/roboto_medium"
                         android:lines="1"
-                        counter="@{viewModel.item.likes}"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -158,25 +158,25 @@
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/default_size"
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/default_size"
+                    android:layout_marginTop="@dimen/default_size"
                     android:layout_marginEnd="@dimen/default_size"
                     android:layout_marginBottom="@dimen/half_default_size"
-                    android:onClick="@{() -> viewModel.download()}"
                     android:background="@drawable/button_download_combine"
+                    android:onClick="@{() -> viewModel.download()}"
                     android:visibility="@{viewModel.item.progress == 0 ? View.VISIBLE : View.GONE}" />
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginStart="@dimen/default_size"
                     android:layout_marginTop="@dimen/default_size"
-                    android:layout_gravity="center"
                     android:layout_marginEnd="@dimen/default_size"
                     android:layout_marginBottom="@dimen/half_default_size"
-                    android:onClick="@{() -> viewModel.onClickInstall()}"
                     android:background="@drawable/button_install_combine"
+                    android:onClick="@{() -> viewModel.onClickInstall()}"
                     android:visibility="@{viewModel.item.progress == 10000 ? View.VISIBLE : View.GONE}" />
 
                 <com.iwelogic.minecraft.mods.views.CollapseTextView
@@ -198,13 +198,13 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
+            android:layout_height="@dimen/toolbar"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="?actionBarSize"
-                android:layout_height="?actionBarSize"
+                android:layout_width="@dimen/toolbar"
+                android:layout_height="@dimen/toolbar"
                 android:background="?attr/actionBarItemBackground"
                 android:onClick="@{() -> viewModel.onClickClose()}"
                 android:scaleType="centerInside"
@@ -216,16 +216,17 @@
                 android:layout_weight="1" />
 
             <ImageView
-                android:layout_width="?actionBarSize"
-                android:layout_height="?actionBarSize"
+                android:layout_width="@dimen/toolbar"
+                android:layout_height="@dimen/toolbar"
                 android:background="?attr/actionBarItemBackground"
                 android:onClick="@{() -> viewModel.onClickHelp()}"
                 android:scaleType="centerInside"
-                android:src="@drawable/help" />
+                android:src="@drawable/help"
+                android:visibility="gone" />
 
             <ImageView
-                android:layout_width="?actionBarSize"
-                android:layout_height="?actionBarSize"
+                android:layout_width="@dimen/toolbar"
+                android:layout_height="@dimen/toolbar"
                 android:onClick="@{() -> viewModel.onClickFavourite()}"
                 android:scaleType="centerInside"
                 android:src="@{viewModel.isFavourite ? @drawable/favorite_on : @drawable/favorite_off}" />

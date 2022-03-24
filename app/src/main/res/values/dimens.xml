@@ -5,6 +5,6 @@
     <dimen name="default_size">16dp</dimen>
     <dimen name="half_default_size">8dp</dimen>
     <dimen name="quarter_default_size">4dp</dimen>
-    <dimen name="toolbar">56dp</dimen>
+    <dimen name="toolbar">52dp</dimen>
 
 </resources>

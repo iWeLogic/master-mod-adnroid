@@ -1,5 +1,6 @@
 package com.iwelogic.minecraft.mods.data
 
+import com.iwelogic.minecraft.mods.models.AdvertisingStatus
 import com.iwelogic.minecraft.mods.models.Mod
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -34,6 +35,14 @@ class Repository @Inject constructor(private val dataSource: DataSource, private
         return flow {
             emit(Result.Loading)
             emit(dataSource.getMods(category, queries))
+            emit(Result.Finish)
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getAdvertisingStatuses(): Flow<Result<List<AdvertisingStatus>>> {
+        return flow {
+            emit(Result.Loading)
+            emit(dataSource.getAdvertisingStatuses())
             emit(Result.Finish)
         }.flowOn(Dispatchers.IO)
     }

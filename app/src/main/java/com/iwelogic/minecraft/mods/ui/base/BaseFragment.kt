@@ -2,12 +2,13 @@ package com.iwelogic.minecraft.mods.ui.base
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.ui.MainActivity
+import com.iwelogic.minecraft.mods.utils.isTrue
+import com.iwelogic.minecraft.mods.utils.readBoolean
 
 open class BaseFragment<VM : BaseViewModel> : Fragment() {
 
@@ -20,8 +21,10 @@ open class BaseFragment<VM : BaseViewModel> : Fragment() {
         }
 
         viewModel.showInterstitial.observe(viewLifecycleOwner) {
-            Log.w("myLog", "onViewCreated: xx")
-            (activity as MainActivity).showInterstitialAd(it)
+            if (context?.readBoolean("interstitial_open_details").isTrue())
+                (activity as MainActivity).showInterstitialAd(it)
+            else
+                it?.invoke()
         }
 
         viewModel.showDialog.observe(this) { dialogData ->

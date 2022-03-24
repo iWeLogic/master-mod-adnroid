@@ -3,6 +3,7 @@ package com.iwelogic.minecraft.mods.data
 import android.content.Context
 import com.google.gson.Gson
 import com.iwelogic.minecraft.mods.R
+import com.iwelogic.minecraft.mods.models.AdvertisingStatus
 import com.iwelogic.minecraft.mods.models.BaseResponse
 import com.iwelogic.minecraft.mods.models.Mod
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -17,6 +18,10 @@ class DataSource @Inject constructor(private val api: Api, @ApplicationContext a
 
     suspend fun getMods(category: String, queries: MultiMap<String, Any>): Result<List<Mod>> {
         return getResponse(request = { api.getMods(category, queries) })
+    }
+
+    suspend fun getAdvertisingStatuses(): Result<List<AdvertisingStatus>> {
+        return getResponse(request = { api.getAdvertisingStatuses() })
     }
 
     suspend fun updateMod(category: String, mod: Mod): Result<BaseResponse> {

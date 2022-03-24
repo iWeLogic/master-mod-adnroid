@@ -1,13 +1,14 @@
 package com.iwelogic.minecraft.mods.ui.details
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.DownloadListener
+import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.data.Repository
+import com.iwelogic.minecraft.mods.models.DialogData
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.ui.base_details.BaseDetailsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,10 +26,8 @@ class DetailsViewModel @Inject constructor(repository: Repository, @ApplicationC
     fun download() {
         item.value?.let { mod ->
             if (mod.progress != 0) return
-            //    navigator?.showInterstitialAd()
             mod.progress = 1
             val dir = File("$base/${mod.category}/${mod.id}").apply { mkdirs() }
-            Log.w("myLog", "download: " + mod.getFile())
             AndroidNetworking.download(mod.getFile(), dir.path, "file.${mod.getFileExtension()}")
                 .setTag("Downloading file")
                 .setPriority(Priority.MEDIUM)
@@ -52,7 +51,13 @@ class DetailsViewModel @Inject constructor(repository: Repository, @ApplicationC
                     override fun onError(error: ANError?) {
                         dir.delete()
                         mod.progress = 0
-                        //          navigator?.openNoConnection()
+                        showDialog.invoke(
+                            DialogData(
+                                title = context.get()?.getString(R.string.no_internet_connection),
+                                message = context.get()?.getString(R.string.no_internet_connection_text),
+                                buttonRightTitle = context.get()?.getString(R.string.ok)
+                            )
+                        )
                     }
                 })
         }
@@ -60,7 +65,7 @@ class DetailsViewModel @Inject constructor(repository: Repository, @ApplicationC
     }
 
     fun onClickInstall() {
-       openInstall.invoke(File("$base/${item.value?.category}/${item.value?.id}/file.${item.value?.getFileExtension()}"))
+        openInstall.invoke(File("$base/${item.value?.category}/${item.value?.id}/file.${item.value?.getFileExtension()}"))
     }
 
     override fun getFile() = File("$base/${item.value?.category}/${item.value?.id}/file.${item.value?.getFileExtension()}")

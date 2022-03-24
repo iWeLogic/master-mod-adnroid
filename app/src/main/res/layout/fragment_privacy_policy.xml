@@ -15,14 +15,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
+            android:layout_height="@dimen/toolbar"
             android:background="@drawable/background_bottom_line"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="?actionBarSize"
-                android:layout_height="?actionBarSize"
+                android:layout_width="@dimen/toolbar"
+                android:layout_height="@dimen/toolbar"
                 android:background="?attr/actionBarItemBackground"
                 android:onClick="@{() -> viewModel.onClickClose()}"
                 android:scaleType="centerInside"

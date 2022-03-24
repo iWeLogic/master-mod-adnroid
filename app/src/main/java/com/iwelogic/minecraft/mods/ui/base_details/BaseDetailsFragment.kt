@@ -14,7 +14,8 @@ import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.ui.base.BaseFragment
 import com.iwelogic.minecraft.mods.ui.details.DetailsFragmentDirections
 import com.iwelogic.minecraft.mods.utils.AddHelper
-
+import com.iwelogic.minecraft.mods.utils.isTrue
+import com.iwelogic.minecraft.mods.utils.readBoolean
 
 abstract class BaseDetailsFragment<VM : BaseDetailsViewModel> : BaseFragment<VM>() {
 
@@ -23,7 +24,9 @@ abstract class BaseDetailsFragment<VM : BaseDetailsViewModel> : BaseFragment<VM>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        refreshAd(view)
+        if (context?.readBoolean("native_on_details").isTrue()) {
+            refreshAd(view)
+        }
         viewModel.openHelp.observe(viewLifecycleOwner) {
             if (findNavController().currentDestination?.id == R.id.detailsFragment) {
                 findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToHelpFragment())
@@ -59,7 +62,6 @@ abstract class BaseDetailsFragment<VM : BaseDetailsViewModel> : BaseFragment<VM>
                         view.findViewById<FrameLayout>(R.id.ad_frame)?.addView(adView)
                     }
                 }
-
                 builder.build().loadAd(AdRequest.Builder().build())
             }
         }

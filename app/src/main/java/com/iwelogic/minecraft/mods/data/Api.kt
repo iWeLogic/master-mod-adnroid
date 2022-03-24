@@ -1,5 +1,6 @@
 package com.iwelogic.minecraft.mods.data
 
+import com.iwelogic.minecraft.mods.models.AdvertisingStatus
 import com.iwelogic.minecraft.mods.models.BaseResponse
 import com.iwelogic.minecraft.mods.models.Mod
 import retrofit2.Response
@@ -12,4 +13,7 @@ interface Api {
 
     @PUT("/api/data/{category}")
     suspend fun updateMod(@Path("category") category: String?, @Body mod: Mod): Response<BaseResponse>
+
+    @GET("/api/data/advertising")
+    suspend fun getAdvertisingStatuses(): Response<List<AdvertisingStatus>>
 }
