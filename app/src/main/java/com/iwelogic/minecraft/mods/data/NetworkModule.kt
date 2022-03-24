@@ -59,6 +59,7 @@ object NetworkModule {
     @Singleton
     fun provideGson(): Gson? {
         return GsonBuilder()
+            .excludeFieldsWithoutExposeAnnotation()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
             .create()
     }

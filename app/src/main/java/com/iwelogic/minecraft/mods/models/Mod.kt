@@ -9,6 +9,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.iwelogic.minecraft.mods.BuildConfig
 import kotlinx.parcelize.Parcelize
@@ -23,41 +24,53 @@ data class Mod(
     var primaryId: String = "",
 
     @field:SerializedName("id")
+    @Expose
     var id: Int? = null,
 
     @field:SerializedName("title")
+    @Expose
     var title: String? = null,
 
     @field:SerializedName("objectId")
+    @Expose
     var objectId: String? = null,
 
     @field:SerializedName("description")
+    @Expose
     var description: String? = null,
 
     @field:SerializedName("countImages")
+    @Expose
     var countImages: Int? = null,
 
     @field:SerializedName("fileSize")
+    @Expose
     var fileSize: Double? = null,
 
     @field:SerializedName("priority")
+    @Expose
     var priority: Int? = null,
 
     @field:SerializedName("pack")
+    @Expose
     var pack: Int? = null,
 
     @field:SerializedName("version")
+    @Expose
     var version: String? = null,
 
     @field:SerializedName("addDate")
+    @Expose
     var addDate: Int? = null,
 
     @field:SerializedName("installs")
     @ColumnInfo(name = "installs")
+    @Expose
     var p_installs: Long? = null,
 
     @field:SerializedName("likes")
     @ColumnInfo(name = "likes")
+    @Expose
     var p_likes: Long? = null,
 
     var category: String? = null,
