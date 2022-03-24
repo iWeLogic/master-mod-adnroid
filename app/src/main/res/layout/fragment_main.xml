@@ -9,37 +9,40 @@
             type="com.iwelogic.minecraft.mods.ui.main.MainViewModel" />
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/bottomNavigationContainer"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/bottom" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#C4C4C4"/>
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/bottomNavigationContainer"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/bottom" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_gravity="bottom"
-            android:background="@color/white"
-            app:itemIconSize="32dp"
-            app:itemTextAppearanceActive="@style/BottomNavigationViewTextActive"
-            app:itemTextAppearanceInactive="@style/BottomNavigationViewText"
-            app:itemTextColor="@color/bottom_nav_color_item"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#C4C4C4" />
 
-    </LinearLayout>
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationView"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_gravity="bottom"
+                android:background="@color/white"
+                app:itemIconSize="32dp"
+                app:itemTextAppearanceActive="@style/BottomNavigationViewTextActive"
+                app:itemTextAppearanceInactive="@style/BottomNavigationViewText"
+                app:itemTextColor="@color/bottom_nav_color_item"
+                app:labelVisibilityMode="labeled"
+                app:menu="@menu/bottom" />
+
+        </LinearLayout>
+
+
 </layout>

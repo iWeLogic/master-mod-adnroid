@@ -2,10 +2,12 @@ package com.iwelogic.minecraft.mods.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
@@ -16,6 +18,9 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -26,8 +31,16 @@ class MainActivity : AppCompatActivity() {
     private var mAdIsLoading: Boolean = false
     private var count = 0
 
+
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen: SplashScreen = installSplashScreen()
+        var keep = true
+        splashScreen.setKeepOnScreenCondition { keep }
+        lifecycleScope.launch(Dispatchers.Default) {
+            delay(1000)
+            keep = false
+        }
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
@@ -40,7 +53,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.openOnboarding.observe(this) {
-            openOnboarding()
+            val host = NavHostFragment.create(R.navigation.onboarding)
+            supportFragmentManager.beginTransaction().replace(R.id.hostContainer, host)
+                .setPrimaryNavigationFragment(host).commitAllowingStateLoss()
         }
     }
 
@@ -51,11 +66,7 @@ class MainActivity : AppCompatActivity() {
             .setPrimaryNavigationFragment(host).commitAllowingStateLoss()
     }
 
-    fun openOnboarding() {
-        val host = NavHostFragment.create(R.navigation.onboarding)
-        supportFragmentManager.beginTransaction().replace(R.id.hostContainer, host)
-            .setPrimaryNavigationFragment(host).commitAllowingStateLoss()
-    }
+
     private fun loadInterstitialAd() {
         mAdIsLoading = true
         val adRequest = AdRequest.Builder().build()
@@ -66,7 +77,6 @@ class MainActivity : AppCompatActivity() {
             object : InterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
                     super.onAdFailedToLoad(adError)
-                    Log.w("myLog", "onAdFailedToLoad: " + adError.message)
                     count++
                     if (count < 3) loadInterstitialAd()
                     else {
@@ -77,7 +87,6 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                    Log.w("myLog", "onAdLoaded: " )
                     mInterstitialAd = interstitialAd
                     mAdIsLoading = false
                 }
@@ -85,34 +94,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showInterstitialAd(callback: (() -> Unit)? = null) {
-         if (mInterstitialAd != null) {
-             mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
-                 override fun onAdDismissedFullScreenContent() {
-                     Log.w("myLog", "onAdDismissedFullScreenContent: " )
-                 }
+        if (mInterstitialAd != null) {
+            mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                }
 
-                 override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
-                     Log.w("myLog", "onAdFailedToShowFullScreenContent: ")
-                     count = 0
-                     callback?.invoke()
-                     loadInterstitialAd()
-                 }
+                override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+                    count = 0
+                    callback?.invoke()
+                    loadInterstitialAd()
+                }
 
-                 override fun onAdShowedFullScreenContent() {
-                     callback?.invoke()
-                     Log.w("myLog", "onAdShowedFullScreenContent: ")
-                     mInterstitialAd = null
-                     count = 0
-                     loadInterstitialAd()
-                 }
-             }
-             mInterstitialAd?.show(this)
-         } else {
-             callback?.invoke()
-             if (!mAdIsLoading) {
-                 count=0
-                 loadInterstitialAd()
-             }
-         }
+                override fun onAdShowedFullScreenContent() {
+                    callback?.invoke()
+                    mInterstitialAd = null
+                    count = 0
+                    loadInterstitialAd()
+                }
+            }
+            mInterstitialAd?.show(this)
+        } else {
+            callback?.invoke()
+            if (!mAdIsLoading) {
+                count = 0
+                loadInterstitialAd()
+            }
+        }
     }
 }

@@ -4,7 +4,7 @@
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -14,7 +14,8 @@
     <FrameLayout
         android:id="@+id/mainContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/background">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/hostContainer"
@@ -24,4 +25,5 @@
             app:defaultNavHost="true" />
 
     </FrameLayout>
+
 </layout>
