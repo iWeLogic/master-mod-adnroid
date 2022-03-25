@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.iwelogic.minecraft.mods.R
@@ -34,6 +35,7 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
     val openInstall: SingleLiveEvent<String> = SingleLiveEvent()
     val openIntent: SingleLiveEvent<Intent> = SingleLiveEvent()
     val openCheckPermission: SingleLiveEvent<() -> Unit> = SingleLiveEvent()
+    val hideDownloadToGalleyBtn: MutableLiveData<Boolean> = MutableLiveData(false)
 
     fun onClickDownloadToGallery() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -46,7 +48,7 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
     }
 
     private fun downloadImageToGalley() {
-        showInterstitial.invoke(null)
+        hideDownloadToGalleyBtn.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
             kotlin.runCatching {
                 //downloading image
@@ -66,8 +68,16 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
                         mod.progressGallery = 10000
                         mod.installs = mod.installs?.plus(1)
                         repository.updateMod(mod.category ?: "", mod).collect()
+                        context.get()?.getString(R.string.image_downloaded)?.let { showSnackBar.invoke(it) }
                     } else {
                         mod.progressGallery = 0
+                        showDialog.invoke(
+                            DialogData(
+                                title = context.get()?.getString(R.string.error),
+                                message = context.get()?.getString(R.string.something_went_wrong),
+                                buttonRightTitle = context.get()?.getString(R.string.ok)
+                            )
+                        )
                     }
                 }
             }.onFailure {
@@ -84,7 +94,6 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
     }
 
     fun onClickDownloadToMinecraft() {
-        showInterstitial.invoke(null)
         item.value?.let { mod ->
             viewModelScope.launch(Dispatchers.IO) {
                 kotlin.runCatching {
@@ -222,7 +231,7 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
         }
     }
 
-    fun showDialogNeedInstallMinecraft(){
+    fun showDialogNeedInstallMinecraft() {
         showDialog.invoke(
             DialogData(
                 title = context.get()?.getString(R.string.minecraft_isnt_installed_title),

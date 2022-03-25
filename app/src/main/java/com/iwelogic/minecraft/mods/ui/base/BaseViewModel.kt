@@ -14,6 +14,7 @@ open class BaseViewModel(applicationContext: Context) : ViewModel() {
     val close: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val showInterstitial: SingleLiveEvent<(() -> Unit)?> = SingleLiveEvent()
     val showDialog: SingleLiveEvent<DialogData> = SingleLiveEvent()
+    val showSnackBar: SingleLiveEvent<String> = SingleLiveEvent()
 
     fun onClickClose() {
         close.invoke(true)

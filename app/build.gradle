@@ -115,4 +115,5 @@ dependencies {
     implementation "com.github.amitshekhariitbhu:Fast-Android-Networking:1.0.2"
     implementation "com.github.skydoves:expandablelayout:1.0.7"
     implementation "org.zeroturnaround:zt-zip:1.14"
+    implementation 'com.github.Redman1037:TSnackBar:V2.0.0'
 }

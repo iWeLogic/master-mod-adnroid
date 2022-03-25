@@ -2,9 +2,13 @@ package com.iwelogic.minecraft.mods.ui.base
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import com.androidadvance.topsnackbar.TSnackbar
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.ui.MainActivity
 import com.iwelogic.minecraft.mods.utils.isTrue
@@ -25,6 +29,18 @@ open class BaseFragment<VM : BaseViewModel> : Fragment() {
                 (activity as MainActivity).showInterstitialAd(it)
             else
                 it?.invoke()
+        }
+
+        viewModel.showSnackBar.observe(viewLifecycleOwner) { msg ->
+            val snackBar: TSnackbar = TSnackbar.make(view, msg ?: view.context.getString(R.string.something_went_wrong), TSnackbar.LENGTH_LONG)
+            snackBar.view.setBackgroundResource(R.color.green)
+            val textView = snackBar.view.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
+            textView.maxLines = 5
+            textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
+            textView.typeface = ResourcesCompat.getFont(view.context, R.font.minecraft_regular)
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+            snackBar.view.findViewById<TextView>(com.androidadvance.topsnackbar.R.id.snackbar_text).setTextColor(ContextCompat.getColor(view.context, R.color.white))
+            snackBar.show()
         }
 
         viewModel.showDialog.observe(this) { dialogData ->
