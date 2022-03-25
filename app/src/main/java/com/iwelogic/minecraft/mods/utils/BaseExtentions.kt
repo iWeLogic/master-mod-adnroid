@@ -1,19 +1,25 @@
 package com.iwelogic.minecraft.mods.utils
 
+import android.app.Activity
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
-import kotlinx.coroutines.ensureActive
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlin.coroutines.coroutineContext
 
-fun List<*>?.deepEquals(other: List<*>?): Boolean {
-    if (this == null && other != null || this != null && other == null) return false
-    if (this == null && other == null) return true
-    return this!!.size == other!!.size && this.mapIndexed { index, element -> element == other[index] }.all { it }
+fun Int.dp(context: Context?): Int {
+    return (toFloat() * (context?.resources?.displayMetrics?.density ?: 1f)).toInt()
 }
 
-inline fun <reified T> Gson.deepCopy(value: T): T {
-    return fromJson(toJson(value), T::class.java)
+fun <T> LiveData<T>.ignoreFirst(): MutableLiveData<T> {
+    val result = MediatorLiveData<T>()
+    var isFirst = true
+    result.addSource(this) {
+        if (isFirst) isFirst = false
+        else result.value = it
+    }
+    return result
 }
 
 inline fun <reified T> List<T>?.deepCopy(): List<T>? {
@@ -22,7 +28,7 @@ inline fun <reified T> List<T>?.deepCopy(): List<T>? {
     this?.forEach {
         temp.add(gson.fromJson(gson.toJson(it), T::class.java))
     }
-    return if(this == null) null else temp.toList()
+    return if (this == null) null else temp.toList()
 }
 
 fun Boolean?.isTrue(action: () -> Unit) {
@@ -34,18 +40,12 @@ fun Boolean?.isTrue(action: () -> Unit) {
 fun Boolean?.isTrue(): Boolean {
     return this == true
 }
-
-suspend inline fun <T> Flow<T>.safeCollect(crossinline action: suspend (T) -> Unit) {
-    collect {
-        coroutineContext.ensureActive()
-        action(it)
-    }
-}
-
-inline fun catchAll(action: () -> Unit) {
-    try {
-        action()
-    } catch (t: Throwable) {
-        t.printStackTrace()
+fun Activity.hideKeyboard(clearFocus: Boolean) {
+    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    window.currentFocus?.let {
+        inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+        if (clearFocus) {
+            it.clearFocus()
+        }
     }
 }

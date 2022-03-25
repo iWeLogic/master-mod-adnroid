@@ -1,6 +1,7 @@
 package com.iwelogic.minecraft.mods.ui.onboarding
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +27,7 @@ class OnboardingFragment : BaseFragment<OnboardingViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel.subscribeOnAgeChanges()
         viewModel.openMain.observe(viewLifecycleOwner) {
             (activity as MainActivity).openMain()
         }

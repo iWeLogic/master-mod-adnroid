@@ -72,7 +72,7 @@
     <string name="search">Search</string>
 
     <string name="confirm">Confirm</string>
-    <string name="click_confirm">By clicking \"CONFIRM\" you accept</string>
+    <string name="click_confirm">By clicking \"Confirm\" you accept</string>
     <string name="privacy_policy_underlined"><u>Privacy policy</u></string>
     <string name="welcome">Welcome!</string>
     <string name="filter">Filter</string>
@@ -106,6 +106,7 @@
     <string name="permission_one_title">Permission required</string>
     <string name="permission_one_body">Access to memory required for file downloading. Grant permission?</string>
     <string name="permission_two_body">Access to memory should be granted in phone settings for file downloading. Open settings?</string>
+    <string name="image">Image</string>
 
 
 </resources>

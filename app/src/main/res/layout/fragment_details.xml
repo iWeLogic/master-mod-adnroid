@@ -88,29 +88,17 @@
                     android:layout_marginEnd="@dimen/default_size"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="2dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/folder" />
-
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="9"
+                        android:drawablePadding="@dimen/half_default_size"
                         android:ellipsize="end"
                         android:fontFamily="@font/minecraft_regular"
                         android:lines="1"
                         android:text="@{viewModel.item.fileSize + ` Mb`}"
-                        android:textSize="16sp" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="2dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/download" />
+                        android:textSize="16sp"
+                        app:drawableStartCompat="@drawable/folder" />
 
                     <TextView
                         counter="@{viewModel.item.installs}"
@@ -118,28 +106,38 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/quarter_default_size"
                         android:layout_weight="7"
+                        android:drawablePadding="@dimen/half_default_size"
                         android:ellipsize="end"
-                        android:fontFamily="@font/roboto_medium"
+                        android:fontFamily="@font/minecraft_regular"
                         android:lines="1"
-                        android:textSize="16sp" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="2dp"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/favorite_small" />
+                        android:textSize="16sp"
+                        app:drawableStartCompat="@drawable/download" />
 
                     <TextView
                         counter="@{viewModel.item.likes}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/quarter_default_size"
+                        android:drawablePadding="@dimen/half_default_size"
                         android:layout_weight="7"
                         android:ellipsize="end"
-                        android:fontFamily="@font/roboto_medium"
+                        android:fontFamily="@font/minecraft_regular"
                         android:lines="1"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        app:drawableStartCompat="@drawable/favorite_small" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/quarter_default_size"
+                        android:layout_weight="7"
+                        android:drawablePadding="@dimen/half_default_size"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/minecraft_regular"
+                        android:lines="1"
+                        android:text="@{viewModel.item.getVersion()}"
+                        android:textSize="16sp"
+                        app:drawableStartCompat="@drawable/version" />
 
                 </LinearLayout>
 
@@ -180,7 +178,7 @@
                     android:visibility="@{viewModel.item.progress == 10000 ? View.VISIBLE : View.GONE}" />
 
                 <com.iwelogic.minecraft.mods.views.CollapseTextView
-                    body="@{viewModel.item.description + `\n Version ` + viewModel.item.getVersion()}"
+                    body="@{viewModel.item.description}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/default_size"

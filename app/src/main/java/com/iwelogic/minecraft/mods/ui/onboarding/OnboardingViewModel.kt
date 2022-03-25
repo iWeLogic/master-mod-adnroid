@@ -1,23 +1,32 @@
 package com.iwelogic.minecraft.mods.ui.onboarding
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.ads.MobileAds
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.ui.base.Const
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
+import com.iwelogic.minecraft.mods.utils.ignoreFirst
 import com.iwelogic.minecraft.mods.utils.writeString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(@ApplicationContext applicationContext: Context) : BaseViewModel(applicationContext) {
 
-    var age: MutableLiveData<Int> = MutableLiveData(33)
+    var age: MutableLiveData<Int> = MutableLiveData(45)
     var openMain: SingleLiveEvent<Boolean> = SingleLiveEvent()
     var openUrl: SingleLiveEvent<Boolean> = SingleLiveEvent()
+    var selected: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val ageObserver: (Int) -> Unit = {
+        selected.postValue(it > 0)
+    }
+
+   fun subscribeOnAgeChanges(){
+       age.ignoreFirst().observeForever(ageObserver)
+   }
 
     fun onClickOk() {
         val contentRating = when (age.value) {
@@ -34,5 +43,10 @@ class OnboardingViewModel @Inject constructor(@ApplicationContext applicationCon
 
     fun onClickPrivacyPolicy() {
         openUrl.invoke(true)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        age.removeObserver(ageObserver)
     }
 }

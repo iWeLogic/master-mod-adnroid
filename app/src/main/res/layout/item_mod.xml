@@ -42,6 +42,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:contentDescription="@string/image"
                         android:scaleType="centerCrop" />
 
                     <LinearLayout
@@ -105,12 +106,28 @@
                                 android:drawablePadding="@dimen/half_default_size"
                                 android:ellipsize="end"
                                 android:fontFamily="@font/minecraft_regular"
-                                android:textColor="@color/black"
                                 android:gravity="center_vertical"
                                 android:lines="1"
                                 android:text="@{item.getFormattedLikes()}"
+                                android:textColor="@color/black"
                                 android:textSize="14sp"
                                 app:drawableStartCompat="@drawable/favorite_small" />
+
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/quarter_default_size"
+                                android:layout_weight="7"
+                                android:drawablePadding="@dimen/half_default_size"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/minecraft_regular"
+                                android:gravity="center_vertical"
+                                android:lines="1"
+                                android:text="@{item.generateVersion()}"
+                                android:textColor="@color/black"
+                                android:textSize="14sp"
+                                app:drawableStartCompat="@drawable/version" />
 
                         </LinearLayout>
 
