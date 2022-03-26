@@ -93,7 +93,7 @@
     <string name="permit">Permit</string>
     <string name="reload">Reload</string>
     <string name="help">Help</string>
-    <string name="enter_your_age">Enter your age</string>
+    <string name="select_your_age">Select your age</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="image_downloaded">Image downloaded</string>
     <string name="error">Error</string>

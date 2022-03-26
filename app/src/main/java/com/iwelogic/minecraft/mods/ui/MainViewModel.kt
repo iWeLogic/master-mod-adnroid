@@ -39,7 +39,7 @@ class MainViewModel @Inject constructor(private val repository: Repository, @App
         loadAdd()
     }
 
-    fun loadAdd() {
+    private fun loadAdd() {
         viewModelScope.launch {
             repository.getAdvertisingStatuses().collect { result ->
                 when (result) {

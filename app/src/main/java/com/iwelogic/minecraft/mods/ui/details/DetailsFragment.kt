@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentDetailsBinding
 import com.iwelogic.minecraft.mods.models.DialogData
-import com.iwelogic.minecraft.mods.ui.base.BaseFragment
 import com.iwelogic.minecraft.mods.ui.base_details.BaseDetailsFragment
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -8,5 +8,4 @@ open class BaseResponse(
 
     @field:SerializedName("status")
     val status: Int? = null
-) {
-}
+)

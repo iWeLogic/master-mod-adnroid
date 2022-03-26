@@ -6,7 +6,7 @@ import com.iwelogic.minecraft.mods.models.Mod
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class DataBaseSource @Inject constructor(private val api: Api, @ApplicationContext applicationContext: Context) {
+class DataBaseSource @Inject constructor(@ApplicationContext applicationContext: Context) {
 
     var dataBase = Room.databaseBuilder(applicationContext, DataBase::class.java, "statistics").allowMainThreadQueries().build()
 

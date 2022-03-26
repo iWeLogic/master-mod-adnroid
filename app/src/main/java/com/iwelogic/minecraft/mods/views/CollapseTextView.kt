@@ -18,22 +18,22 @@ import java.util.regex.Pattern
 
 class CollapseTextView : LinearLayout {
 
-    var isExpand = false
+    private var isExpand = false
     var isActiveAnimation = false
 
     constructor(context: Context?) : super(context) {
-        init(null)
+        init()
     }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
-        init(attrs)
+        init()
     }
 
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init(attrs)
+        init()
     }
 
-    private fun init(attrs: AttributeSet?) {
+    private fun init() {
         LayoutInflater.from(context).inflate(R.layout.layout_collapse_text, this, true)
         val bodyView = findViewById<TextView>(R.id.body)
         findViewById<View>(R.id.collapseTitle).setOnClickListener {

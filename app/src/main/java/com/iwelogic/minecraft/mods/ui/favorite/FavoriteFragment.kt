@@ -11,7 +11,6 @@ import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentFavoriteBinding
 import com.iwelogic.minecraft.mods.models.Category
 import com.iwelogic.minecraft.mods.ui.base.BaseFragment
-import com.iwelogic.minecraft.mods.ui.main.MainFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -17,7 +17,7 @@ class HelpFragment : BaseFragment<HelpViewModel>() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding: FragmentHelpBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_help, container, false)
         binding.lifecycleOwner = this
-        viewModel = ViewModelProvider(this).get(HelpViewModel::class.java)
+        viewModel = ViewModelProvider(this)[HelpViewModel::class.java]
         binding.viewModel = viewModel
         return binding.root
     }

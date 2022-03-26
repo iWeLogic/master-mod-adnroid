@@ -38,7 +38,7 @@
 
             <TextView
                 style="@style/Header"
-                android:text="@string/enter_your_age" />
+                android:text="@string/select_your_age" />
 
             <TextView
                 android:layout_width="wrap_content"

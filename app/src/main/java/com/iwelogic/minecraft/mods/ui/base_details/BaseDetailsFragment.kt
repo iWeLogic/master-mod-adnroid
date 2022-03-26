@@ -19,8 +19,8 @@ import com.iwelogic.minecraft.mods.utils.readBoolean
 
 abstract class BaseDetailsFragment<VM : BaseDetailsViewModel> : BaseFragment<VM>() {
 
-    var adView: NativeAdView? = null
-    var currentNativeAd: NativeAd? = null
+    private var adView: NativeAdView? = null
+    private var currentNativeAd: NativeAd? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,8 +51,8 @@ abstract class BaseDetailsFragment<VM : BaseDetailsViewModel> : BaseFragment<VM>
                         currentNativeAd = nativeAd
                         if (adView == null) {
                             adView = layoutInflater.inflate(R.layout.layout_native_ad, view as FrameLayout, false) as NativeAdView
-                            nativeAd.images.firstOrNull()?.let {
-                                adView?.findViewById<ImageView>(R.id.imageAd)?.setImageDrawable(it.drawable)
+                            nativeAd.images.firstOrNull()?.let { image ->
+                                adView?.findViewById<ImageView>(R.id.imageAd)?.setImageDrawable(image.drawable)
                             }
                         }
                         AddHelper.populateUnifiedNativeAdView(nativeAd, adView!!)

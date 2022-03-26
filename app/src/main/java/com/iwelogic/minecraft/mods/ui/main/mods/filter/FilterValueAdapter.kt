@@ -10,10 +10,10 @@ import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.ItemFilterValueBinding
 import com.iwelogic.minecraft.mods.models.FilterValue
 
-class FilterValueAdapter : ListAdapter<FilterValue, RecyclerView.ViewHolder>(REPO_COMPARATOR) {
+class FilterValueAdapter : ListAdapter<FilterValue, RecyclerView.ViewHolder>(COMPARATOR) {
 
     companion object {
-        private val REPO_COMPARATOR = object : DiffUtil.ItemCallback<FilterValue>() {
+        private val COMPARATOR = object : DiffUtil.ItemCallback<FilterValue>() {
             override fun areItemsTheSame(oldItem: FilterValue, newItem: FilterValue): Boolean = oldItem === newItem
             override fun areContentsTheSame(oldItem: FilterValue, newItem: FilterValue): Boolean = oldItem == newItem
         }

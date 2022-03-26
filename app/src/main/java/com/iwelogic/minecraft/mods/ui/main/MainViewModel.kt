@@ -7,6 +7,4 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(@ApplicationContext applicationContext: Context) : BaseViewModel(applicationContext) {
-
-}
+class MainViewModel @Inject constructor(@ApplicationContext applicationContext: Context) : BaseViewModel(applicationContext)

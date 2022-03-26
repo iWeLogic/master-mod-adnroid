@@ -19,9 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentDetailsSkinBinding
 import com.iwelogic.minecraft.mods.models.DialogData
-import com.iwelogic.minecraft.mods.ui.base.Const
 import com.iwelogic.minecraft.mods.ui.base_details.BaseDetailsFragment
-import com.iwelogic.minecraft.mods.utils.writeBoolean
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 
@@ -102,7 +100,6 @@ class DetailsSkinFragment : BaseDetailsFragment<DetailsSkinViewModel>() {
                 intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 startActivity(intent)
-                context?.writeBoolean(Const.STATUS_MOD_INSTALLED, true)
             } catch (e: Exception) {
                 viewModel.showDialogNeedInstallMinecraft()
             }

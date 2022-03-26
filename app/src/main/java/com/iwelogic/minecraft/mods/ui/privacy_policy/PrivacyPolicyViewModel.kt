@@ -9,10 +9,10 @@ import javax.inject.Inject
 @HiltViewModel
 class PrivacyPolicyViewModel @Inject constructor(@ApplicationContext applicationContext: Context) : BaseViewModel(applicationContext) {
 
-    val text = " <p>\n" +
-            "                  iWeLogic built the Minecraft Mods app as\n" +
+    val text = "<p>\n" +
+            "                  Nazar Novak built the Mods for minecraft app as\n" +
             "                  a Free app. This SERVICE is provided by\n" +
-            "                  iWeLogic at no cost and is intended for use as\n" +
+            "                  Nazar Novak at no cost and is intended for use as\n" +
             "                  is.\n" +
             "                </p> <p>\n" +
             "                  This page is used to inform visitors regarding my\n" +
@@ -27,7 +27,7 @@ class PrivacyPolicyViewModel @Inject constructor(@ApplicationContext application
             "                </p> <p>\n" +
             "                  The terms used in this Privacy Policy have the same meanings\n" +
             "                  as in our Terms and Conditions, which are accessible at\n" +
-            "                  Minecraft Mods unless otherwise defined in this Privacy Policy.\n" +
+            "                  Mods for minecraft unless otherwise defined in this Privacy Policy.\n" +
             "                </p> <p><strong>Information Collection and Use</strong></p> <p>\n" +
             "                  For a better experience, while using our Service, I\n" +
             "                  may require you to provide us with certain personally\n" +
@@ -103,8 +103,9 @@ class PrivacyPolicyViewModel @Inject constructor(@ApplicationContext application
             "                  periodically for any changes. I will\n" +
             "                  notify you of any changes by posting the new Privacy Policy on\n" +
             "                  this page.\n" +
-            "                </p> <p>This policy is effective as of 2022-03-23</p> <p><strong>Contact Us</strong></p> <p>\n" +
+            "                </p> <p>This policy is effective as of 2022-03-24</p> <p><strong>Contact Us</strong></p> <p>\n" +
             "                  If you have any questions or suggestions about my\n" +
-            "                  Privacy Policy, do not hesitate to contact me at novaknazar@gmail.com."
+            "                  Privacy Policy, do not hesitate to contact me at novaknazar@gmail.com.\n" +
+            "                </p>"
 }
 

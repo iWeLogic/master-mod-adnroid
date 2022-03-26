@@ -1,7 +1,6 @@
 package com.iwelogic.minecraft.mods.ui.onboarding
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.ads.MobileAds
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
@@ -24,9 +23,9 @@ class OnboardingViewModel @Inject constructor(@ApplicationContext applicationCon
         selected.postValue(it > 0)
     }
 
-   fun subscribeOnAgeChanges(){
-       age.ignoreFirst().observeForever(ageObserver)
-   }
+    fun subscribeOnAgeChanges() {
+        age.ignoreFirst().observeForever(ageObserver)
+    }
 
     fun onClickOk() {
         val contentRating = when (age.value) {

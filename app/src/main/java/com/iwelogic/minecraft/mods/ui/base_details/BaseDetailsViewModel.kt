@@ -1,7 +1,6 @@
 package com.iwelogic.minecraft.mods.ui.base_details
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -11,11 +10,9 @@ import com.iwelogic.minecraft.mods.models.Mod
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.utils.isTrue
-import com.iwelogic.minecraft.mods.utils.readBoolean
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.File
-import java.lang.ref.WeakReference
 
 abstract class BaseDetailsViewModel(val repository: Repository, applicationContext: Context) : BaseViewModel(applicationContext) {
 

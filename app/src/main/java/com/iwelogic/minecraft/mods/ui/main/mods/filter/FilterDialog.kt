@@ -18,7 +18,7 @@ class FilterDialog : BaseDialog<FilterViewModel>() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding: DialogFilterBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_filter, container, false)
         binding.lifecycleOwner = this
-        viewModel = ViewModelProvider(this).get(FilterViewModel::class.java)
+        viewModel = ViewModelProvider(this)[FilterViewModel::class.java]
         viewModel.items.postValue(FilterDialogArgs.fromBundle(requireArguments()).data.toList())
         binding.viewModel = viewModel
         return binding.root

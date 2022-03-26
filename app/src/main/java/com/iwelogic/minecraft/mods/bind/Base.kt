@@ -78,31 +78,4 @@ object Base {
         view.text = HtmlCompat.fromHtml(html ?: "", HtmlCompat.FROM_HTML_MODE_LEGACY)
         view.movementMethod = LinkMovementMethod.getInstance()
     }
-
-/*    @BindingAdapter("error")
-    @JvmStatic
-    fun setError(view: EditText, error: String?) {
-        error?.let {
-            val icon = ContextCompat.getDrawable(view.context, R.drawable.myerror)
-            icon!!.bounds = Rect(0, 0, Objects.requireNonNull(icon).intrinsicWidth, icon.intrinsicHeight)
-            view.requestFocus()
-            view.setError(error, icon)
-        } ?: run {
-            view.setError(null, null)
-        }
-    }*/
-
-    @BindingAdapter("onTextChangedListener")
-    @JvmStatic
-    fun onTextChanged(view: EditText, onTextChangedListener: (String) -> Unit) {
-        view.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
-                onTextChangedListener.invoke(text.toString())
-            }
-
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable) {}
-        })
-    }
-
 }

@@ -31,8 +31,9 @@ object AddHelper {
         adView.advertiserView = adView.findViewById(R.id.ad_advertiser)
 
         (adView.headlineView as TextView).text = nativeAd.headline
-        adView.mediaView?.setMediaContent(nativeAd.mediaContent)
-
+        nativeAd.mediaContent?.let {
+            adView.mediaView?.setMediaContent(it)
+        }
         if (nativeAd.body == null) {
             adView.bodyView?.visibility = View.INVISIBLE
         } else {
