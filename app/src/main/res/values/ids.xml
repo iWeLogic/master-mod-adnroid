@@ -2,5 +2,6 @@
     <string name="ad_id" translatable="false">ca-app-pub-1749982293883461~4425739320</string>
     <string name="ad_interstitial" translatable="false">ca-app-pub-8483070711143803/8121684949</string>
     <string name="ad_native" translatable="false">ca-app-pub-8483070711143803/3884763324</string>
+    <string name="notification_channel" translatable="false">Mods for Minecraft notification</string>
 
 </resources>
