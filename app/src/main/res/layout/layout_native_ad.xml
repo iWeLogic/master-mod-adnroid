@@ -95,17 +95,12 @@
 
             </FrameLayout>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatButton
+                style="@style/Button"
                 android:id="@+id/ad_call_to_action"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
+                android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/half_default_size"
-                android:layout_marginBottom="@dimen/default_size"
-                android:background="@drawable/background_btn_native"
-                android:fontFamily="@font/roboto_medium"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:layout_marginBottom="@dimen/default_size" />
 
         </LinearLayout>
 

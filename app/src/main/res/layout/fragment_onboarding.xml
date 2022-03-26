@@ -64,19 +64,10 @@
 
 
             <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/background_button"
+                style="@style/Button"
                 android:enabled="@{viewModel.selected}"
-                android:fontFamily="@font/minecraft_regular"
                 android:onClick="@{() -> viewModel.onClickOk()}"
-                android:paddingStart="@dimen/double_default_size"
-                android:paddingTop="@dimen/half_default_size"
-                android:paddingEnd="@dimen/double_default_size"
-                android:paddingBottom="@dimen/half_default_size"
-                android:text="@string/confirm"
-                android:textAllCaps="false"
-                android:textColor="@color/black" />
+                android:text="@string/confirm"/>
 
         </LinearLayout>
 

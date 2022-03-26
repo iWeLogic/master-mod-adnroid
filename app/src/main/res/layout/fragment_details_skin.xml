@@ -129,7 +129,7 @@
                     android:onClick="@{() -> viewModel.onClickInstall()}"
                     android:visibility="@{viewModel.item.progress == 10000 ? View.VISIBLE : View.GONE}" />
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -137,7 +137,7 @@
                     android:layout_marginTop="@dimen/half_default_size"
                     android:layout_marginEnd="@dimen/default_size"
                     android:onClick="@{() -> viewModel.onClickDownloadToGallery()}"
-                    android:src="@drawable/button_download_to_gallery"
+                    android:background="@drawable/button_download_to_gallery"
                     android:visibility="@{viewModel.hideDownloadToGalleyBtn ? View.GONE : View.VISIBLE}" />
 
                 <FrameLayout
