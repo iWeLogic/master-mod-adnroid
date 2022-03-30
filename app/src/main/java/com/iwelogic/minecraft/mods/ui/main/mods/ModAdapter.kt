@@ -22,7 +22,7 @@ class ModAdapter(private val onClick: (Mod) -> Unit) : ListAdapter<Mod, Recycler
 
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<Mod>() {
-            override fun areItemsTheSame(oldItem: Mod, newItem: Mod): Boolean = oldItem === newItem
+            override fun areItemsTheSame(oldItem: Mod, newItem: Mod): Boolean = oldItem.id == newItem.id
             override fun areContentsTheSame(oldItem: Mod, newItem: Mod): Boolean = oldItem == newItem
         }
     }
@@ -44,7 +44,7 @@ class ModAdapter(private val onClick: (Mod) -> Unit) : ListAdapter<Mod, Recycler
             holder.bind(getItem(position))
         }
         if (holder is AdViewHolder) {
-            holder.bind()
+            holder.bind(getItem(position))
         }
     }
 
@@ -69,23 +69,28 @@ class ModAdapter(private val onClick: (Mod) -> Unit) : ListAdapter<Mod, Recycler
     }
 
     inner class AdViewHolder(private val binding: ItemAdBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind() {
+        fun bind(item: Mod) {
             val context = binding.adViewContainer.context
-            val adView = AdView(context)
-            adView.adUnitId = context.getString(R.string.ad_banner)
-            val adWidth = context.resources.displayMetrics.widthPixels - 32.dp(context)
-            val adHeight = adWidth / 3 * 2
-            adView.adSize = AdSize.getInlineAdaptiveBannerAdSize(adWidth.fromPxToDp(context), adHeight.fromPxToDp(context))
-            val adRequest = AdRequest.Builder().build()
-            adView.loadAd(adRequest)
+            item.adView?.let { adView ->
+                adView.parent?.let {
+                    (it as ViewGroup).removeView(adView)
+                }
+            } ?: run {
+                val adViewNew = AdView(context)
+                adViewNew.adUnitId = context.getString(R.string.ad_banner)
+                val adWidth = context.resources.displayMetrics.widthPixels - 32.dp(context)
+                val adHeight = adWidth / 3 * 2
+                adViewNew.adSize = AdSize.getInlineAdaptiveBannerAdSize(adWidth.fromPxToDp(context), adHeight.fromPxToDp(context))
+                val adRequest = AdRequest.Builder().build()
+                adViewNew.loadAd(adRequest)
+                item.adView = adViewNew
+            }
             binding.adViewContainer.removeAllViews()
-            binding.adViewContainer.addView(adView)
-            binding.executePendingBindings()
+            binding.adViewContainer.addView(item.adView)
         }
     }
 
     internal class ProgressHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position).category) {

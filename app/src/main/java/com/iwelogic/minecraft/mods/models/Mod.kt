@@ -9,9 +9,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import com.google.android.gms.ads.AdView
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.iwelogic.minecraft.mods.BuildConfig
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "mods")
@@ -80,16 +82,17 @@ data class Mod(
     var _progress: Int = 0,
 
     @Transient
-    @Ignore
-    var downloaded: Boolean = false,
-
-    @Transient
     var _progressGallery: Int = 0,
 
     @ColumnInfo(name = "favouriteDate")
     var favouriteDate: Long = 0
 
 ) : BaseObservable(), Parcelable {
+
+    @Transient
+    @Ignore
+    @IgnoredOnParcel
+    var adView: AdView? = null
 
     var progress: Int
         @Bindable get() = _progress

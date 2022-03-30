@@ -14,7 +14,7 @@ class FilterValueAdapter : ListAdapter<FilterValue, RecyclerView.ViewHolder>(COM
 
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<FilterValue>() {
-            override fun areItemsTheSame(oldItem: FilterValue, newItem: FilterValue): Boolean = oldItem === newItem
+            override fun areItemsTheSame(oldItem: FilterValue, newItem: FilterValue): Boolean = oldItem.filter == newItem.filter
             override fun areContentsTheSame(oldItem: FilterValue, newItem: FilterValue): Boolean = oldItem == newItem
         }
     }
