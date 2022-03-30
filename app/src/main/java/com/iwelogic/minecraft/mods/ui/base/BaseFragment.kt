@@ -25,9 +25,9 @@ open class BaseFragment<VM : BaseViewModel> : Fragment() {
         }
 
         viewModel.showInterstitial.observe(viewLifecycleOwner) {
-            if (context?.readBoolean("interstitial_open_details").isTrue())
+            if (context?.readBoolean("interstitial_open_details").isTrue()) {
                 (activity as MainActivity).showInterstitialAd(it)
-            else
+            } else
                 it?.invoke()
         }
 

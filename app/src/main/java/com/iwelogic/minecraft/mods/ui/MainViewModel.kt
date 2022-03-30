@@ -24,6 +24,10 @@ class MainViewModel @Inject constructor(private val repository: Repository, @App
     var openMain: SingleLiveEvent<Boolean> = SingleLiveEvent()
     var openOnboarding: SingleLiveEvent<Boolean> = SingleLiveEvent()
 
+    init {
+        loadAdd()
+    }
+
     fun checkAge() {
         context.get()?.readString(Const.CONTENT_RATING)?.let {
             val requestConfiguration = MobileAds.getRequestConfiguration()
@@ -36,7 +40,6 @@ class MainViewModel @Inject constructor(private val repository: Repository, @App
         } ?: run {
             openOnboarding.invoke(true)
         }
-        loadAdd()
     }
 
     private fun loadAdd() {
@@ -45,8 +48,9 @@ class MainViewModel @Inject constructor(private val repository: Repository, @App
                 when (result) {
                     is Result.Success -> {
                         result.data?.forEach {
-                            if (it.id != null && it.status != null)
-                                context.get()?.writeBoolean(it.id, true)
+                            if (it.id != null && it.status != null) {
+                                context.get()?.writeBoolean(it.id, it.status)
+                            }
                         }
                     }
                     else -> {}
