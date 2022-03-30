@@ -17,6 +17,7 @@ import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.utils.deepCopy
 import com.iwelogic.minecraft.mods.utils.isTrue
+import com.iwelogic.minecraft.mods.utils.readBoolean
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -145,6 +146,7 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
                         }
                         is Result.Success -> {
                             val data = result.data?.toMutableList()?.onEach { it.category = category } ?: ArrayList()
+                            if (data.isNotEmpty() && context.get()?.readBoolean("banner_in_list").isTrue()) data.add(4, Mod(category = "ad"))
                             mods.value?.addAll(data)
                             mods.postValue(mods.value)
                             if (data.size < PAGE_SIZE) finished = true

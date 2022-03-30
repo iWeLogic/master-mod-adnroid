@@ -24,7 +24,7 @@
         android:orientation="vertical"
         android:padding="@dimen/double_default_size"
         android:visibility="@{TextUtils.isEmpty(viewModel.error) ? View.GONE : View.VISIBLE}"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <TextView
             style="@style/Header"

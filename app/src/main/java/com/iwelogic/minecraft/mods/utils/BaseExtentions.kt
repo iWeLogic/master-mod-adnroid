@@ -12,6 +12,10 @@ fun Int.dp(context: Context?): Int {
     return (toFloat() * (context?.resources?.displayMetrics?.density ?: 1f)).toInt()
 }
 
+fun Int.fromPxToDp(context: Context?): Int {
+    return (toFloat() / (context?.resources?.displayMetrics?.density ?: 1f)).toInt()
+}
+
 fun <T> LiveData<T>.ignoreFirst(): MutableLiveData<T> {
     val result = MediatorLiveData<T>()
     var isFirst = true

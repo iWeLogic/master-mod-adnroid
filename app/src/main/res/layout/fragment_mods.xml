@@ -89,6 +89,8 @@
                 spanCount="@{viewModel.spanCount}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingStart="@dimen/half_default_size"
+                android:paddingEnd="@dimen/half_default_size"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
             <include

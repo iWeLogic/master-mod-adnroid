@@ -16,10 +16,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_size"
-            android:layout_marginTop="@dimen/half_default_size"
-            android:layout_marginEnd="@dimen/default_size"
-            android:layout_marginBottom="@dimen/half_default_size"
+            android:layout_margin="@dimen/half_default_size"
             app:cardElevation="@dimen/quarter_default_size">
 
             <androidx.constraintlayout.widget.ConstraintLayout

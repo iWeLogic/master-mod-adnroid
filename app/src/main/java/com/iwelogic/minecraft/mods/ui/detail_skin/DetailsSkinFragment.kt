@@ -51,7 +51,6 @@ class DetailsSkinFragment : BaseDetailsFragment<DetailsSkinViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        refreshAd(view)
 
         setFragmentResultListener("provide") { _, _ ->
             permissionAction?.let {
