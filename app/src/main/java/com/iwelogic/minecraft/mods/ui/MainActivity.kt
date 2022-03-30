@@ -66,31 +66,26 @@ class MainActivity : AppCompatActivity() {
             .setPrimaryNavigationFragment(host).commitAllowingStateLoss()
     }
 
-
     private fun loadInterstitialAd() {
         mAdIsLoading = true
         val adRequest = AdRequest.Builder().build()
-        InterstitialAd.load(
-            this,
-            getString(R.string.ad_interstitial),
-            adRequest,
-            object : InterstitialAdLoadCallback() {
-                override fun onAdFailedToLoad(adError: LoadAdError) {
-                    super.onAdFailedToLoad(adError)
-                    count++
-                    if (count < 3) loadInterstitialAd()
-                    else {
-                        count = 0
-                        mAdIsLoading = false
-                    }
-                    mInterstitialAd = null
-                }
-
-                override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                    mInterstitialAd = interstitialAd
+        InterstitialAd.load(this, getString(R.string.ad_interstitial), adRequest, object : InterstitialAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                super.onAdFailedToLoad(adError)
+                count++
+                if (count < 3) loadInterstitialAd()
+                else {
+                    count = 0
                     mAdIsLoading = false
                 }
-            })
+                mInterstitialAd = null
+            }
+
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                mInterstitialAd = interstitialAd
+                mAdIsLoading = false
+            }
+        })
     }
 
     fun showInterstitialAd(callback: (() -> Unit)? = null) {
