@@ -49,7 +49,7 @@ class MainViewModel @Inject constructor(private val repository: Repository, @App
                     is Result.Success -> {
                         result.data?.forEach {
                             if (it.id != null && it.status != null) {
-                                context.get()?.writeBoolean(it.id, true)
+                                context.get()?.writeBoolean(it.id, it.status)
                             }
                         }
                     }
