@@ -3,18 +3,18 @@ package com.iwelogic.minecraft.mods.ui.main.mods
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.*
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.ItemAdBinding
 import com.iwelogic.minecraft.mods.databinding.ItemModBinding
 import com.iwelogic.minecraft.mods.databinding.ItemSkinBinding
 import com.iwelogic.minecraft.mods.models.Mod
+import com.iwelogic.minecraft.mods.utils.catchAll
 import com.iwelogic.minecraft.mods.utils.dp
 import com.iwelogic.minecraft.mods.utils.fromPxToDp
 
@@ -37,14 +37,10 @@ class ModAdapter(private val onClick: (Mod) -> Unit) : ListAdapter<Mod, Recycler
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is ModViewHolder) {
-            holder.bind(getItem(position))
-        }
-        if (holder is SkinViewHolder) {
-            holder.bind(getItem(position))
-        }
-        if (holder is AdViewHolder) {
-            holder.bind(getItem(position))
+        when (holder) {
+            is ModViewHolder -> holder.bind(getItem(position))
+            is SkinViewHolder -> holder.bind(getItem(position))
+            is AdViewHolder -> holder.bind(getItem(position))
         }
     }
 
@@ -82,6 +78,17 @@ class ModAdapter(private val onClick: (Mod) -> Unit) : ListAdapter<Mod, Recycler
                 val adHeight = adWidth / 3 * 2
                 adViewNew.adSize = AdSize.getInlineAdaptiveBannerAdSize(adWidth.fromPxToDp(context), adHeight.fromPxToDp(context))
                 val adRequest = AdRequest.Builder().build()
+                adViewNew.adListener = object : AdListener() {
+                    override fun onAdFailedToLoad(p0: LoadAdError) {
+                        super.onAdFailedToLoad(p0)
+                        catchAll {
+                            binding.adViewContainer.removeAllViews()
+                            val placeholder = ImageView(context)
+                            placeholder.setImageResource(R.drawable.ad_placeholder)
+                            binding.adViewContainer.addView(placeholder)
+                        }
+                    }
+                }
                 adViewNew.loadAd(adRequest)
                 item.adView = adViewNew
             }

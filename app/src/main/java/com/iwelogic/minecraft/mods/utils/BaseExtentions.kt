@@ -2,6 +2,7 @@ package com.iwelogic.minecraft.mods.utils
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -51,5 +52,14 @@ fun Activity.hideKeyboard(clearFocus: Boolean) {
         if (clearFocus) {
             it.clearFocus()
         }
+    }
+}
+
+inline fun catchAll(action: () -> Unit) {
+    try {
+        action()
+    } catch (t: Throwable) {
+        t.printStackTrace()
+        Log.w("myLog", "catchAll: " + t.message)
     }
 }
