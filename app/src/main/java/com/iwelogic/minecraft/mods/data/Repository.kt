@@ -34,7 +34,7 @@ class Repository @Inject constructor(private val dataSource: DataSource, private
     suspend fun getMods(category: String, queries: MultiMap<String, Any>): Flow<Result<List<Mod>>> {
         return flow {
             emit(Result.Loading)
-            delay(200)
+            delay(100)
             emit(dataSource.getMods(category, queries))
             emit(Result.Finish)
         }.flowOn(Dispatchers.IO)

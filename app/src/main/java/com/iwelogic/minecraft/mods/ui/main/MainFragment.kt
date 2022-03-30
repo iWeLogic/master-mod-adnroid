@@ -28,8 +28,23 @@ class MainFragment : BaseFragment<MainViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        bottomNavigationView.itemIconTintList = null;
+        bottomNavigationView.itemIconTintList = null
         val navController = (childFragmentManager.findFragmentById(R.id.bottomNavigationContainer) as NavHostFragment).navController
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
     }
+
+
+    /*fun showRatingDialog() {
+
+        activity?.let { activity ->
+            val manager = ReviewManagerFactory.create(activity)
+            val request = manager.requestReviewFlow()
+            request.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val reviewInfo = task.result
+                    manager.launchReviewFlow(activity, reviewInfo)
+                }
+            }
+        }
+    }*/
 }
