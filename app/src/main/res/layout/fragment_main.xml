@@ -24,17 +24,13 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/bottom" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#C4C4C4" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:layout_gravity="bottom"
-            android:background="@color/background_navigation"
+            android:background="@drawable/background_top_line"
             app:itemIconSize="32dp"
             app:itemTextAppearanceActive="@style/BottomNavigationViewTextActive"
             app:itemTextAppearanceInactive="@style/BottomNavigationViewText"

@@ -7,10 +7,10 @@
     <color name="title">#FFFFFFFF</color>
     <color name="regularText">#C4C4C4</color>
     <color name="disableColor">#616161</color>
-    <color name="white">#FFFFFFFF</color>
     <color name="hintText">#AFAFAF</color>
+    <color name="divider">#9A9A9A</color>
 
-
+    <color name="white">#FFFFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="gray2">#C4C4C4</color>
 </resources>
