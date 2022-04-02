@@ -39,41 +39,40 @@ object Base {
         searchClose.setImageResource(R.drawable.clear)
     }
 
-    @BindingAdapter("image")
+    @BindingAdapter("image", "scaleType", "radius", requireAll = false)
     @JvmStatic
-    fun setImage(view: ImageView, image: String?) {
+    fun setImage(view: ImageView, image: String?, scaleType: ScaleType?, radius: Int?) {
         val circularProgressDrawable = CircularProgressDrawable(view.context)
         circularProgressDrawable.strokeWidth = 6.dp(view.context).toFloat()
         circularProgressDrawable.centerRadius = 24.dp(view.context).toFloat()
         circularProgressDrawable.setColorSchemeColors(ContextCompat.getColor(view.context, R.color.titleText))
         circularProgressDrawable.start()
-        val radius = (view.tag ?: "0").toString().toInt()
         image?.let {
             Glide.with(view.context).load(image).transform(
-                when (view.scaleType) {
-                    ImageView.ScaleType.CENTER_CROP -> if (radius == 0) CenterCrop() else MultiTransformation(CenterCrop(), RoundedCorners(radius.dp(view.context)))
-                    ImageView.ScaleType.CENTER_INSIDE -> if (radius == 0) CenterInside() else MultiTransformation(CenterInside(), RoundedCorners(radius.dp(view.context)))
-                    ImageView.ScaleType.FIT_CENTER -> if (radius == 0) FitCenter() else MultiTransformation(FitCenter(), RoundedCorners(radius.dp(view.context)))
-                    else -> CircleCrop()
+                if (radius != null && radius > 0) {
+                    when (scaleType) {
+                        ScaleType.CENTER_INSIDE -> MultiTransformation(CenterInside(), RoundedCorners(radius.dp(view.context)))
+                        ScaleType.FIT_CENTER -> MultiTransformation(FitCenter(), RoundedCorners(radius.dp(view.context)))
+                        ScaleType.CIRCLE_CROP -> MultiTransformation(CircleCrop(), RoundedCorners(radius.dp(view.context)))
+                        else -> MultiTransformation(CenterCrop(), RoundedCorners(radius.dp(view.context)))
+                    }
+                } else {
+                    when (scaleType) {
+                        ScaleType.CENTER_INSIDE -> CenterInside()
+                        ScaleType.FIT_CENTER -> FitCenter()
+                        ScaleType.CIRCLE_CROP -> CircleCrop()
+                        else -> CenterCrop()
+                    }
                 }
             ).placeholder(circularProgressDrawable).into(view)
         }
     }
 
-    @BindingAdapter("image")
-    @JvmStatic
-    fun setImage(view: ImageView, image: Int?) {
-        val radius = (view.tag ?: "0").toString().toInt()
-        image?.let {
-            Glide.with(view.context).load(image).transform(
-                when (view.scaleType) {
-                    ImageView.ScaleType.CENTER_CROP -> if (radius == 0) CenterCrop() else MultiTransformation(CenterCrop(), RoundedCorners(radius.dp(view.context)))
-                    ImageView.ScaleType.CENTER_INSIDE -> if (radius == 0) CenterInside() else MultiTransformation(CenterInside(), RoundedCorners(radius.dp(view.context)))
-                    ImageView.ScaleType.FIT_CENTER -> if (radius == 0) FitCenter() else MultiTransformation(FitCenter(), RoundedCorners(radius.dp(view.context)))
-                    else -> CircleCrop()
-                }
-            ).into(view)
-        }
+    enum class ScaleType {
+        CENTER_CROP,
+        CENTER_INSIDE,
+        FIT_CENTER,
+        CIRCLE_CROP
     }
 
     @BindingAdapter("html")

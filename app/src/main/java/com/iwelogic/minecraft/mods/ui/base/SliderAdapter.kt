@@ -2,10 +2,10 @@ package com.iwelogic.minecraft.mods.ui.base
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
+import androidx.databinding.DataBindingUtil
 import com.iwelogic.minecraft.mods.R
+import com.iwelogic.minecraft.mods.databinding.ItemImageBinding
 import com.smarteist.autoimageslider.SliderViewAdapter
 import java.util.*
 
@@ -20,16 +20,21 @@ class SliderAdapter : SliderViewAdapter<SliderAdapter.ImageViewHolder>() {
 
     @SuppressLint("InflateParams")
     override fun onCreateViewHolder(parent: ViewGroup): ImageViewHolder {
-        return ImageViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_image, null))
+        return ImageViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_image, parent, false))
     }
 
     override fun onBindViewHolder(viewHolder: ImageViewHolder, position: Int) {
-        Glide.with(viewHolder.view.context).load(images[position]).into(viewHolder.view.findViewById(R.id.image))
+        viewHolder.bind(images[position])
     }
 
     override fun getCount(): Int {
         return images.size
     }
 
-    inner class ImageViewHolder(val view: View) : SliderViewAdapter.ViewHolder(view)
+    inner class ImageViewHolder(private val binding: ItemImageBinding) : SliderViewAdapter.ViewHolder(binding.root) {
+        fun bind(item: String) {
+            binding.item = item
+            binding.executePendingBindings()
+        }
+    }
 }

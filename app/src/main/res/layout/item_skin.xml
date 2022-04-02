@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="com.iwelogic.minecraft.mods.bind.Base.ScaleType" />
+
         <variable
             name="item"
             type="com.iwelogic.minecraft.mods.models.Mod" />
@@ -38,10 +40,10 @@
 
                     <ImageView
                         image="@{item.getImage()}"
+                        scaleType="@{ScaleType.CENTER_INSIDE}"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:scaleType="fitCenter"
                         android:contentDescription="@string/skins" />
 
                     <LinearLayout

@@ -109,6 +109,7 @@
     <string name="permission_one_body">Access to memory required for file downloading. Grant permission?</string>
     <string name="permission_two_body">Access to memory should be granted in phone settings for file downloading. Open settings?</string>
     <string name="image">Image</string>
+    <string name="skin">Skin</string>
 
 
 </resources>
