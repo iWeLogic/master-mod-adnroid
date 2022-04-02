@@ -77,7 +77,7 @@
                     android:layout_marginEnd="@dimen/default_size"
                     android:fontFamily="@font/minecraft_bold"
                     android:text="@{viewModel.item.title}"
-                    android:textColor="@color/titleText"
+                    android:textColor="@color/title"
                     android:textSize="20sp" />
 
                 <LinearLayout

@@ -12,7 +12,7 @@
         android:layout_marginTop="@dimen/default_size"
         android:layout_marginEnd="@dimen/double_default_size"
         android:layout_marginBottom="@dimen/default_size"
-        android:background="@color/background"
+        android:background="@color/background_navigation"
         android:orientation="vertical"
         android:padding="24dp"
         tools:ignore="UselessParent">

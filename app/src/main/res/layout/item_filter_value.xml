@@ -20,11 +20,13 @@
             android:button="@drawable/checkbox_button"
             android:checked="@={item.value}"
             android:fontFamily="@font/minecraft_regular"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
             android:minHeight="0dp"
-            android:textSize="15sp"
             android:padding="@dimen/half_default_size"
             android:text="@{context.getString(item.filter.title)}"
-            android:textColor="@color/black" />
+            android:textColor="@color/title"
+            android:textSize="15sp" />
 
     </FrameLayout>
 

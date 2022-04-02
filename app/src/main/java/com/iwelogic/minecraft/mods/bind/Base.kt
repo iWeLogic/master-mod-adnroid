@@ -32,7 +32,7 @@ object Base {
         searchView.setQuery(query, false)
         val txtSearch = searchView.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
         txtSearch.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
-        txtSearch.setTextColor(ContextCompat.getColor(searchView.context, R.color.titleText))
+        txtSearch.setTextColor(ContextCompat.getColor(searchView.context, R.color.title))
         txtSearch.setHintTextColor(ContextCompat.getColor(searchView.context, R.color.hintText))
         txtSearch.typeface = ResourcesCompat.getFont(searchView.context, R.font.minecraft_regular)
         val searchClose = searchView.findViewById(androidx.appcompat.R.id.search_close_btn) as ImageView
@@ -45,7 +45,7 @@ object Base {
         val circularProgressDrawable = CircularProgressDrawable(view.context)
         circularProgressDrawable.strokeWidth = 6.dp(view.context).toFloat()
         circularProgressDrawable.centerRadius = 24.dp(view.context).toFloat()
-        circularProgressDrawable.setColorSchemeColors(ContextCompat.getColor(view.context, R.color.titleText))
+        circularProgressDrawable.setColorSchemeColors(ContextCompat.getColor(view.context, R.color.title))
         circularProgressDrawable.start()
         image?.let {
             Glide.with(view.context).load(image).transform(

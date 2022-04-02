@@ -2,7 +2,7 @@
     <style name="Theme.MinecraftMods" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/background</item>
         <item name="colorPrimaryVariant">@color/background</item>
-        <item name="colorOnPrimary">@color/titleText</item>
+        <item name="colorOnPrimary">@color/title</item>
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/green</item>

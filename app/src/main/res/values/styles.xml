@@ -11,14 +11,13 @@
     </style>
 
     <style name="SearchStyle">
-        <item name="colorAccent">@color/titleText</item>
+        <item name="colorAccent">@color/title</item>
     </style>
 
     <style name="AppTheme.TextAppearance.Popup" parent="TextAppearance.MaterialComponents.Caption">
         <item name="fontFamily">@font/minecraft_regular</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:button">@drawable/checkbox_button</item>
+        <item name="android:textColor">@color/title</item>
     </style>
 
     <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
@@ -43,7 +42,7 @@
 
 
     <style name="Header">
-        <item name="android:textColor">@color/titleText</item>
+        <item name="android:textColor">@color/title</item>
         <item name="android:fontFamily">@font/minecraft_bold</item>
         <item name="android:textSize">18sp</item>
         <item name="android:includeFontPadding">false</item>

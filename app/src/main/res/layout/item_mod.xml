@@ -57,7 +57,7 @@
                             android:fontFamily="@font/minecraft_regular"
                             android:lines="1"
                             android:text="@{item.title}"
-                            android:textColor="@color/titleText"
+                            android:textColor="@color/title"
                             android:textSize="17sp" />
 
                         <LinearLayout

@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="com.iwelogic.minecraft.mods.bind.Base.ScaleType" />
+
         <import type="com.iwelogic.minecraft.mods.BuildConfig" />
 
         <import type="android.view.View" />
@@ -35,10 +37,10 @@
 
                     <ImageView
                         image="@{viewModel.item.getImage()}"
+                        scaleType="@{ScaleType.CENTER_INSIDE}"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:padding="@dimen/default_size"
-                        android:scaleType="fitCenter"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -69,9 +71,9 @@
                         android:layout_marginStart="@dimen/quarter_default_size"
                         android:layout_weight="1"
                         android:ellipsize="end"
-                        android:textColor="@color/regularText"
                         android:fontFamily="@font/roboto_medium"
                         android:lines="1"
+                        android:textColor="@color/regularText"
                         android:textSize="16sp" />
 
                     <ImageView
@@ -88,9 +90,9 @@
                         android:layout_marginStart="@dimen/quarter_default_size"
                         android:layout_weight="1"
                         android:ellipsize="end"
-                        android:textColor="@color/regularText"
                         android:fontFamily="@font/roboto_medium"
                         android:lines="1"
+                        android:textColor="@color/regularText"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -138,8 +140,8 @@
                     android:layout_marginStart="@dimen/default_size"
                     android:layout_marginTop="@dimen/half_default_size"
                     android:layout_marginEnd="@dimen/default_size"
-                    android:onClick="@{() -> viewModel.onClickDownloadToGallery()}"
                     android:background="@drawable/button_download_to_gallery"
+                    android:onClick="@{() -> viewModel.onClickDownloadToGallery()}"
                     android:visibility="@{viewModel.hideDownloadToGalleyBtn ? View.GONE : View.VISIBLE}" />
 
                 <FrameLayout

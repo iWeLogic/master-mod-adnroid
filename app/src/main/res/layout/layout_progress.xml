@@ -25,7 +25,7 @@
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminateTint="@color/titleText"
+            android:indeterminateTint="@color/title"
             android:indeterminateTintMode="src_atop" />
 
     </LinearLayout>

@@ -49,7 +49,7 @@
                 android:layout_marginStart="@dimen/half_default_size"
                 android:fontFamily="@font/minecraft_regular"
                 android:text="@{viewModel.message}"
-                android:textColor="@color/titleText"
+                android:textColor="@color/title"
                 android:textSize="18sp" />
 
             <androidx.recyclerview.widget.RecyclerView
