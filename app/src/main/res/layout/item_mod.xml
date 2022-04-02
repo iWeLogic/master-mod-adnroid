@@ -26,7 +26,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:background="@color/white"
+                    android:background="@color/background_navigation"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="30:20"
@@ -57,7 +57,7 @@
                             android:fontFamily="@font/minecraft_regular"
                             android:lines="1"
                             android:text="@{item.title}"
-                            android:textColor="@color/black"
+                            android:textColor="@color/titleText"
                             android:textSize="17sp" />
 
                         <LinearLayout
@@ -77,7 +77,7 @@
                                 android:fontFamily="@font/minecraft_regular"
                                 android:lines="1"
                                 android:text="@{item.fileSize + ` Mb`}"
-                                android:textColor="@color/black"
+                                android:textColor="@color/regularText"
                                 android:textSize="14sp"
                                 app:drawableStartCompat="@drawable/folder" />
 
@@ -91,7 +91,7 @@
                                 android:fontFamily="@font/minecraft_regular"
                                 android:lines="1"
                                 android:text="@{item.getFormattedDownloads()}"
-                                android:textColor="@color/black"
+                                android:textColor="@color/regularText"
                                 android:textSize="14sp"
                                 app:drawableStartCompat="@drawable/download" />
 
@@ -106,7 +106,7 @@
                                 android:gravity="center_vertical"
                                 android:lines="1"
                                 android:text="@{item.getFormattedLikes()}"
-                                android:textColor="@color/black"
+                                android:textColor="@color/regularText"
                                 android:textSize="14sp"
                                 app:drawableStartCompat="@drawable/favorite_small" />
 
@@ -122,7 +122,7 @@
                                 android:gravity="center_vertical"
                                 android:lines="1"
                                 android:text="@{item.generateVersion()}"
-                                android:textColor="@color/black"
+                                android:textColor="@color/regularText"
                                 android:textSize="14sp"
                                 app:drawableStartCompat="@drawable/version" />
 

@@ -72,8 +72,7 @@
                 android:background="?attr/actionBarItemBackground"
                 android:contentDescription="@string/sorting"
                 android:scaleType="centerInside"
-                android:src="@drawable/sort"
-                app:tint="@color/black" />
+                android:src="@drawable/sort" />
 
         </LinearLayout>
 

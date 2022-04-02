@@ -1,7 +1,5 @@
 package com.iwelogic.minecraft.mods.bind
 
-import android.text.Editable
-import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.util.TypedValue
 import android.widget.EditText
@@ -12,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.*
@@ -33,8 +32,8 @@ object Base {
         searchView.setQuery(query, false)
         val txtSearch = searchView.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
         txtSearch.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
-        txtSearch.setTextColor(ContextCompat.getColor(searchView.context, R.color.black))
-        txtSearch.setHintTextColor(ContextCompat.getColor(searchView.context, R.color.black50))
+        txtSearch.setTextColor(ContextCompat.getColor(searchView.context, R.color.titleText))
+        txtSearch.setHintTextColor(ContextCompat.getColor(searchView.context, R.color.hintText))
         txtSearch.typeface = ResourcesCompat.getFont(searchView.context, R.font.minecraft_regular)
         val searchClose = searchView.findViewById(androidx.appcompat.R.id.search_close_btn) as ImageView
         searchClose.setImageResource(R.drawable.clear)
@@ -43,6 +42,11 @@ object Base {
     @BindingAdapter("image")
     @JvmStatic
     fun setImage(view: ImageView, image: String?) {
+        val circularProgressDrawable = CircularProgressDrawable(view.context)
+        circularProgressDrawable.strokeWidth = 6.dp(view.context).toFloat()
+        circularProgressDrawable.centerRadius = 24.dp(view.context).toFloat()
+        circularProgressDrawable.setColorSchemeColors(ContextCompat.getColor(view.context, R.color.titleText))
+        circularProgressDrawable.start()
         val radius = (view.tag ?: "0").toString().toInt()
         image?.let {
             Glide.with(view.context).load(image).transform(
@@ -52,7 +56,7 @@ object Base {
                     ImageView.ScaleType.FIT_CENTER -> if (radius == 0) FitCenter() else MultiTransformation(FitCenter(), RoundedCorners(radius.dp(view.context)))
                     else -> CircleCrop()
                 }
-            ).into(view)
+            ).placeholder(circularProgressDrawable).into(view)
         }
     }
 

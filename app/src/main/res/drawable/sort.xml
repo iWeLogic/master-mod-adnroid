@@ -5,44 +5,44 @@
     android:viewportHeight="24">
   <path
       android:pathData="M6.1539,20.9231H9.2308V24H6.1539V20.9231Z"
-      android:fillColor="@color/titleColor"/>
+      android:fillColor="@color/titleText"/>
   <path
       android:pathData="M3.077,17.8462H6.1539V20.9231H3.077V17.8462Z"
-      android:fillColor="@color/titleColor"/>
+      android:fillColor="@color/titleText"/>
   <path
       android:pathData="M9.2308,17.8462H12.3077V20.9231H9.2308V17.8462Z"
-      android:fillColor="@color/titleColor"/>
+      android:fillColor="@color/titleText"/>
   <path
       android:pathData="M12.3077,14.7692H15.3846V17.8461H12.3077V14.7692Z"
-      android:fillColor="@color/titleColor"/>
+      android:fillColor="@color/titleText"/>
   <path
       android:pathData="M-0,14.7692H3.0769V17.8461H-0V14.7692Z"
-      android:fillColor="@color/titleColor"/>
+      android:fillColor="@color/titleText"/>
   <path
       android:pathData="M17.8462,20.9231H23.6923V24H17.8462V20.9231Z"
-      android:fillColor="@color/titleColor"/>
+      android:fillColor="@color/titleText"/>
   <path
       android:pathData="M30.7692,0H36.3077V3.0769H30.7692V0Z"
-      android:fillColor="@color/titleColor"/>
+      android:fillColor="@color/titleText"/>
   <path
       android:pathData="M17.8462,7.0769H20.9231V10.1539H17.8462V7.0769Z"
-      android:fillColor="@color/titleColor"/>
+      android:fillColor="@color/titleText"/>
   <path
       android:pathData="M6.1539,0H9.2308V3.0769H6.1539V0Z"
-      android:fillColor="@color/titleColor"/>
+      android:fillColor="@color/titleText"/>
   <path
       android:pathData="M6.1539,11.0769H9.2308V17.8462H6.1539V11.0769Z"
-      android:fillColor="@color/titleColor"/>
+      android:fillColor="@color/titleText"/>
   <path
       android:pathData="M6.1539,4H9.2308V10.1538H6.1539V4Z"
-      android:fillColor="@color/titleColor"/>
+      android:fillColor="@color/titleText"/>
   <path
       android:pathData="M17.8461,14.4615H28.3077V17.5385H17.8461V14.4615Z"
-      android:fillColor="@color/titleColor"/>
+      android:fillColor="@color/titleText"/>
   <path
       android:pathData="M22.1539,7.0769H32.9231V10.1539H22.1539V7.0769Z"
-      android:fillColor="@color/titleColor"/>
+      android:fillColor="@color/titleText"/>
   <path
       android:pathData="M17.8462,0H29.2308V3.0769H17.8462V0Z"
-      android:fillColor="@color/titleColor"/>
+      android:fillColor="@color/titleText"/>
 </vector>

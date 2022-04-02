@@ -9,9 +9,14 @@
     <color name="main">#00838F</color>
     <color name="background">#FAFAFA</color>
     <color name="background_navigation">#16191F</color>
-    <color name="titleColor">#FFFFFFFF</color>
+    <color name="titleText">#FFFFFFFF</color>
+    <color name="regularText">#C4C4C4</color>
+    <color name="disableColor">#D1D1D1</color>
+    <color name="hintText">#80000000</color>
+
+
     <color name="white">#FFFFFFFF</color>
-    <color name="black50">#80000000</color>
+
     <color name="transparent">#00FFFFFF</color>
     <color name="gray2">#C4C4C4</color>
 </resources>

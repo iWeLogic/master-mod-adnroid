@@ -77,7 +77,7 @@
                     android:layout_marginEnd="@dimen/default_size"
                     android:fontFamily="@font/minecraft_bold"
                     android:text="@{viewModel.item.title}"
-                    android:textColor="@color/black"
+                    android:textColor="@color/titleText"
                     android:textSize="20sp" />
 
                 <LinearLayout
@@ -97,6 +97,7 @@
                         android:fontFamily="@font/minecraft_regular"
                         android:lines="1"
                         android:text="@{viewModel.item.fileSize + ` Mb`}"
+                        android:textColor="@color/regularText"
                         android:textSize="16sp"
                         app:drawableStartCompat="@drawable/folder" />
 
@@ -110,6 +111,7 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/minecraft_regular"
                         android:lines="1"
+                        android:textColor="@color/regularText"
                         android:textSize="16sp"
                         app:drawableStartCompat="@drawable/download" />
 
@@ -123,6 +125,7 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/minecraft_regular"
                         android:lines="1"
+                        android:textColor="@color/regularText"
                         android:textSize="16sp"
                         app:drawableStartCompat="@drawable/favorite_small" />
 
@@ -136,6 +139,7 @@
                         android:fontFamily="@font/minecraft_regular"
                         android:lines="1"
                         android:text="@{viewModel.item.getVersion()}"
+                        android:textColor="@color/regularText"
                         android:textSize="16sp"
                         app:drawableStartCompat="@drawable/version" />
 

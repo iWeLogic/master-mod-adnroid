@@ -52,8 +52,7 @@
                 android:background="?attr/actionBarItemBackground"
                 android:onClick="@{() -> viewModel.onClickMic()}"
                 android:scaleType="centerInside"
-                android:src="@drawable/mic"
-                app:tint="@color/darkIcons" />
+                android:src="@drawable/mic"/>
 
         </LinearLayout>
 

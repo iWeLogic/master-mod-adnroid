@@ -18,7 +18,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/background">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -69,6 +69,7 @@
                         android:layout_marginStart="@dimen/quarter_default_size"
                         android:layout_weight="1"
                         android:ellipsize="end"
+                        android:textColor="@color/regularText"
                         android:fontFamily="@font/roboto_medium"
                         android:lines="1"
                         android:textSize="16sp" />
@@ -87,6 +88,7 @@
                         android:layout_marginStart="@dimen/quarter_default_size"
                         android:layout_weight="1"
                         android:ellipsize="end"
+                        android:textColor="@color/regularText"
                         android:fontFamily="@font/roboto_medium"
                         android:lines="1"
                         android:textSize="16sp" />
