@@ -30,9 +30,10 @@
 
                 <TextView
                     android:id="@+id/ad_headline"
+                    android:textColor="@color/titleText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/minecraft_bold"
                     android:textSize="16sp" />
 
                 <LinearLayout
@@ -43,7 +44,8 @@
                         android:id="@+id/ad_advertiser"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/regularText"
+                        android:fontFamily="@font/minecraft_regular"
                         android:gravity="bottom"
                         android:textSize="14sp" />
 
@@ -72,7 +74,8 @@
                 android:id="@+id/ad_body"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/regularText"
+                android:fontFamily="@font/minecraft_regular"
                 android:textSize="14sp" />
 
             <FrameLayout
@@ -100,6 +103,7 @@
                 android:id="@+id/ad_call_to_action"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="@dimen/half_default_size"
+                android:minWidth="200dp"
                 android:layout_marginBottom="@dimen/default_size" />
 
         </LinearLayout>

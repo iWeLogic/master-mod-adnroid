@@ -37,7 +37,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:visibility="@{viewModel.item.countImages > 1 ? View.VISIBLE : View.GONE}"
-                        app:layout_constraintDimensionRatio="30:20"
+                        app:layout_constraintDimensionRatio="30:18"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -62,7 +62,7 @@
                         android:scaleType="centerCrop"
                         android:visibility="@{viewModel.item.countImages > 1 ? View.GONE : View.VISIBLE}"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="30:20"
+                        app:layout_constraintDimensionRatio="30:18"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />

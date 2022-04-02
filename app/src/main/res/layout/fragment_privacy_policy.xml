@@ -24,10 +24,10 @@
                 android:layout_width="@dimen/toolbar"
                 android:layout_height="@dimen/toolbar"
                 android:background="?attr/actionBarItemBackground"
+                android:contentDescription="@string/back"
                 android:onClick="@{() -> viewModel.onClickClose()}"
                 android:scaleType="centerInside"
-                android:src="@drawable/back"
-                android:contentDescription="@string/back" />
+                android:src="@drawable/back" />
 
             <TextView
                 style="@style/Header"
@@ -43,10 +43,11 @@
 
             <TextView
                 html="@{viewModel.text}"
-                android:textColor="@color/black"
-                android:textSize="15sp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/minecraft_regular"
+                android:textColor="@color/regularText"
+                android:textSize="15sp" />
 
         </androidx.core.widget.NestedScrollView>
 

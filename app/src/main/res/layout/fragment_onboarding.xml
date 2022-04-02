@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/minecraft_regular"
             android:text="@string/click_confirm"
-            android:textColor="@color/black" />
+            android:textColor="@color/regularText" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
             android:onClick="@{() -> viewModel.onClickPrivacyPolicy()}"
             android:padding="@dimen/half_default_size"
             android:text="@string/privacy_policy_underlined"
-            android:textColor="@color/black" />
+            android:textColor="@color/regularText" />
 
     </LinearLayout>
 

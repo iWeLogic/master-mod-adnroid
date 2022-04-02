@@ -12,7 +12,7 @@
         android:layout_marginTop="@dimen/default_size"
         android:layout_marginEnd="@dimen/double_default_size"
         android:layout_marginBottom="@dimen/default_size"
-        android:background="@color/white"
+        android:background="@color/background"
         android:orientation="vertical"
         android:padding="24dp"
         tools:ignore="UselessParent">
@@ -30,7 +30,7 @@
             android:layout_marginTop="@dimen/half_default_size"
             android:fontFamily="@font/minecraft_regular"
             android:letterSpacing="0.04"
-            android:textColor="@color/black"
+            android:textColor="@color/regularText"
             android:textSize="16sp" />
 
 
