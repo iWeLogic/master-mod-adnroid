@@ -5,10 +5,8 @@ import androidx.annotation.NonNull
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
+import androidx.room.*
+import androidx.room.TypeConverter
 import com.google.android.gms.ads.AdView
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -75,7 +73,10 @@ data class Mod(
     @Expose
     var p_likes: Long? = null,
 
+    @ColumnInfo(name = "type")
     var type: Type? = null,
+
+    var category: String? = null,
 
     @Transient
     @Ignore
@@ -161,4 +162,19 @@ data class Mod(
     }
 
     fun getFile() = BuildConfig.BACKEND_FILES + "/" + type + "/" + id + "/file.${type?.fileExtension}"
+
+}
+
+// TypeConverter
+class TypeConverter {
+
+    @androidx.room.TypeConverter
+    fun toString(type: Type?): String? {
+        return type?.id
+    }
+
+    @TypeConverter
+    fun toType(value: String?): Type? {
+        return Type.getValueById(value ?: "")
+    }
 }
