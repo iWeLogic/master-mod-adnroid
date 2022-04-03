@@ -84,33 +84,20 @@ class ModsFragment : BaseFragment<ModsViewModel>() {
         parentFragment?.parentFragment?.setFragmentResultListener("filter_" + viewModel.type.id) { _, bundle ->
             viewModel.setNewFilters(bundle.getParcelableArray("value")?.map { it as FilterValue } ?: ArrayList())
         }
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
         viewModel.recyclerState?.let {
-            view?.findViewById<RecyclerView>(R.id.list)?.layoutManager?.onRestoreInstanceState(it)
+            view.findViewById<RecyclerView>(R.id.list)?.layoutManager?.onRestoreInstanceState(it)
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        saveState()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        saveState()
+        view?.findViewById<RecyclerView>(R.id.list)?.layoutManager?.onSaveInstanceState()?.let {
+            viewModel.recyclerState = it
+        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         viewModel.reloadScreenSize(context?.resources?.displayMetrics?.widthPixels)
-    }
-
-    private fun saveState() {
-        view?.findViewById<RecyclerView>(R.id.list)?.layoutManager?.onSaveInstanceState()?.let {
-            viewModel.recyclerState = it
-        }
     }
 }

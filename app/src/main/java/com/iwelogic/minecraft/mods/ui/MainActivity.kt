@@ -54,16 +54,18 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.openOnboarding.observe(this) {
             val host = NavHostFragment.create(R.navigation.onboarding)
-            supportFragmentManager.beginTransaction().replace(R.id.hostContainer, host)
-                .setPrimaryNavigationFragment(host).commitAllowingStateLoss()
+            supportFragmentManager.beginTransaction().replace(R.id.hostContainer, host).setPrimaryNavigationFragment(host).commitAllowingStateLoss()
         }
     }
 
     fun openMain() {
-        loadInterstitialAd()
-        val host = NavHostFragment.create(R.navigation.main)
-        supportFragmentManager.beginTransaction().replace(R.id.hostContainer, host)
-            .setPrimaryNavigationFragment(host).commitAllowingStateLoss()
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.hostContainer) as NavHostFragment
+        val currentFragment = navHostFragment.navController.currentDestination?.id
+        if (currentFragment == null || currentFragment == R.id.onboardingFragment) {
+            loadInterstitialAd()
+            val host = NavHostFragment.create(R.navigation.main)
+            supportFragmentManager.beginTransaction().replace(R.id.hostContainer, host).setPrimaryNavigationFragment(host).commitAllowingStateLoss()
+        }
     }
 
     private fun loadInterstitialAd() {

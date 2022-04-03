@@ -34,12 +34,6 @@ class MainFragment : BaseFragment<MainViewModel>() {
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        view?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId = viewModel.selectedItemId
-    }
-
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         view?.findViewById<BottomNavigationView>(R.id.bottomNavigationView)?.selectedItemId?.let {
