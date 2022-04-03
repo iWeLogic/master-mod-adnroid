@@ -1,5 +1,6 @@
 package com.iwelogic.minecraft.mods.ui.favorite
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,7 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>() {
         viewModel = ViewModelProvider(this)[FavoriteViewModel::class.java]
         binding.viewModel = viewModel
         viewModel.load()
+        viewModel.reloadScreenSize(context?.resources?.displayMetrics?.widthPixels)
         return binding.root
     }
 
@@ -38,5 +40,10 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>() {
                 }
             }
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        viewModel.reloadScreenSize(context?.resources?.displayMetrics?.widthPixels)
     }
 }

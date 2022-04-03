@@ -18,43 +18,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/double_default_size"
-            android:layout_marginTop="@dimen/default_size"
-            android:layout_marginEnd="@dimen/double_default_size"
-            android:layout_marginBottom="@dimen/default_size"
+            android:layout_margin="@dimen/default_size"
             android:background="@color/background_navigation"
             android:orientation="vertical"
-            android:padding="24dp"
+            android:padding="@dimen/default_size"
             tools:ignore="UselessParent">
-
-            <TextView
-                style="@style/Header"
-                android:text="@string/filter"
-                android:layout_gravity="center" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:fontFamily="@font/minecraft_bold"
-                android:letterSpacing="0.04"
-                android:minHeight="36dp"
-                android:minLines="2"
-                android:text="@{viewModel.errorMessage}"
-                android:textColor="@color/red"
-                android:textSize="14sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                filters="@{viewModel.items}"
-                android:layout_width="match_parent"
-                android:overScrollMode="never"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_default_size"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/Header"
+                    android:layout_gravity="center"
+                    android:text="@string/filter" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/default_size"
+                    android:fontFamily="@font/minecraft_bold"
+                    android:letterSpacing="0.04"
+                    android:minHeight="32dp"
+                    android:minLines="2"
+                    android:text="@{viewModel.errorMessage}"
+                    android:textColor="@color/red"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                filters="@{viewModel.items}"
+                spanCount="@{viewModel.spanCount}"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/half_default_size"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/half_default_size"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -65,8 +73,8 @@
                     android:text="@string/cancel" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="0dp"
                     style="@style/Button"
+                    android:layout_width="0dp"
                     android:layout_marginStart="@dimen/default_size"
                     android:layout_weight="1"
                     android:onClick="@{() -> viewModel.onClickApply()}"

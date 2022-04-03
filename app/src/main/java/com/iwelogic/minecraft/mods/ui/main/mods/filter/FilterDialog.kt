@@ -1,5 +1,6 @@
 package com.iwelogic.minecraft.mods.ui.main.mods.filter
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ class FilterDialog : BaseDialog<FilterViewModel>() {
         val binding: DialogFilterBinding = DataBindingUtil.inflate(inflater, R.layout.dialog_filter, container, false)
         binding.lifecycleOwner = this
         viewModel = ViewModelProvider(this)[FilterViewModel::class.java]
+        viewModel.reloadScreenSize(context?.resources?.displayMetrics?.widthPixels)
         viewModel.items.postValue(FilterDialogArgs.fromBundle(requireArguments()).data.toList())
         binding.viewModel = viewModel
         return binding.root
@@ -30,5 +32,10 @@ class FilterDialog : BaseDialog<FilterViewModel>() {
             setFragmentResult(FilterDialogArgs.fromBundle(requireArguments()).key, Bundle().apply { putParcelableArray("value", it.toTypedArray()) })
             dismiss()
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        viewModel.reloadScreenSize(context?.resources?.displayMetrics?.widthPixels)
     }
 }

@@ -51,31 +51,19 @@ object Main {
         spanCount?.let {
             val layoutManager = (view.layoutManager as GridLayoutManager)
             layoutManager.spanCount = spanCount
-            if (layoutManager.spanCount == 2) {
+            if (layoutManager.spanCount >= 2) {
                 layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
                         view.adapter?.let {
                             return when (it.getItemViewType(position)) {
-                                3 -> 1
-                                2 -> 1
-                                1 -> 1
-                                else -> 2
-                            }
-                        } ?: run {
-                            return 0
-                        }
-                    }
-                }
-            }
-            if (layoutManager.spanCount == 4) {
-                layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                    override fun getSpanSize(position: Int): Int {
-                        view.adapter?.let {
-                            return when (it.getItemViewType(position)) {
-                                3 -> 2
-                                2 -> 1
-                                1 -> 1
-                                else -> 2
+                                Type.AD.cellType -> if (mods?.firstOrNull()?.type == Type.SKINS) 2 else 1
+                                Type.SKINS.cellType -> 1
+                                Type.ADDONS.cellType -> 1
+                                Type.MAPS.cellType -> 1
+                                Type.TEXTURES.cellType -> 1
+                                Type.SEEDS.cellType -> 1
+                                Type.BUILDINGS.cellType -> 1
+                                else -> layoutManager.spanCount
                             }
                         } ?: run {
                             return 0
@@ -106,21 +94,25 @@ object Main {
         }
     }
 
-    @BindingAdapter("filters")
+    @BindingAdapter("filters", "spanCount")
     @JvmStatic
-    fun showFilters(view: RecyclerView, filters: List<FilterValue>?) {
+    fun showFilters(view: RecyclerView, filters: List<FilterValue>?, spanCount: Int) {
         view.adapter ?: run {
             view.adapter = FilterValueAdapter()
         }
+        val layoutManager = (view.layoutManager as GridLayoutManager)
+        layoutManager.spanCount = spanCount
         (view.adapter as FilterValueAdapter).submitList(filters?.toMutableList())
     }
 
-    @BindingAdapter("favorites", "onClick")
+    @BindingAdapter("favorites", "onClick", "spanCount")
     @JvmStatic
-    fun showFavorites(view: RecyclerView, favorites: List<Mod>?, onClick: (Mod) -> Unit) {
+    fun showFavorites(view: RecyclerView, favorites: List<Mod>?, onClick: (Mod) -> Unit, spanCount: Int) {
         view.adapter ?: run {
             view.adapter = FavoriteAdapter(onClick)
         }
+        val layoutManager = (view.layoutManager as GridLayoutManager)
+        layoutManager.spanCount = spanCount
         (view.adapter as FavoriteAdapter).submitList(favorites?.toMutableList())
     }
 }

@@ -7,6 +7,7 @@ import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.models.Mod
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
+import com.iwelogic.minecraft.mods.utils.fromPxToDp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -17,10 +18,11 @@ class FavoriteViewModel @Inject constructor(private val repository: Repository, 
     val mods: MutableLiveData<MutableList<Mod>> = MutableLiveData(ArrayList())
     val openMod: SingleLiveEvent<Mod> = SingleLiveEvent()
     val message: MutableLiveData<String> = MutableLiveData("")
+    val spanCount: MutableLiveData<Int> = MutableLiveData(1)
 
     fun load() {
         repository.getFavouriteItems().observeForever {
-            if(it.isEmpty()){
+            if (it.isEmpty()) {
                 message.postValue(context.get()?.getString(R.string.favorite_is_empty))
             } else {
                 message.postValue(null)
@@ -31,5 +33,11 @@ class FavoriteViewModel @Inject constructor(private val repository: Repository, 
 
     val onClick: (Mod) -> Unit = {
         openMod.invoke(it)
+    }
+
+    fun reloadScreenSize(widthDp: Int?) {
+        widthDp?.fromPxToDp(context.get())?.let {
+            spanCount.postValue(if (it > 700) 2 else 1)
+        }
     }
 }

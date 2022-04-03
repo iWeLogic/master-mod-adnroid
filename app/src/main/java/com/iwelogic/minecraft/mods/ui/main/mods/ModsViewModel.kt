@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 open class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, private val repository: Repository, @Assisted val type: Type) : BaseViewModel(applicationContext) {
 
     companion object {
-        const val PAGE_SIZE = 30
+        const val PAGE_SIZE = 32
     }
 
     private var job: Job? = null
@@ -127,7 +127,12 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
                         }
                         is Result.Success -> {
                             val data = result.data?.toMutableList()?.onEach { it.type = Type.values().firstOrNull { it == type } } ?: ArrayList()
-                            if (data.isNotEmpty() && context.get()?.readBoolean("banner_in_list").isTrue()) data.add(4, Mod(type = Type.AD))
+                            if (context.get()?.readBoolean("banner_in_list").isTrue()) {
+                                if (data.size > 4)
+                                    data.add(4, Mod(type = Type.AD))
+                                if (data.size > 19)
+                                    data.add(19, Mod(type = Type.AD))
+                            }
                             mods.value?.addAll(data)
                             mods.postValue(mods.value)
                             if (data.size < PAGE_SIZE) finished = true
