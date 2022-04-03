@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.iwelogic.minecraft.mods.App
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.data.MultiMap
 import com.iwelogic.minecraft.mods.data.Repository
@@ -75,7 +76,8 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
     init {
         filters.value = Filter.getFiltersByCategory(category).map { FilterValue(it, true) }
         load()
-        spanCount.postValue(if (category == "skins") 2 else 1)
+        val phoneSpanCount = if (category == "skins") 2 else 1
+        spanCount.postValue(if (App.isTablet) phoneSpanCount * 2 else phoneSpanCount)
         title.postValue(
             when (category) {
                 "addons" -> applicationContext.getString(R.string.addons)

@@ -17,6 +17,11 @@ object AddHelper {
             override fun onChildViewAdded(parent: View?, child: View?) {
                 if (child is ImageView) {
                     child.adjustViewBounds = true
+                } else {
+                    val params = child?.layoutParams
+                    val width = (parent?.context?.resources?.displayMetrics?.widthPixels ?: 360) - 32.dp(parent?.context)
+                    params?.height = (width / 1.77f).toInt()
+                    child?.layoutParams = params;
                 }
             }
 
