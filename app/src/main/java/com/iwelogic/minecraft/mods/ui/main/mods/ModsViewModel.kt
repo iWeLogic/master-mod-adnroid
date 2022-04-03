@@ -168,7 +168,7 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
 
     fun reloadScreenSize(widthDp: Int?) {
         widthDp?.fromPxToDp(context.get())?.let {
-            val span = if (it > 700) 2 else 1
+            val span = if (it > 680) 2 else 1
             spanCount.postValue(span * type.spanCount)
         }
     }

@@ -163,7 +163,7 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
 
     fun reloadScreenSize(widthDp: Int?) {
         widthDp?.fromPxToDp(context.get())?.let {
-            spanCount.postValue(if (it > 700) 2 else 1)
+            spanCount.postValue(if (it > 680) 2 else 1)
         }
     }
 
