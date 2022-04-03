@@ -20,7 +20,7 @@ class MainFragment : BaseFragment<MainViewModel>() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding: FragmentMainBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
         binding.lifecycleOwner = this
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
         binding.viewModel = viewModel
         return binding.root
     }
@@ -29,6 +29,7 @@ class MainFragment : BaseFragment<MainViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.itemIconTintList = null
+        bottomNavigationView.selectedItemId = viewModel.selectedItemId
         val navController = (childFragmentManager.findFragmentById(R.id.bottomNavigationContainer) as NavHostFragment).navController
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
     }

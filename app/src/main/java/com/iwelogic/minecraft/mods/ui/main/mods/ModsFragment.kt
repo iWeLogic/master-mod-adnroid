@@ -9,11 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentModsBinding
 import com.iwelogic.minecraft.mods.models.FilterValue
-import com.iwelogic.minecraft.mods.ui.base.BaseFragment
 import com.iwelogic.minecraft.mods.models.Type
+import com.iwelogic.minecraft.mods.ui.base.BaseFragment
 import com.iwelogic.minecraft.mods.ui.main.MainFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -22,12 +23,31 @@ import javax.inject.Inject
 class ModsFragment : BaseFragment<ModsViewModel>() {
 
     @Inject
-    lateinit var viewModelFactory: ModsViewModelFactory
+    lateinit var addonsViewModelFactory: AddonsViewModelFactory
+
+    @Inject
+    lateinit var mapsViewModelFactory: MapsViewModelFactory
+
+    @Inject
+    lateinit var texturesViewModelFactory: TexturesViewModelFactory
+
+    @Inject
+    lateinit var seedsViewModelFactory: SeedsViewModelFactory
+
+    @Inject
+    lateinit var skinsViewModelFactory: SkinsViewModelFactory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding: FragmentModsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_mods, container, false)
         binding.lifecycleOwner = this
-        viewModel = ViewModelProvider(this, ModsViewModel.provideFactory(viewModelFactory, Type.getValueById(ModsFragmentArgs.fromBundle(requireArguments()).type)))[ModsViewModel::class.java]
+        val type = ModsFragmentArgs.fromBundle(requireArguments()).type
+        viewModel = when (type) {
+            "addons" -> ViewModelProvider(requireActivity(), AddonsViewModel.provideFactory(addonsViewModelFactory, Type.getValueById(type)))[AddonsViewModel::class.java]
+            "maps" -> ViewModelProvider(requireActivity(), MapsViewModel.provideFactory(mapsViewModelFactory, Type.getValueById(type)))[MapsViewModel::class.java]
+            "textures" -> ViewModelProvider(requireActivity(), TexturesViewModel.provideFactory(texturesViewModelFactory, Type.getValueById(type)))[TexturesViewModel::class.java]
+            "seeds" -> ViewModelProvider(requireActivity(), SeedsViewModel.provideFactory(seedsViewModelFactory, Type.getValueById(type)))[SeedsViewModel::class.java]
+            else -> ViewModelProvider(requireActivity(), SkinsViewModel.provideFactory(skinsViewModelFactory, Type.getValueById(type)))[SkinsViewModel::class.java]
+        }
         binding.viewModel = viewModel
         viewModel.reloadScreenSize(context?.resources?.displayMetrics?.widthPixels)
         return binding.root
@@ -66,8 +86,31 @@ class ModsFragment : BaseFragment<ModsViewModel>() {
         }
     }
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        viewModel.recyclerState?.let {
+            view?.findViewById<RecyclerView>(R.id.list)?.layoutManager?.onRestoreInstanceState(it)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        saveState()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        saveState()
+    }
+
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         viewModel.reloadScreenSize(context?.resources?.displayMetrics?.widthPixels)
+    }
+
+    private fun saveState() {
+        view?.findViewById<RecyclerView>(R.id.list)?.layoutManager?.onSaveInstanceState()?.let {
+            viewModel.recyclerState = it
+        }
     }
 }

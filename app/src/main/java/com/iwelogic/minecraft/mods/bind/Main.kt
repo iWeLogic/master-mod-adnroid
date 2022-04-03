@@ -40,6 +40,7 @@ object Main {
     fun showMods(view: RecyclerView, mods: List<Mod>?, onClick: (Mod) -> Unit, onScroll: (Int) -> Unit, spanCount: Int?) {
         view.adapter ?: run {
             view.adapter = ModAdapter(onClick)
+            view.itemAnimator?.changeDuration = 0
             view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
