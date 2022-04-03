@@ -1,5 +1,6 @@
 package com.iwelogic.minecraft.mods.ui.main.mods
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,6 +29,7 @@ class ModsFragment : BaseFragment<ModsViewModel>() {
         binding.lifecycleOwner = this
         viewModel = ViewModelProvider(this, ModsViewModel.provideFactory(viewModelFactory, Type.getValueById(ModsFragmentArgs.fromBundle(requireArguments()).type)))[ModsViewModel::class.java]
         binding.viewModel = viewModel
+        viewModel.reloadScreenSize(context?.resources?.displayMetrics?.widthPixels)
         return binding.root
     }
 
@@ -62,5 +64,10 @@ class ModsFragment : BaseFragment<ModsViewModel>() {
         parentFragment?.parentFragment?.setFragmentResultListener("filter_" + viewModel.type.id) { _, bundle ->
             viewModel.setNewFilters(bundle.getParcelableArray("value")?.map { it as FilterValue } ?: ArrayList())
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        viewModel.reloadScreenSize(context?.resources?.displayMetrics?.widthPixels)
     }
 }

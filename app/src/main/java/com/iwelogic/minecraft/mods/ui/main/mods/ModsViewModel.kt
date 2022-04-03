@@ -1,22 +1,19 @@
 package com.iwelogic.minecraft.mods.ui.main.mods
 
 import android.content.Context
+import android.os.Parcelable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.iwelogic.minecraft.mods.App
 import com.iwelogic.minecraft.mods.data.MultiMap
 import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.data.Result
-import com.iwelogic.minecraft.mods.models.Filter
-import com.iwelogic.minecraft.mods.models.FilterValue
-import com.iwelogic.minecraft.mods.models.Mod
-import com.iwelogic.minecraft.mods.models.Sort
+import com.iwelogic.minecraft.mods.models.*
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
-import com.iwelogic.minecraft.mods.models.Type
 import com.iwelogic.minecraft.mods.utils.deepCopy
+import com.iwelogic.minecraft.mods.utils.fromPxToDp
 import com.iwelogic.minecraft.mods.utils.isTrue
 import com.iwelogic.minecraft.mods.utils.readBoolean
 import dagger.assisted.Assisted
@@ -28,7 +25,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, private val repository: Repository, @Assisted val type: Type) : BaseViewModel(applicationContext) {
+open class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, private val repository: Repository, @Assisted val type: Type) : BaseViewModel(applicationContext) {
 
     companion object {
         fun provideFactory(assistedFactory: ModsViewModelFactory, type: Type): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
@@ -45,6 +42,7 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
     private val changeObserver: (Any) -> Unit = {
         onReload()
     }
+    var recyclerState: Parcelable? = null
     val sort: MutableLiveData<Sort> = MutableLiveData(Sort.DATE)
     val mods: MutableLiveData<MutableList<Mod>> = MutableLiveData(ArrayList())
     val title: MutableLiveData<String> = MutableLiveData()
@@ -74,8 +72,6 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
     init {
         filters.value = Filter.getFiltersByCategory(type.id).map { FilterValue(it, true) }
         load()
-
-        spanCount.postValue(type.spanCount * if (App.isTablet) 2 else 1)
         title.postValue(applicationContext.getString(type.title))
         sort.observeForever(changeObserver)
         filters.observeForever(changeObserver)
@@ -157,6 +153,11 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
     }
 
     override fun onReload() {
+        try {
+            val i = 10 / 0
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         job?.cancel()
         showProgressInList(false)
         progress.postValue(false)
@@ -171,7 +172,20 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
         sort.removeObserver(changeObserver)
         filters.removeObserver(changeObserver)
     }
+
+    fun reloadScreenSize(widthDp: Int?) {
+        widthDp?.fromPxToDp(context.get())?.let {
+            val span = if (it > 600) 2 else 1
+            spanCount.postValue(span * type.spanCount)
+        }
+    }
 }
+
+class AddonsViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, private val repository: Repository, @Assisted type: Type) : ModsViewModel(applicationContext, repository, type)
+class MapsViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, private val repository: Repository, @Assisted type: Type) : ModsViewModel(applicationContext, repository, type)
+class TexturesViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, private val repository: Repository, @Assisted type: Type) : ModsViewModel(applicationContext, repository, type)
+class SeedsViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, private val repository: Repository, @Assisted type: Type) : ModsViewModel(applicationContext, repository, type)
+class SkinsViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, private val repository: Repository, @Assisted type: Type) : ModsViewModel(applicationContext, repository, type)
 
 @AssistedFactory
 interface ModsViewModelFactory {

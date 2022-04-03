@@ -15,8 +15,6 @@ import com.iwelogic.minecraft.mods.databinding.ItemModBinding
 import com.iwelogic.minecraft.mods.databinding.ItemSkinBinding
 import com.iwelogic.minecraft.mods.models.Mod
 import com.iwelogic.minecraft.mods.utils.catchAll
-import com.iwelogic.minecraft.mods.utils.dp
-import com.iwelogic.minecraft.mods.utils.fromPxToDp
 
 class ModAdapter(private val onClick: (Mod) -> Unit) : ListAdapter<Mod, RecyclerView.ViewHolder>(COMPARATOR) {
 
@@ -74,9 +72,7 @@ class ModAdapter(private val onClick: (Mod) -> Unit) : ListAdapter<Mod, Recycler
             } ?: run {
                 val adViewNew = AdView(context)
                 adViewNew.adUnitId = context.getString(R.string.ad_banner)
-                val adWidth = context.resources.displayMetrics.widthPixels - 32.dp(context)
-                val adHeight = adWidth / 3 * 2
-                adViewNew.adSize = AdSize.getInlineAdaptiveBannerAdSize(adWidth.fromPxToDp(context), adHeight.fromPxToDp(context))
+                adViewNew.adSize = AdSize.MEDIUM_RECTANGLE
                 val adRequest = AdRequest.Builder().build()
                 adViewNew.adListener = object : AdListener() {
                     override fun onAdFailedToLoad(p0: LoadAdError) {

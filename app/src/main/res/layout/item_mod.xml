@@ -29,7 +29,7 @@
                     android:background="@color/background_navigation"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="30:20"
+                    app:layout_constraintDimensionRatio="30:22"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">

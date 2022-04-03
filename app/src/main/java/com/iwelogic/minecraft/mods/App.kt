@@ -10,7 +10,7 @@ import dagger.hilt.android.HiltAndroidApp
 class App : Application() {
 
     companion object {
-        val isTablet = true
+        val isTablet = false
     }
 
     override fun onCreate() {

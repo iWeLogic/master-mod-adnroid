@@ -1,10 +1,13 @@
 package com.iwelogic.minecraft.mods.ui.main
 
 import android.content.Context
+import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(@ApplicationContext applicationContext: Context) : BaseViewModel(applicationContext)
+class MainViewModel @Inject constructor(@ApplicationContext applicationContext: Context) : BaseViewModel(applicationContext) {
+    var selectedItemId = R.id.addons
+}

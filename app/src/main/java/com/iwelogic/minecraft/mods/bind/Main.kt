@@ -55,7 +55,7 @@ object Main {
                     override fun getSpanSize(position: Int): Int {
                         view.adapter?.let {
                             return when (it.getItemViewType(position)) {
-                                3 -> 2
+                                3 -> 1
                                 2 -> 1
                                 1 -> 1
                                 else -> 2
