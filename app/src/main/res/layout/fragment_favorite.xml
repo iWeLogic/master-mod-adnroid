@@ -50,7 +50,7 @@
                 android:fontFamily="@font/minecraft_regular"
                 android:text="@{viewModel.message}"
                 android:textColor="@color/title"
-                android:textSize="18sp" />
+                android:textSize="@dimen/largeText" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list"

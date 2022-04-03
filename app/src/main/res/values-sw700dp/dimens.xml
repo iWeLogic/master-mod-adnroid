@@ -7,10 +7,9 @@
     <dimen name="quarter_default_size">4dp</dimen>
     <dimen name="toolbar">52dp</dimen>
 
-    <dimen name="normalText">15sp</dimen>
-    <dimen name="largeText">17sp</dimen>
-    <dimen name="extraLargeText">20sp</dimen>
-    <dimen name="hugeText">24sp</dimen>
+    <dimen name="normalText">18sp</dimen>
+    <dimen name="largeText">21dp</dimen>
+    <dimen name="extraLargeText">24dp</dimen>
+    <dimen name="hugeText">28sp</dimen>
     <dimen name="ageCounter">42sp</dimen>
-
 </resources>

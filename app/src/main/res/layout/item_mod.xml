@@ -58,7 +58,7 @@
                             android:lines="1"
                             android:text="@{item.title}"
                             android:textColor="@color/title"
-                            android:textSize="17sp" />
+                            android:textSize="@dimen/largeText" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -78,7 +78,7 @@
                                 android:lines="1"
                                 android:text="@{item.fileSize + ` Mb`}"
                                 android:textColor="@color/regularText"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/normalText"
                                 app:drawableStartCompat="@drawable/folder" />
 
                             <TextView
@@ -92,7 +92,7 @@
                                 android:lines="1"
                                 android:text="@{item.getFormattedDownloads()}"
                                 android:textColor="@color/regularText"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/normalText"
                                 app:drawableStartCompat="@drawable/download" />
 
                             <TextView
@@ -107,7 +107,7 @@
                                 android:lines="1"
                                 android:text="@{item.getFormattedLikes()}"
                                 android:textColor="@color/regularText"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/normalText"
                                 app:drawableStartCompat="@drawable/favorite_small" />
 
 
@@ -123,7 +123,7 @@
                                 android:lines="1"
                                 android:text="@{item.generateVersion()}"
                                 android:textColor="@color/regularText"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/normalText"
                                 app:drawableStartCompat="@drawable/version" />
 
                         </LinearLayout>

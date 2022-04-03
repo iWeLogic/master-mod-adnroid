@@ -83,7 +83,7 @@
                     android:paddingBottom="@dimen/quarter_default_size"
                     android:text="@string/addons"
                     android:textColor="@{viewModel.type.equals(Type.ADDONS) ? @color/white : @color/black}"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/largeText" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -100,7 +100,7 @@
                     android:paddingBottom="@dimen/quarter_default_size"
                     android:text="@string/maps"
                     android:textColor="@{viewModel.type.equals(Type.MAPS) ? @color/white : @color/black}"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/largeText" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -117,7 +117,7 @@
                     android:paddingBottom="@dimen/quarter_default_size"
                     android:text="@string/textures"
                     android:textColor="@{viewModel.type.equals(Type.TEXTURES) ? @color/white : @color/black}"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/largeText" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -134,7 +134,7 @@
                     android:paddingBottom="@dimen/quarter_default_size"
                     android:text="@string/seeds"
                     android:textColor="@{viewModel.type.equals(Type.SEEDS) ? @color/white : @color/black}"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/largeText" />
 
 
             </LinearLayout>

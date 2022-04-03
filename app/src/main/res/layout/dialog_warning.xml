@@ -31,7 +31,7 @@
             android:fontFamily="@font/minecraft_regular"
             android:letterSpacing="0.04"
             android:textColor="@color/regularText"
-            android:textSize="16sp" />
+            android:textSize="@dimen/normalText" />
 
 
         <LinearLayout

@@ -16,7 +16,7 @@
 
     <style name="AppTheme.TextAppearance.Popup" parent="TextAppearance.MaterialComponents.Caption">
         <item name="fontFamily">@font/minecraft_regular</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/largeText</item>
         <item name="android:textColor">@color/title</item>
     </style>
 
@@ -30,7 +30,7 @@
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:background">@drawable/background_button</item>
         <item name="android:fontFamily">@font/minecraft_regular</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/largeText</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:stateListAnimator">@null</item>
         <item name="android:textColor">@color/button</item>
@@ -44,7 +44,7 @@
     <style name="Header">
         <item name="android:textColor">@color/title</item>
         <item name="android:fontFamily">@font/minecraft_bold</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/largeText</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>

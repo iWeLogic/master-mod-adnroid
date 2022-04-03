@@ -78,7 +78,7 @@
                     android:fontFamily="@font/minecraft_bold"
                     android:text="@{viewModel.item.title}"
                     android:textColor="@color/title"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/extraLargeText" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -98,7 +98,7 @@
                         android:lines="1"
                         android:text="@{viewModel.item.fileSize + ` Mb`}"
                         android:textColor="@color/regularText"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/normalText"
                         app:drawableStartCompat="@drawable/folder" />
 
                     <TextView
@@ -112,7 +112,7 @@
                         android:fontFamily="@font/minecraft_regular"
                         android:lines="1"
                         android:textColor="@color/regularText"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/normalText"
                         app:drawableStartCompat="@drawable/download" />
 
                     <TextView
@@ -126,7 +126,7 @@
                         android:fontFamily="@font/minecraft_regular"
                         android:lines="1"
                         android:textColor="@color/regularText"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/normalText"
                         app:drawableStartCompat="@drawable/favorite_small" />
 
                     <TextView
@@ -140,7 +140,7 @@
                         android:lines="1"
                         android:text="@{viewModel.item.getVersion()}"
                         android:textColor="@color/regularText"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/normalText"
                         app:drawableStartCompat="@drawable/version" />
 
                 </LinearLayout>

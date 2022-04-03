@@ -24,7 +24,7 @@
         <TextView
             style="@style/Header"
             android:text="@string/welcome"
-            android:textSize="24sp" />
+            android:textSize="@dimen/hugeText" />
 
 
         <androidx.legacy.widget.Space
@@ -49,7 +49,7 @@
             android:gravity="center"
             android:text="@{viewModel.selected ? (`` + viewModel.age) : ``}"
             android:textColor="@color/black"
-            android:textSize="42sp" />
+            android:textSize="@dimen/ageCounter" />
 
         <androidx.legacy.widget.Space
             android:layout_width="match_parent"

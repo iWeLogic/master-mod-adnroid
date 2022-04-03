@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/minecraft_regular"
                 android:textColor="@color/regularText"
-                android:textSize="15sp" />
+                android:textSize="@dimen/normalText" />
 
         </androidx.core.widget.NestedScrollView>
 

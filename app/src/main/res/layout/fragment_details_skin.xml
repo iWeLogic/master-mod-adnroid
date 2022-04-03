@@ -74,7 +74,7 @@
                         android:fontFamily="@font/roboto_medium"
                         android:lines="1"
                         android:textColor="@color/regularText"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/normalText" />
 
                     <ImageView
                         android:layout_width="20dp"
@@ -93,7 +93,7 @@
                         android:fontFamily="@font/roboto_medium"
                         android:lines="1"
                         android:textColor="@color/regularText"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/normalText" />
 
                 </LinearLayout>
 

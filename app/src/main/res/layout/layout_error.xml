@@ -39,7 +39,7 @@
             android:fontFamily="@font/minecraft_regular"
             android:textColor="@color/title"
             android:text="@{viewModel.error}"
-            android:textSize="16sp" />
+            android:textSize="@dimen/normalText" />
 
         <androidx.appcompat.widget.AppCompatButton
             style="@style/Button"

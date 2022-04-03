@@ -18,11 +18,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/minecraft_bold"
+            android:includeFontPadding="false"
             android:paddingTop="@dimen/half_default_size"
             android:paddingBottom="@dimen/half_default_size"
             android:text="@string/description"
             android:textColor="@color/title"
-            android:textSize="16sp" />
+            android:textSize="@dimen/largeText" />
 
         <ImageView
             android:id="@+id/icon"
@@ -38,8 +39,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/minecraft_regular"
+        android:includeFontPadding="false"
         android:textColor="@color/regularText"
-        android:textSize="14sp"
+        android:textSize="@dimen/normalText"
         android:visibility="gone" />
 
 </LinearLayout>

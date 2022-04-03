@@ -46,7 +46,7 @@
                     android:minLines="2"
                     android:text="@{viewModel.errorMessage}"
                     android:textColor="@color/red"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/normalText" />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
