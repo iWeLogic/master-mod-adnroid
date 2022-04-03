@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="ContentDescription">
+
+    <data>
+
+        <import type="com.iwelogic.minecraft.mods.bind.Base.ScaleType" />
+
+        <import type="com.iwelogic.minecraft.mods.BuildConfig" />
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.iwelogic.minecraft.mods.ui.detail_skin.DetailsSkinViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_skin_details">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            image="@{viewModel.item.getImage()}"
+                            scaleType="@{ScaleType.CENTER_INSIDE}"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:padding="@dimen/default_size"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_size"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="@dimen/default_size"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="2dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/download" />
+
+                        <TextView
+                            counter="@{viewModel.item.installs}"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/quarter_default_size"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/roboto_medium"
+                            android:lines="1"
+                            android:textColor="@color/regularText"
+                            android:textSize="@dimen/normalText" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="2dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/favorite_small" />
+
+                        <TextView
+                            counter="@{viewModel.item.likes}"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/quarter_default_size"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/roboto_medium"
+                            android:lines="1"
+                            android:textColor="@color/regularText"
+                            android:textSize="@dimen/normalText" />
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        progress="@{viewModel.item.progress}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/default_size"
+                        android:layout_marginTop="@dimen/default_size"
+                        android:layout_marginEnd="@dimen/default_size"
+                        android:layout_marginBottom="@dimen/half_default_size"
+                        android:background="@drawable/background_btn_downloading"
+                        android:visibility="@{viewModel.item.progress > 0 &amp; viewModel.item.progress &lt; 10000 ? View.VISIBLE : View.GONE}" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/default_size"
+                        android:layout_marginTop="@dimen/default_size"
+                        android:layout_marginEnd="@dimen/default_size"
+                        android:layout_marginBottom="@dimen/half_default_size"
+                        android:background="@drawable/button_download_combine"
+                        android:onClick="@{() -> viewModel.onClickDownloadToMinecraft()}"
+                        android:visibility="@{viewModel.item.progress == 0 ? View.VISIBLE : View.GONE}" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/default_size"
+                        android:layout_marginTop="@dimen/default_size"
+                        android:layout_marginEnd="@dimen/default_size"
+                        android:layout_marginBottom="@dimen/half_default_size"
+                        android:background="@drawable/button_install_combine"
+                        android:onClick="@{() -> viewModel.onClickInstall()}"
+                        android:visibility="@{viewModel.item.progress == 10000 ? View.VISIBLE : View.GONE}" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="@dimen/default_size"
+                        android:layout_marginTop="@dimen/half_default_size"
+                        android:layout_marginEnd="@dimen/default_size"
+                        android:background="@drawable/button_download_to_gallery"
+                        android:onClick="@{() -> viewModel.onClickDownloadToGallery()}"
+                        android:visibility="@{viewModel.hideDownloadToGalleyBtn ? View.GONE : View.VISIBLE}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/toolbar"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="@dimen/toolbar"
+                        android:layout_height="@dimen/toolbar"
+                        android:background="?attr/actionBarItemBackground"
+                        android:onClick="@{() -> viewModel.onClickClose()}"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/back_details" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="@dimen/toolbar"
+                        android:layout_height="@dimen/toolbar"
+                        android:background="?attr/actionBarItemBackground"
+                        android:onClick="@{() -> viewModel.onClickHelp()}"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/help"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:layout_width="@dimen/toolbar"
+                        android:layout_height="@dimen/toolbar"
+                        android:layout_marginEnd="@dimen/default_size"
+                        android:background="?attr/actionBarItemBackground"
+                        android:onClick="@{() -> viewModel.onClickFavourite()}"
+                        android:scaleType="centerInside"
+                        android:src="@{viewModel.isFavourite ? @drawable/favorite_on : @drawable/favorite_off}" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/ad_frame"
+                android:layout_margin="@dimen/default_size"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</layout>

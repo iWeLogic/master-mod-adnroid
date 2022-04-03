@@ -17,7 +17,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/background">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -191,10 +192,8 @@
                 <FrameLayout
                     android:id="@+id/ad_frame"
                     android:layout_width="match_parent"
-                    android:layout_marginStart="@dimen/default_size"
-                    android:layout_marginEnd="@dimen/default_size"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp" />
+                    android:layout_margin="@dimen/default_size" />
 
             </LinearLayout>
 

@@ -56,7 +56,7 @@ abstract class BaseDetailsFragment<VM : BaseDetailsViewModel> : BaseFragment<VM>
                                 adView?.findViewById<ImageView>(R.id.imageAd)?.setImageDrawable(image.drawable)
                             }
                         }
-                        AddHelper.populateUnifiedNativeAdView(nativeAd, adView!!)
+                        AddHelper.populateUnifiedNativeAdView(nativeAd, adView!!, activity?.resources?.configuration?.orientation)
                         adView?.parent?.let { parent ->
                             (parent as ViewGroup).removeAllViews()
                         }

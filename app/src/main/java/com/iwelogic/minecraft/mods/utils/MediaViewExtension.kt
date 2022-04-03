@@ -11,7 +11,7 @@ import com.iwelogic.minecraft.mods.R
 
 object AddHelper {
 
-    fun populateUnifiedNativeAdView(nativeAd: NativeAd, adView: NativeAdView) {
+    fun populateUnifiedNativeAdView(nativeAd: NativeAd, adView: NativeAdView, orientation: Int?) {
         adView.mediaView = adView.findViewById(R.id.ad_media)
         adView.mediaView?.setOnHierarchyChangeListener(object : ViewGroup.OnHierarchyChangeListener {
             override fun onChildViewAdded(parent: View?, child: View?) {
@@ -19,9 +19,13 @@ object AddHelper {
                     child.adjustViewBounds = true
                 } else {
                     val params = child?.layoutParams
-                    val width = (parent?.context?.resources?.displayMetrics?.widthPixels ?: 360) - 32.dp(parent?.context)
+                    val width = if (orientation == 2) {
+                        ((parent?.context?.resources?.displayMetrics?.widthPixels ?: 360) - 32.dp(parent?.context)) / 2
+                    } else {
+                        (parent?.context?.resources?.displayMetrics?.widthPixels ?: 360) - 32.dp(parent?.context)
+                    }
                     params?.height = (width / 1.77f).toInt()
-                    child?.layoutParams = params;
+                    child?.layoutParams = params
                 }
             }
 
