@@ -27,8 +27,8 @@ class DetailsViewModel @Inject constructor(repository: Repository, @ApplicationC
         item.value?.let { mod ->
             if (mod.progress != 0) return
             mod.progress = 1
-            val dir = File("$base/${mod.cellType}/${mod.id}").apply { mkdirs() }
-            AndroidNetworking.download(mod.getFile(), dir.path, "file.${mod.cellType?.fileExtension}")
+            val dir = File("$base/${mod.type}/${mod.id}").apply { mkdirs() }
+            AndroidNetworking.download(mod.getFile(), dir.path, "file.${mod.type?.fileExtension}")
                 .setTag("Downloading file")
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -43,7 +43,7 @@ class DetailsViewModel @Inject constructor(repository: Repository, @ApplicationC
                     override fun onDownloadComplete() {
                         viewModelScope.launch {
                             mod.installs = (mod.installs ?: 0) + 1
-                            repository.updateMod(mod.cellType?.title ?: "", mod).collect()
+                            repository.updateMod(mod.type?.id ?: "", mod).collect()
                         }
                         mod.progress = 10000
                     }
@@ -65,8 +65,8 @@ class DetailsViewModel @Inject constructor(repository: Repository, @ApplicationC
     }
 
     fun onClickInstall() {
-        openInstall.invoke(File("$base/${item.value?.cellType}/${item.value?.id}/file.${item.value?.cellType?.fileExtension}"))
+        openInstall.invoke(File("$base/${item.value?.type}/${item.value?.id}/file.${item.value?.type?.fileExtension}"))
     }
 
-    override fun getFile() = File("$base/${item.value?.cellType}/${item.value?.id}/file.${item.value?.cellType?.fileExtension}")
+    override fun getFile() = File("$base/${item.value?.type}/${item.value?.id}/file.${item.value?.type?.fileExtension}")
 }

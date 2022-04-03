@@ -12,7 +12,7 @@
             android:name="com.iwelogic.minecraft.mods.ui.main.mods.ModsFragment"
             android:label="AddonsFragment">
             <argument
-                android:name="category"
+                android:name="type"
                 android:defaultValue="addons"
                 app:argType="string" />
         </fragment>
@@ -26,7 +26,7 @@
             android:name="com.iwelogic.minecraft.mods.ui.main.mods.ModsFragment"
             android:label="MapsFragment">
             <argument
-                android:name="category"
+                android:name="type"
                 android:defaultValue="maps"
                 app:argType="string" />
         </fragment>
@@ -40,7 +40,7 @@
             android:name="com.iwelogic.minecraft.mods.ui.main.mods.ModsFragment"
             android:label="TexturesFragment">
             <argument
-                android:name="category"
+                android:name="type"
                 android:defaultValue="textures"
                 app:argType="string" />
         </fragment>
@@ -54,7 +54,7 @@
             android:name="com.iwelogic.minecraft.mods.ui.main.mods.ModsFragment"
             android:label="SeedsFragment">
             <argument
-                android:name="category"
+                android:name="type"
                 android:defaultValue="seeds"
                 app:argType="string" />
         </fragment>
@@ -68,7 +68,7 @@
             android:name="com.iwelogic.minecraft.mods.ui.main.mods.ModsFragment"
             android:label="SkinsFragment">
             <argument
-                android:name="category"
+                android:name="type"
                 android:defaultValue="skins"
                 app:argType="string" />
         </fragment>

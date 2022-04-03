@@ -25,22 +25,22 @@ abstract class BaseDetailsViewModel(val repository: Repository, applicationConte
 
     fun checkIsFileExist() {
         item.value?.progress = if (getFile().exists()) 10000 else 0
-        isFavourite = repository.checkExist("${item.value?.cellType} ${item.value?.pack} ${item.value?.id}")
+        isFavourite = repository.checkExist("${item.value?.type} ${item.value?.pack} ${item.value?.id}")
     }
 
     fun onClickFavourite() {
         item.value?.let { mod ->
-            mod.primaryId = "${mod.cellType} ${mod.pack} ${mod.id}"
+            mod.primaryId = "${mod.type} ${mod.pack} ${mod.id}"
             viewModelScope.launch {
                 if (isFavourite?.value.isTrue()) {
                     repository.removeFromFavourite(mod).collect()
                     mod.likes = mod.likes?.minus(1)
-                    repository.updateMod(mod.cellType?.title ?: "", mod).collect()
+                    repository.updateMod(mod.type?.id ?: "", mod).collect()
                 } else {
                     mod.favouriteDate = System.currentTimeMillis()
                     mod.likes = mod.likes?.plus(1)
                     repository.setFavourite(mod).collect()
-                    repository.updateMod(mod.cellType?.title ?: "", mod).collect()
+                    repository.updateMod(mod.type?.id ?: "", mod).collect()
                 }
             }
         }

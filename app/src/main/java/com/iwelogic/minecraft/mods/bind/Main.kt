@@ -8,11 +8,10 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.iwelogic.minecraft.mods.R
-import com.iwelogic.minecraft.mods.models.Category
 import com.iwelogic.minecraft.mods.models.FilterValue
 import com.iwelogic.minecraft.mods.models.Mod
 import com.iwelogic.minecraft.mods.models.Sort
+import com.iwelogic.minecraft.mods.models.Type
 import com.iwelogic.minecraft.mods.ui.favorite.FavoriteAdapter
 import com.iwelogic.minecraft.mods.ui.main.mods.ModAdapter
 import com.iwelogic.minecraft.mods.ui.main.mods.filter.FilterValueAdapter
@@ -20,12 +19,12 @@ import com.iwelogic.minecraft.mods.ui.main.mods.filter.FilterValueAdapter
 
 object Main {
 
-    @BindingAdapter("sort", "onSelect", "category")
+    @BindingAdapter("sort", "onSelect", "type")
     @JvmStatic
-    fun setSort(view: ImageView, sort: Sort, onSelect: (Sort) -> Unit, category: String) {
+    fun setSort(view: ImageView, sort: Sort, onSelect: (Sort) -> Unit, type: Type) {
         view.setOnClickListener {
             val popup = PopupMenu(view.context, view, Gravity.END)
-            popup.inflate(if (category == Category.SKINS.id) R.menu.sort_skins else R.menu.sort)
+            popup.inflate(type.sortMenu)
             popup.menu.findItem(sort.menuId).isChecked = true
             popup.setOnMenuItemClickListener { item ->
                 item.isChecked = !item.isChecked

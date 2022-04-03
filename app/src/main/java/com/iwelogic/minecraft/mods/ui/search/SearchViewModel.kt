@@ -7,10 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.iwelogic.minecraft.mods.data.MultiMap
 import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.data.Result
-import com.iwelogic.minecraft.mods.models.Category
 import com.iwelogic.minecraft.mods.models.Mod
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
-import com.iwelogic.minecraft.mods.ui.base.CellType
+import com.iwelogic.minecraft.mods.models.Type
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.ui.main.mods.ModsViewModel
 import com.iwelogic.minecraft.mods.utils.isTrue
@@ -28,7 +27,7 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
 
     val title: MutableLiveData<String> = MutableLiveData("")
     val mods: MutableLiveData<MutableList<Mod>> = MutableLiveData(ArrayList())
-    var category: MutableLiveData<Category> = MutableLiveData(Category.ADDONS)
+    var type: MutableLiveData<Type> = MutableLiveData(Type.ADDONS)
     var query: MutableLiveData<String> = MutableLiveData("")
     val openMod: SingleLiveEvent<Mod> = SingleLiveEvent()
     val openVoiceSearch: SingleLiveEvent<Boolean> = SingleLiveEvent()
@@ -41,7 +40,7 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
     }
 
     init {
-        category.observeForever(changeObserver)
+        type.observeForever(changeObserver)
         query.observeForever {
             jobRefresh?.cancel()
             jobRefresh = viewModelScope.launch {
@@ -64,8 +63,8 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
         }
     }
 
-    fun onSelectCategory(category: Category) {
-        this.category.postValue(category)
+    fun onSelectCategory(type: Type) {
+        this.type.postValue(type)
     }
 
     fun onClickMic() {
@@ -84,7 +83,7 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
     }
 
     private fun load() {
-        if (!job?.isActive.isTrue() && mods.value?.none { it.cellType == CellType.PROGRESS }.isTrue() && !finished) {
+        if (!job?.isActive.isTrue() && mods.value?.none { it.type == Type.PROGRESS }.isTrue() && !finished) {
             job = viewModelScope.launch {
                 val queries: MultiMap<String, Any> = MultiMap()
                 queries["property"] = "id"
@@ -100,7 +99,7 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
                 queries["where"] = "title LIKE '%${query.value}%'"
                 queries["offset"] = mods.value?.size ?: 0
 
-                repository.getMods(category.value?.id ?: "", queries).catch {
+                repository.getMods(type.value?.id ?: "", queries).catch {
                     showProgressInList(false)
                     progress.postValue(false)
                     error.postValue(it.message)
@@ -116,7 +115,7 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
                             progress.postValue(false)
                         }
                         is Result.Success -> {
-                            val data = result.data?.toMutableList()?.onEach { it.cellType = CellType.values().firstOrNull { it.title == category.value?.id } } ?: ArrayList()
+                            val data = result.data?.toMutableList()?.onEach { it.type = Type.values().firstOrNull { it.id == type.value?.id } } ?: ArrayList()
                             mods.value?.addAll(data)
                             mods.postValue(mods.value)
                             if (data.size < ModsViewModel.PAGE_SIZE) finished = true
@@ -130,8 +129,8 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
     }
 
     private fun showProgressInList(status: Boolean) {
-        if (status) mods.value?.add(Mod(cellType = CellType.PROGRESS))
-        else mods.value?.removeAll { it.cellType == CellType.PROGRESS }
+        if (status) mods.value?.add(Mod(type = Type.PROGRESS))
+        else mods.value?.removeAll { it.type == Type.PROGRESS }
         mods.postValue(mods.value)
     }
 
@@ -153,6 +152,6 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
 
     override fun onCleared() {
         super.onCleared()
-        category.removeObserver(changeObserver)
+        type.removeObserver(changeObserver)
     }
 }

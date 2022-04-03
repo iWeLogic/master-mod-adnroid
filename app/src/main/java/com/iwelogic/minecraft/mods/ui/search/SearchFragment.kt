@@ -16,7 +16,7 @@ import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentSearchBinding
 import com.iwelogic.minecraft.mods.models.DialogData
 import com.iwelogic.minecraft.mods.ui.base.BaseFragment
-import com.iwelogic.minecraft.mods.ui.base.CellType
+import com.iwelogic.minecraft.mods.models.Type
 import com.iwelogic.minecraft.mods.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -45,7 +45,7 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
 
         viewModel.openMod.observe(viewLifecycleOwner) {
             if (findNavController().currentDestination?.id == R.id.searchFragment) {
-                if (it.cellType == CellType.SKINS) {
+                if (it.type == Type.SKINS) {
                     findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsSkinFragment(it))
                 } else {
                     findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(it))

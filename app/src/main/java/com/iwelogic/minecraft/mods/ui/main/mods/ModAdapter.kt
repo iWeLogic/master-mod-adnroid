@@ -100,6 +100,6 @@ class ModAdapter(private val onClick: (Mod) -> Unit) : ListAdapter<Mod, Recycler
     internal class ProgressHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun getItemViewType(position: Int): Int {
-        return getItem(position).cellType?.type ?: 0
+        return getItem(position).type?.cellType ?: 0
     }
 }

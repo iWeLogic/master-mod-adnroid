@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.iwelogic.minecraft.mods.App
-import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.data.MultiMap
 import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.data.Result
@@ -15,8 +14,8 @@ import com.iwelogic.minecraft.mods.models.FilterValue
 import com.iwelogic.minecraft.mods.models.Mod
 import com.iwelogic.minecraft.mods.models.Sort
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
-import com.iwelogic.minecraft.mods.ui.base.CellType
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
+import com.iwelogic.minecraft.mods.models.Type
 import com.iwelogic.minecraft.mods.utils.deepCopy
 import com.iwelogic.minecraft.mods.utils.isTrue
 import com.iwelogic.minecraft.mods.utils.readBoolean
@@ -29,13 +28,13 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, private val repository: Repository, @Assisted val category: String) : BaseViewModel(applicationContext) {
+class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, private val repository: Repository, @Assisted val type: Type) : BaseViewModel(applicationContext) {
 
     companion object {
-        fun provideFactory(assistedFactory: ModsViewModelFactory, category: String): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+        fun provideFactory(assistedFactory: ModsViewModelFactory, type: Type): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
-                return assistedFactory.create(category) as T
+                return assistedFactory.create(type) as T
             }
         }
 
@@ -73,19 +72,11 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
     }
 
     init {
-        filters.value = Filter.getFiltersByCategory(category).map { FilterValue(it, true) }
+        filters.value = Filter.getFiltersByCategory(type.id).map { FilterValue(it, true) }
         load()
-        val phoneSpanCount = if (category == "skins") 2 else 1
-        spanCount.postValue(if (App.isTablet) phoneSpanCount * 2 else phoneSpanCount)
-        title.postValue(
-            when (category) {
-                "addons" -> applicationContext.getString(R.string.addons)
-                "maps" -> applicationContext.getString(R.string.maps)
-                "textures" -> applicationContext.getString(R.string.textures)
-                "seeds" -> applicationContext.getString(R.string.seeds)
-                else -> applicationContext.getString(R.string.skins)
-            }
-        )
+
+        spanCount.postValue(type.spanCount * if (App.isTablet) 2 else 1)
+        title.postValue(applicationContext.getString(type.title))
         sort.observeForever(changeObserver)
         filters.observeForever(changeObserver)
     }
@@ -111,14 +102,14 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
     }
 
     private fun load() {
-        if (!job?.isActive.isTrue() && mods.value?.none { it.cellType == CellType.PROGRESS }.isTrue() && !finished) {
+        if (!job?.isActive.isTrue() && mods.value?.none { it.type == Type.PROGRESS }.isTrue() && !finished) {
             job = viewModelScope.launch {
                 val queries: MultiMap<String, Any> = MultiMap()
                 queries["property"] = "id"
                 queries["property"] = "installs"
                 queries["property"] = "likes"
                 queries["property"] = "objectId"
-                if (category != "skins") {
+                if (type != Type.SKINS) {
                     queries["property"] = "title"
                     queries["property"] = "description"
                     queries["property"] = "fileSize"
@@ -130,7 +121,7 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
                 queries["where"] = Filter.getQuery(filters.value)
                 queries["offset"] = mods.value?.size ?: 0
 
-                repository.getMods(category, queries).catch {
+                repository.getMods(type.id, queries).catch {
                     showProgressInList(false)
                     progress.postValue(false)
                     error.postValue(it.message)
@@ -146,8 +137,8 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
                             progress.postValue(false)
                         }
                         is Result.Success -> {
-                            val data = result.data?.toMutableList()?.onEach { it.cellType = CellType.values().firstOrNull { it.title == category } } ?: ArrayList()
-                            if (data.isNotEmpty() && context.get()?.readBoolean("banner_in_list").isTrue()) data.add(4, Mod(cellType = CellType.AD))
+                            val data = result.data?.toMutableList()?.onEach { it.type = Type.values().firstOrNull { it == type } } ?: ArrayList()
+                            if (data.isNotEmpty() && context.get()?.readBoolean("banner_in_list").isTrue()) data.add(4, Mod(type = Type.AD))
                             mods.value?.addAll(data)
                             mods.postValue(mods.value)
                             if (data.size < PAGE_SIZE) finished = true
@@ -160,8 +151,8 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
     }
 
     private fun showProgressInList(status: Boolean) {
-        if (status) mods.value?.add(Mod(cellType = CellType.PROGRESS))
-        else mods.value?.removeAll { it.cellType == CellType.PROGRESS }
+        if (status) mods.value?.add(Mod(type = Type.PROGRESS))
+        else mods.value?.removeAll { it.type == Type.PROGRESS }
         mods.postValue(mods.value)
     }
 
@@ -184,5 +175,5 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
 
 @AssistedFactory
 interface ModsViewModelFactory {
-    fun create(type: String): ModsViewModel
+    fun create(type: Type): ModsViewModel
 }

@@ -4,7 +4,7 @@
 
     <data>
 
-        <import type="com.iwelogic.minecraft.mods.models.Category" />
+        <import type="com.iwelogic.minecraft.mods.models.Type" />
 
         <variable
             name="viewModel"
@@ -52,7 +52,7 @@
                 android:background="?attr/actionBarItemBackground"
                 android:onClick="@{() -> viewModel.onClickMic()}"
                 android:scaleType="centerInside"
-                android:src="@drawable/mic"/>
+                android:src="@drawable/mic" />
 
         </LinearLayout>
 
@@ -72,68 +72,68 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/double_default_size"
                     android:layout_margin="@dimen/quarter_default_size"
-                    android:background="@{viewModel.category.equals(Category.ADDONS) ? @drawable/background_chips_on : @drawable/background_chips_off}"
+                    android:background="@{viewModel.type.equals(Type.ADDONS) ? @drawable/background_chips_on : @drawable/background_chips_off}"
                     android:drawablePadding="@dimen/half_default_size"
                     android:fontFamily="@font/minecraft_regular"
                     android:gravity="center"
-                    android:onClick="@{() -> viewModel.onSelectCategory(Category.ADDONS)}"
+                    android:onClick="@{() -> viewModel.onSelectCategory(Type.ADDONS)}"
                     android:paddingStart="12dp"
                     android:paddingTop="@dimen/quarter_default_size"
                     android:paddingEnd="12dp"
                     android:paddingBottom="@dimen/quarter_default_size"
                     android:text="@string/addons"
-                    android:textColor="@{viewModel.category.equals(Category.ADDONS) ? @color/white : @color/black}"
+                    android:textColor="@{viewModel.type.equals(Type.ADDONS) ? @color/white : @color/black}"
                     android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/double_default_size"
                     android:layout_margin="@dimen/quarter_default_size"
-                    android:background="@{viewModel.category.equals(Category.MAPS) ? @drawable/background_chips_on : @drawable/background_chips_off}"
+                    android:background="@{viewModel.type.equals(Type.MAPS) ? @drawable/background_chips_on : @drawable/background_chips_off}"
                     android:drawablePadding="@dimen/half_default_size"
                     android:fontFamily="@font/minecraft_regular"
                     android:gravity="center"
-                    android:onClick="@{() -> viewModel.onSelectCategory(Category.MAPS)}"
+                    android:onClick="@{() -> viewModel.onSelectCategory(Type.MAPS)}"
                     android:paddingStart="12dp"
                     android:paddingTop="@dimen/quarter_default_size"
                     android:paddingEnd="12dp"
                     android:paddingBottom="@dimen/quarter_default_size"
                     android:text="@string/maps"
-                    android:textColor="@{viewModel.category.equals(Category.MAPS) ? @color/white : @color/black}"
+                    android:textColor="@{viewModel.type.equals(Type.MAPS) ? @color/white : @color/black}"
                     android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/double_default_size"
                     android:layout_margin="@dimen/quarter_default_size"
-                    android:background="@{viewModel.category.equals(Category.TEXTURES) ? @drawable/background_chips_on : @drawable/background_chips_off}"
+                    android:background="@{viewModel.type.equals(Type.TEXTURES) ? @drawable/background_chips_on : @drawable/background_chips_off}"
                     android:drawablePadding="@dimen/half_default_size"
                     android:fontFamily="@font/minecraft_regular"
                     android:gravity="center"
-                    android:onClick="@{() -> viewModel.onSelectCategory(Category.TEXTURES)}"
+                    android:onClick="@{() -> viewModel.onSelectCategory(Type.TEXTURES)}"
                     android:paddingStart="12dp"
                     android:paddingTop="@dimen/quarter_default_size"
                     android:paddingEnd="12dp"
                     android:paddingBottom="@dimen/quarter_default_size"
                     android:text="@string/textures"
-                    android:textColor="@{viewModel.category.equals(Category.TEXTURES) ? @color/white : @color/black}"
+                    android:textColor="@{viewModel.type.equals(Type.TEXTURES) ? @color/white : @color/black}"
                     android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/double_default_size"
                     android:layout_margin="@dimen/quarter_default_size"
-                    android:background="@{viewModel.category.equals(Category.SEEDS) ? @drawable/background_chips_on : @drawable/background_chips_off}"
+                    android:background="@{viewModel.type.equals(Type.SEEDS) ? @drawable/background_chips_on : @drawable/background_chips_off}"
                     android:drawablePadding="@dimen/half_default_size"
                     android:fontFamily="@font/minecraft_regular"
                     android:gravity="center"
-                    android:onClick="@{() -> viewModel.onSelectCategory(Category.SEEDS)}"
+                    android:onClick="@{() -> viewModel.onSelectCategory(Type.SEEDS)}"
                     android:paddingStart="12dp"
                     android:paddingTop="@dimen/quarter_default_size"
                     android:paddingEnd="12dp"
                     android:paddingBottom="@dimen/quarter_default_size"
                     android:text="@string/seeds"
-                    android:textColor="@{viewModel.category.equals(Category.SEEDS) ? @color/white : @color/black}"
+                    android:textColor="@{viewModel.type.equals(Type.SEEDS) ? @color/white : @color/black}"
                     android:textSize="16sp" />
 
 
