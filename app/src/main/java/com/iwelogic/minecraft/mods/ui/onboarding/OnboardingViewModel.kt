@@ -1,8 +1,10 @@
 package com.iwelogic.minecraft.mods.ui.onboarding
 
 import android.content.Context
+import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.ads.MobileAds
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.ui.base.Const
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
@@ -23,6 +25,11 @@ class OnboardingViewModel @Inject constructor(@ApplicationContext applicationCon
         selected.postValue(it > 0)
     }
 
+    init {
+        val params = Bundle()
+        FirebaseAnalytics.getInstance(applicationContext).logEvent("open_onboarding", params)
+    }
+
     fun subscribeOnAgeChanges() {
         age.ignoreFirst().observeForever(ageObserver)
     }
@@ -34,6 +41,9 @@ class OnboardingViewModel @Inject constructor(@ApplicationContext applicationCon
             in 12..17 -> "T"
             else -> "MA"
         }
+        val params = Bundle()
+        params.putString("value", contentRating)
+        context.get()?.let { FirebaseAnalytics.getInstance(it).logEvent("content_rating", params) }
         context.get()?.writeString(Const.CONTENT_RATING, contentRating)
         val requestConfiguration = MobileAds.getRequestConfiguration().toBuilder().setMaxAdContentRating(contentRating).setTestDeviceIds(listOf("5571260002C1C3A1FD32D49B3E5332C1", "81AC2F5CC6A169492DFD647D9F39B4AA")).build()
         MobileAds.setRequestConfiguration(requestConfiguration)
