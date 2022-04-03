@@ -7,12 +7,15 @@ import androidx.lifecycle.viewModelScope
 import com.iwelogic.minecraft.mods.data.MultiMap
 import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.data.Result
+import com.iwelogic.minecraft.mods.models.Advertisement
 import com.iwelogic.minecraft.mods.models.Mod
-import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.models.Type
+import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.ui.main.mods.ModsViewModel
+import com.iwelogic.minecraft.mods.utils.fromPxToDp
 import com.iwelogic.minecraft.mods.utils.isTrue
+import com.iwelogic.minecraft.mods.utils.readBoolean
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
@@ -29,6 +32,7 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
     val mods: MutableLiveData<MutableList<Mod>> = MutableLiveData(ArrayList())
     var type: MutableLiveData<Type> = MutableLiveData(Type.ADDONS)
     var query: MutableLiveData<String> = MutableLiveData("")
+    val spanCount: MutableLiveData<Int> = MutableLiveData(1)
     val openMod: SingleLiveEvent<Mod> = SingleLiveEvent()
     val openVoiceSearch: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val hideKeyboard: SingleLiveEvent<Boolean> = SingleLiveEvent()
@@ -115,7 +119,13 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
                             progress.postValue(false)
                         }
                         is Result.Success -> {
-                            val data = result.data?.toMutableList()?.onEach { it.type = Type.values().firstOrNull { it.id == type.value?.id } } ?: ArrayList()
+                            val data = result.data?.toMutableList()?.onEach { it.type = type.value } ?: ArrayList()
+                            if (context.get()?.readBoolean(Advertisement.BANNER_IN_LIST.id).isTrue()) {
+                                if (data.size > 4)
+                                    data.add(4, Mod(type = Type.AD))
+                                if (data.size > 19)
+                                    data.add(19, Mod(type = Type.AD))
+                            }
                             mods.value?.addAll(data)
                             mods.postValue(mods.value)
                             if (data.size < ModsViewModel.PAGE_SIZE) finished = true
@@ -147,6 +157,12 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
             } else {
                 load()
             }
+        }
+    }
+
+    fun reloadScreenSize(widthDp: Int?) {
+        widthDp?.fromPxToDp(context.get())?.let {
+            spanCount.postValue(if (it > 700) 2 else 1)
         }
     }
 

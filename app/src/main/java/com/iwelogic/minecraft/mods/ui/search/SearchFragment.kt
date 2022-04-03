@@ -2,6 +2,7 @@ package com.iwelogic.minecraft.mods.ui.search
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.view.LayoutInflater
@@ -15,8 +16,8 @@ import androidx.navigation.fragment.findNavController
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentSearchBinding
 import com.iwelogic.minecraft.mods.models.DialogData
-import com.iwelogic.minecraft.mods.ui.base.BaseFragment
 import com.iwelogic.minecraft.mods.models.Type
+import com.iwelogic.minecraft.mods.ui.base.BaseFragment
 import com.iwelogic.minecraft.mods.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -30,6 +31,7 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
         val binding: FragmentSearchBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         binding.lifecycleOwner = this
         viewModel = ViewModelProvider(this)[SearchViewModel::class.java]
+        viewModel.reloadScreenSize(context?.resources?.displayMetrics?.widthPixels)
         binding.viewModel = viewModel
         return binding.root
     }
@@ -74,5 +76,10 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
         viewModel.hideKeyboard.observe(viewLifecycleOwner) {
             activity?.hideKeyboard(true)
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        viewModel.reloadScreenSize(context?.resources?.displayMetrics?.widthPixels)
     }
 }

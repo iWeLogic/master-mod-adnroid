@@ -127,7 +127,7 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
                         }
                         is Result.Success -> {
                             val data = result.data?.toMutableList()?.onEach { it.type = Type.values().firstOrNull { it == type } } ?: ArrayList()
-                            if (context.get()?.readBoolean("banner_in_list").isTrue()) {
+                            if (context.get()?.readBoolean(Advertisement.BANNER_IN_LIST.id).isTrue()) {
                                 if (data.size > 4)
                                     data.add(4, Mod(type = Type.AD))
                                 if (data.size > 19)

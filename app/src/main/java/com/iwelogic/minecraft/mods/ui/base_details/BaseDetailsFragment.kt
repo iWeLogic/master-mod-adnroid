@@ -11,6 +11,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.iwelogic.minecraft.mods.R
+import com.iwelogic.minecraft.mods.models.Advertisement
 import com.iwelogic.minecraft.mods.ui.base.BaseFragment
 import com.iwelogic.minecraft.mods.ui.details.DetailsFragmentDirections
 import com.iwelogic.minecraft.mods.utils.AddHelper
@@ -24,7 +25,7 @@ abstract class BaseDetailsFragment<VM : BaseDetailsViewModel> : BaseFragment<VM>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (context?.readBoolean("native_on_details").isTrue()) {
+        if (context?.readBoolean(Advertisement.NATIVE_ON_DETAILS.id).isTrue()) {
             refreshAd(view)
         }
         viewModel.openHelp.observe(viewLifecycleOwner) {
