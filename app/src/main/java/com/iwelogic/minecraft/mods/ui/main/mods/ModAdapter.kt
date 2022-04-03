@@ -65,11 +65,11 @@ class ModAdapter(private val onClick: (Mod) -> Unit) : ListAdapter<Mod, Recycler
     inner class AdViewHolder(private val binding: ItemAdBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Mod) {
             val context = binding.adViewContainer.context
-            item.adView?.let { adView ->
-                adView.parent?.let {
-                    (it as ViewGroup).removeView(adView)
+            if (item.adView != null) {
+                item.adView?.parent?.let {
+                    (it as ViewGroup).removeView(item.adView)
                 }
-            } ?: run {
+            } else {
                 val adViewNew = AdView(context)
                 adViewNew.adUnitId = context.getString(R.string.ad_banner)
                 adViewNew.adSize = AdSize.MEDIUM_RECTANGLE
