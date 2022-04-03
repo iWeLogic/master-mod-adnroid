@@ -13,6 +13,7 @@ import com.google.android.gms.ads.AdView
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.iwelogic.minecraft.mods.BuildConfig
+import com.iwelogic.minecraft.mods.ui.base.CellType
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
@@ -75,7 +76,7 @@ data class Mod(
     @Expose
     var p_likes: Long? = null,
 
-    var category: String? = null,
+    var cellType: CellType? = null,
 
     @Transient
     @Ignore
@@ -151,22 +152,14 @@ data class Mod(
         }
     }
 
-    fun getFileExtension() = when (category) {
-        "maps" -> "mcworld"
-        "addons" -> "mcaddon"
-        "seeds" -> "mcworld"
-        "textures" -> "mcpack"
-        else -> "png"
-    }
-
-    fun getImage() = BuildConfig.BACKEND_FILES + "/" + category + "/" + id + "/images/0.${if (category == "skins") "png" else "jpg"}"
+    fun getImage() = BuildConfig.BACKEND_FILES + "/" + cellType + "/" + id + "/images/0.${if (cellType?.title == "skins") "png" else "jpg"}"
 
 
     fun getImages(): List<String> = (0 until (countImages ?: 0)).map {
-        val image = BuildConfig.BACKEND_FILES + "/" + category + "/" + id + "/images/$it.jpg"
+        val image = BuildConfig.BACKEND_FILES + "/" + cellType + "/" + id + "/images/$it.jpg"
         //  Log.w("myLog", "getImages: " + image)
         image
     }
 
-    fun getFile() = BuildConfig.BACKEND_FILES + "/" + category + "/" + id + "/file.${getFileExtension()}"
+    fun getFile() = BuildConfig.BACKEND_FILES + "/" + cellType + "/" + id + "/file.${cellType?.fileExtension}"
 }

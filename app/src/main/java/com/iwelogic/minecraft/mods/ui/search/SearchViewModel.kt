@@ -10,6 +10,7 @@ import com.iwelogic.minecraft.mods.data.Result
 import com.iwelogic.minecraft.mods.models.Category
 import com.iwelogic.minecraft.mods.models.Mod
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
+import com.iwelogic.minecraft.mods.ui.base.CellType
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.ui.main.mods.ModsViewModel
 import com.iwelogic.minecraft.mods.utils.isTrue
@@ -83,7 +84,7 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
     }
 
     private fun load() {
-        if (!job?.isActive.isTrue() && mods.value?.none { it.category == ModsViewModel.ERROR || it.category == ModsViewModel.PROGRESS }.isTrue() && !finished) {
+        if (!job?.isActive.isTrue() && mods.value?.none { it.cellType == CellType.PROGRESS }.isTrue() && !finished) {
             job = viewModelScope.launch {
                 val queries: MultiMap<String, Any> = MultiMap()
                 queries["property"] = "id"
@@ -115,7 +116,7 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
                             progress.postValue(false)
                         }
                         is Result.Success -> {
-                            val data = result.data?.toMutableList()?.onEach { it.category = category.value?.id } ?: ArrayList()
+                            val data = result.data?.toMutableList()?.onEach { it.cellType = CellType.values().firstOrNull { it.title == category.value?.id } } ?: ArrayList()
                             mods.value?.addAll(data)
                             mods.postValue(mods.value)
                             if (data.size < ModsViewModel.PAGE_SIZE) finished = true
@@ -129,8 +130,8 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
     }
 
     private fun showProgressInList(status: Boolean) {
-        if (status) mods.value?.add(Mod(category = ModsViewModel.PROGRESS))
-        else mods.value?.removeAll { it.category == ModsViewModel.PROGRESS }
+        if (status) mods.value?.add(Mod(cellType = CellType.PROGRESS))
+        else mods.value?.removeAll { it.cellType == CellType.PROGRESS }
         mods.postValue(mods.value)
     }
 

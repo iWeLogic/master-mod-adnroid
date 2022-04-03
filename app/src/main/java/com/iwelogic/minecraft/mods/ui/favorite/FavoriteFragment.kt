@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentFavoriteBinding
-import com.iwelogic.minecraft.mods.models.Category
 import com.iwelogic.minecraft.mods.ui.base.BaseFragment
+import com.iwelogic.minecraft.mods.ui.base.CellType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,7 +28,7 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.openMod.observe(viewLifecycleOwner) {
-            if (it.category == Category.SKINS.id) {
+            if (it.cellType == CellType.SKINS) {
                 if (findNavController().currentDestination?.id == R.id.favoriteFragment) {
                     findNavController().navigate(FavoriteFragmentDirections.actionFavoriteFragmentToDetailsSkinFragment(it))
                 }

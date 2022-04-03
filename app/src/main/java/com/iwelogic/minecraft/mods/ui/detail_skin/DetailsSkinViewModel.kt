@@ -67,7 +67,7 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
                         context.get()?.writeBoolean(name, true)
                         mod.progressGallery = 10000
                         mod.installs = mod.installs?.plus(1)
-                        repository.updateMod(mod.category ?: "", mod).collect()
+                        repository.updateMod(mod.cellType?.title ?: "", mod).collect()
                         context.get()?.getString(R.string.image_downloaded)?.let { showSnackBar.invoke(it) }
                     } else {
                         mod.progressGallery = 0
@@ -109,7 +109,7 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
                     //creating files
                     val name = "skin_${mod.id}"
 
-                    val dir = File("$base/${item.value?.category}/${mod.id}/$name").apply { mkdirs() }
+                    val dir = File("$base/${item.value?.cellType}/${mod.id}/$name").apply { mkdirs() }
                     val fileSkins = File("${dir.absolutePath}/skins.json")
                     val fileManifest = File("${dir.absolutePath}/manifest.json")
                     val fileImage = File("${dir.absolutePath}/$name.png")
@@ -154,7 +154,7 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
                     ZipUtil.pack(dir, filePack, true)
                     mod.progress = 10000
                     mod.installs = mod.installs?.plus(1)
-                    repository.updateMod(mod.category ?: "", mod).collect()
+                    repository.updateMod(mod.cellType?.title ?: "", mod).collect()
                 }.onFailure {
                     showDialog.invoke(
                         DialogData(

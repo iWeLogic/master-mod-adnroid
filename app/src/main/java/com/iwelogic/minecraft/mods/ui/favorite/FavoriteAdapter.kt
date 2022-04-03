@@ -57,9 +57,6 @@ class FavoriteAdapter(private val onClick: (Mod) -> Unit) : ListAdapter<Mod, Rec
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (getItem(position).category) {
-            "skins" -> 2
-            else -> 1
-        }
+        return getItem(position).cellType?.type ?: 0
     }
 }

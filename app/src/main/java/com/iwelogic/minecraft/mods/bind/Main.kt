@@ -67,6 +67,22 @@ object Main {
                     }
                 }
             }
+            if (layoutManager.spanCount == 4) {
+                layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        view.adapter?.let {
+                            return when (it.getItemViewType(position)) {
+                                3 -> 2
+                                2 -> 1
+                                1 -> 1
+                                else -> 2
+                            }
+                        } ?: run {
+                            return 0
+                        }
+                    }
+                }
+            }
         }
         (view.adapter as ModAdapter).submitList(mods?.toMutableList())
     }

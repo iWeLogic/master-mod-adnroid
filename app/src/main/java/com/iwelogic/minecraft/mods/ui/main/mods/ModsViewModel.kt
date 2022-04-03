@@ -15,6 +15,7 @@ import com.iwelogic.minecraft.mods.models.FilterValue
 import com.iwelogic.minecraft.mods.models.Mod
 import com.iwelogic.minecraft.mods.models.Sort
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
+import com.iwelogic.minecraft.mods.ui.base.CellType
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.utils.deepCopy
 import com.iwelogic.minecraft.mods.utils.isTrue
@@ -38,8 +39,6 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
             }
         }
 
-        const val PROGRESS = "progress"
-        const val ERROR = "error"
         const val PAGE_SIZE = 30
     }
 
@@ -112,7 +111,7 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
     }
 
     private fun load() {
-        if (!job?.isActive.isTrue() && mods.value?.none { it.category == ERROR || it.category == PROGRESS }.isTrue() && !finished) {
+        if (!job?.isActive.isTrue() && mods.value?.none { it.cellType == CellType.PROGRESS }.isTrue() && !finished) {
             job = viewModelScope.launch {
                 val queries: MultiMap<String, Any> = MultiMap()
                 queries["property"] = "id"
@@ -147,8 +146,8 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
                             progress.postValue(false)
                         }
                         is Result.Success -> {
-                            val data = result.data?.toMutableList()?.onEach { it.category = category } ?: ArrayList()
-                            if (data.isNotEmpty() && context.get()?.readBoolean("banner_in_list").isTrue()) data.add(4, Mod(category = "ad"))
+                            val data = result.data?.toMutableList()?.onEach { it.cellType = CellType.values().firstOrNull { it.title == category } } ?: ArrayList()
+                            if (data.isNotEmpty() && context.get()?.readBoolean("banner_in_list").isTrue()) data.add(4, Mod(cellType = CellType.AD))
                             mods.value?.addAll(data)
                             mods.postValue(mods.value)
                             if (data.size < PAGE_SIZE) finished = true
@@ -161,8 +160,8 @@ class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationC
     }
 
     private fun showProgressInList(status: Boolean) {
-        if (status) mods.value?.add(Mod(category = PROGRESS))
-        else mods.value?.removeAll { it.category == PROGRESS }
+        if (status) mods.value?.add(Mod(cellType = CellType.PROGRESS))
+        else mods.value?.removeAll { it.cellType == CellType.PROGRESS }
         mods.postValue(mods.value)
     }
 
