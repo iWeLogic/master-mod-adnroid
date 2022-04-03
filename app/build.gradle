@@ -37,16 +37,14 @@ android {
             firebaseCrashlytics {
                 mappingFileUploadEnabled false
             }
-            manifestPlaceholders = [ disableCrachlytics: false ]
+            manifestPlaceholders = [ statusCrashlytics: true ]
             buildConfigField "String", "BACKEND_URL", '"https://angelicperson.backendless.app"'
             buildConfigField "String", "BACKEND_FILES", '"http://eu.backendlessappcontent.com/131E89F3-9ABD-92C9-FF6A-9A48441F6800/D6116013-FF57-4830-AD2C-3F16ED393819/files"'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             debuggable true
-            manifestPlaceholders = [disableCrachlytics: true]
-            resValue "string", "maps_api_key", "XXXXXXXXXXXXXXXXXXXXXX"
-
+            manifestPlaceholders = [statusCrashlytics: false]
             buildConfigField "String", "BACKEND_URL", '"https://angelicperson.backendless.app"'
             buildConfigField "String", "BACKEND_FILES", '"http://eu.backendlessappcontent.com/131E89F3-9ABD-92C9-FF6A-9A48441F6800/D6116013-FF57-4830-AD2C-3F16ED393819/files"'
         }

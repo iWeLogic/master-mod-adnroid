@@ -67,8 +67,8 @@
             android:resource="@color/green" />
 
         <meta-data
-            android:name="firebase_analytics_collection_deactivated"
-            android:value="${disableCrachlytics}" />
+            android:name="firebase_crashlytics_collection_enabled"
+            android:value="${statusCrashlytics}" />
     </application>
 
 </manifest>
