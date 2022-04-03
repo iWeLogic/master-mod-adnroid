@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.data.MultiMap
 import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.data.Result
@@ -120,7 +121,7 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
                         }
                         is Result.Success -> {
                             val data = result.data?.toMutableList()?.onEach { it.type = type.value } ?: ArrayList()
-                            if (context.get()?.readBoolean(Advertisement.BANNER_IN_LIST.id).isTrue()) {
+                            if (context.get()?.readBoolean(Advertisement.BANNER_IN_LIST.id).isTrue() && !context.get()?.resources?.getBoolean(R.bool.isTablet).isTrue()) {
                                 if (data.size > 4)
                                     data.add(4, Mod(type = Type.AD))
                                 if (data.size > 19)

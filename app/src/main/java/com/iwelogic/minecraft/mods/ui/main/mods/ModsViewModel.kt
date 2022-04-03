@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.data.MultiMap
 import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.data.Result
@@ -109,7 +110,6 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
                 queries["sortBy"] = sort.value?.query ?: ""
                 queries["where"] = Filter.getQuery(filters.value)
                 queries["offset"] = mods.value?.size ?: 0
-
                 repository.getMods(type.id, queries).catch {
                     showProgressInList(false)
                     progress.postValue(false)
@@ -126,8 +126,8 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
                             progress.postValue(false)
                         }
                         is Result.Success -> {
-                            val data = result.data?.toMutableList()?.onEach { it.type = Type.values().firstOrNull { it == type } } ?: ArrayList()
-                            if (context.get()?.readBoolean(Advertisement.BANNER_IN_LIST.id).isTrue()) {
+                            val data = result.data?.toMutableList()?.onEach { it.type = type } ?: ArrayList()
+                            if (context.get()?.readBoolean(Advertisement.BANNER_IN_LIST.id).isTrue() && !context.get()?.resources?.getBoolean(R.bool.isTablet).isTrue()) {
                                 if (data.size > 4)
                                     data.add(4, Mod(type = Type.AD))
                                 if (data.size > 19)
