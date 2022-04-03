@@ -129,9 +129,9 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
                             val data = result.data?.toMutableList()?.onEach { it.type = type } ?: ArrayList()
                             if (context.get()?.readBoolean(Advertisement.BANNER_IN_LIST.id).isTrue() && !context.get()?.resources?.getBoolean(R.bool.isTablet).isTrue()) {
                                 if (data.size > 4)
-                                    data.add(4, Mod(type = Type.AD))
+                                    data.add(4, Mod(id = (0..999999).random(), type = Type.AD))
                                 if (data.size > 19)
-                                    data.add(19, Mod(type = Type.AD))
+                                    data.add(19, Mod(id = (0..999999).random(), type = Type.AD))
                             }
                             mods.value?.addAll(data)
                             mods.postValue(mods.value)
