@@ -1,13 +1,13 @@
 package com.iwelogic.minecraft.mods.models
 
 import android.os.Parcelable
+import android.view.View
 import androidx.annotation.NonNull
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
 import androidx.room.*
 import androidx.room.TypeConverter
-import com.google.android.gms.ads.AdView
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.iwelogic.minecraft.mods.BuildConfig
@@ -93,7 +93,7 @@ data class Mod(
     @Transient
     @Ignore
     @IgnoredOnParcel
-    var adView: AdView? = null
+    var adView: View? = null
 
     var progress: Int
         @Bindable get() = _progress

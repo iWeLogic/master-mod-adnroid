@@ -78,10 +78,10 @@ class ModAdapter(private val onClick: (Mod) -> Unit) : ListAdapter<Mod, Recycler
                     override fun onAdFailedToLoad(p0: LoadAdError) {
                         super.onAdFailedToLoad(p0)
                         catchAll {
+                            item.adView = ImageView(context).apply { setImageResource(R.drawable.ad_placeholder) }
                             binding.adViewContainer.removeAllViews()
-                            val placeholder = ImageView(context)
-                            placeholder.setImageResource(R.drawable.ad_placeholder)
-                            binding.adViewContainer.addView(placeholder)
+                            binding.adViewContainer.addView(item.adView)
+                            binding.executePendingBindings()
                         }
                     }
                 }
@@ -90,6 +90,7 @@ class ModAdapter(private val onClick: (Mod) -> Unit) : ListAdapter<Mod, Recycler
             }
             binding.adViewContainer.removeAllViews()
             binding.adViewContainer.addView(item.adView)
+            binding.executePendingBindings()
         }
     }
 
