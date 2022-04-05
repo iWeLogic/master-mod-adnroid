@@ -15,19 +15,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(@ApplicationContext applicationContext: Context) : BaseViewModel(applicationContext) {
-    var selectedItemId = R.id.addons
 
+    companion object {
+        const val COUNTER_STARTUPS = "counter_startups"
+    }
+
+    var selectedItemId = R.id.addons
     val showRatingDialog: SingleLiveEvent<Boolean> = SingleLiveEvent()
 
     init {
         viewModelScope.launch {
             delay(1000)
-            var opens = applicationContext.readInteger("opens", 0)
+            var opens = applicationContext.readInteger(COUNTER_STARTUPS, 0)
             opens++
             if (opens == 3) {
                 showRatingDialog.postValue(true)
             }
-            applicationContext.writeInteger("opens", opens)
+            applicationContext.writeInteger(COUNTER_STARTUPS, opens)
         }
     }
 }
