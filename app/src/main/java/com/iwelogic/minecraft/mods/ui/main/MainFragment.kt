@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.play.core.review.ReviewManagerFactory
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentMainBinding
 import com.iwelogic.minecraft.mods.ui.base.BaseFragment
@@ -32,6 +33,19 @@ class MainFragment : BaseFragment<MainViewModel>() {
         bottomNavigationView.selectedItemId = viewModel.selectedItemId
         val navController = (childFragmentManager.findFragmentById(R.id.bottomNavigationContainer) as NavHostFragment).navController
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
+
+        viewModel.showRatingDialog.observe(viewLifecycleOwner) {
+            activity?.let { activity ->
+                val manager = ReviewManagerFactory.create(activity)
+                val request = manager.requestReviewFlow()
+                request.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val reviewInfo = task.result
+                        manager.launchReviewFlow(activity, reviewInfo)
+                    }
+                }
+            }
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -40,18 +54,4 @@ class MainFragment : BaseFragment<MainViewModel>() {
             viewModel.selectedItemId = it
         }
     }
-
-    /*fun showRatingDialog() {
-
-        activity?.let { activity ->
-            val manager = ReviewManagerFactory.create(activity)
-            val request = manager.requestReviewFlow()
-            request.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val reviewInfo = task.result
-                    manager.launchReviewFlow(activity, reviewInfo)
-                }
-            }
-        }
-    }*/
 }
