@@ -101,7 +101,7 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
                 queries["property"] = "version"
                 queries["property"] = "objectId"
                 queries["pageSize"] = ModsViewModel.PAGE_SIZE
-                queries["where"] = "title LIKE '%${query.value}%'"
+                queries["where"] = "title LIKE '%${query.value}%' AND status=true"
                 queries["offset"] = mods.value?.size ?: 0
 
                 repository.getMods(type.value?.id ?: "", queries).catch {

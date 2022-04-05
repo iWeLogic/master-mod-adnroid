@@ -106,6 +106,7 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
                     queries["property"] = "countImages"
                     queries["property"] = "version"
                 }
+                queries["where"] = "status=true"
                 queries["pageSize"] = PAGE_SIZE
                 queries["sortBy"] = sort.value?.query ?: ""
                 queries["where"] = Filter.getQuery(filters.value)
