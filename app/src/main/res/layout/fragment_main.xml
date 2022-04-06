@@ -28,10 +28,10 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="@dimen/bottomBar"
             android:layout_gravity="bottom"
             android:background="@drawable/background_top_line"
-            app:itemIconSize="32dp"
+            app:itemIconSize="@dimen/bottomBarIcon"
             app:itemTextAppearanceActive="@style/BottomNavigationViewTextActive"
             app:itemTextAppearanceInactive="@style/BottomNavigationViewText"
             app:itemTextColor="@color/bottom_nav_color_item"

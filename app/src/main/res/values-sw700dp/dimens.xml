@@ -5,8 +5,11 @@
     <dimen name="default_size">16dp</dimen>
     <dimen name="half_default_size">8dp</dimen>
     <dimen name="quarter_default_size">4dp</dimen>
-    <dimen name="toolbar">52dp</dimen>
+    <dimen name="toolbar">62dp</dimen>
+    <dimen name="bottomBar">80dp</dimen>
+    <dimen name="bottomBarIcon">40dp</dimen>
 
+    <dimen name="smallText">15sp</dimen>
     <dimen name="normalText">18sp</dimen>
     <dimen name="largeText">21dp</dimen>
     <dimen name="extraLargeText">24sp</dimen>
