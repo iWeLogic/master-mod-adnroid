@@ -15,6 +15,7 @@ import com.iwelogic.minecraft.mods.databinding.FragmentModsBinding
 import com.iwelogic.minecraft.mods.models.FilterValue
 import com.iwelogic.minecraft.mods.models.Type
 import com.iwelogic.minecraft.mods.ui.base.BaseFragment
+import com.iwelogic.minecraft.mods.ui.base.Const.VALUE
 import com.iwelogic.minecraft.mods.ui.main.MainFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -82,7 +83,7 @@ class ModsFragment : BaseFragment<ModsViewModel>() {
             }
         }
         parentFragment?.parentFragment?.setFragmentResultListener("filter_" + viewModel.type.id) { _, bundle ->
-            viewModel.setNewFilters(bundle.getParcelableArray("value")?.map { it as FilterValue } ?: ArrayList())
+            viewModel.setNewFilters(bundle.getParcelableArray(VALUE)?.map { it as FilterValue } ?: ArrayList())
         }
         viewModel.recyclerState?.let {
             view.findViewById<RecyclerView>(R.id.list)?.layoutManager?.onRestoreInstanceState(it)

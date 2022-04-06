@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.DialogFilterBinding
 import com.iwelogic.minecraft.mods.ui.base.BaseDialog
+import com.iwelogic.minecraft.mods.ui.base.Const.VALUE
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,7 +30,7 @@ class FilterDialog : BaseDialog<FilterViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.apply.observe(viewLifecycleOwner) {
-            setFragmentResult(FilterDialogArgs.fromBundle(requireArguments()).key, Bundle().apply { putParcelableArray("value", it.toTypedArray()) })
+            setFragmentResult(FilterDialogArgs.fromBundle(requireArguments()).key, Bundle().apply { putParcelableArray(VALUE, it.toTypedArray()) })
             dismiss()
         }
     }
