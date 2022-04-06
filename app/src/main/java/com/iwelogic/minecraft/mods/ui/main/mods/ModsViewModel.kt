@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.os.Parcelable
-import android.util.Log
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.core.content.ContextCompat
@@ -116,20 +115,15 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
                 queries["where"] = Filter.getQuery(filters.value)
                 queries["offset"] = mods.value?.size ?: 0
                 repository.getMods(type.id, queries).catch {
-                    showProgressInList(false)
-                    progress.postValue(false)
                     error.postValue(it.message)
+                    showProgress(false)
                 }.collect { result ->
                     when (result) {
                         is Result.Loading -> {
                             error.postValue(null)
-                            if (mods.value.isNullOrEmpty()) progress.postValue(true)
-                            else showProgressInList(true)
+                            showProgress(true)
                         }
-                        is Result.Finish -> {
-                            showProgressInList(false)
-                            progress.postValue(false)
-                        }
+                        is Result.Finish -> showProgress(false)
                         is Result.Success -> {
                             val data = result.data?.toMutableList()?.onEach { it.type = type } ?: ArrayList()
                             if (context.get()?.readBoolean(Advertisement.BANNER_IN_LIST.id).isTrue() && !context.get()?.resources?.getBoolean(R.bool.isTablet).isTrue()) {
@@ -152,7 +146,7 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
 
     private fun loadBanners() {
         context.get()?.let { context ->
-            mods.value?.filter { it.type == Type.AD }?. forEach {
+            mods.value?.filter { it.type == Type.AD }?.forEach {
                 if (it.adView == null) {
                     it.adView = ProgressBar(context).apply {
                         indeterminateTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.title))
@@ -165,7 +159,6 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
                     adViewNew.adListener = object : AdListener() {
                         override fun onAdFailedToLoad(p0: LoadAdError) {
                             super.onAdFailedToLoad(p0)
-                            Log.w("myLog", "onAdFailedToLoad: ")
                             catchAll {
                                 it.adView = ImageView(context).apply { setImageResource(R.drawable.ad_placeholder) }
                             }
@@ -173,7 +166,6 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
 
                         override fun onAdLoaded() {
                             super.onAdLoaded()
-                            Log.w("myLog", "onAdLoaded: ")
                             it.adView = adViewNew
                         }
                     }
@@ -184,15 +176,23 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
         }
     }
 
-    private fun showProgressInList(status: Boolean) {
-        if (status) mods.value?.add(Mod(type = Type.PROGRESS))
-        else mods.value?.removeAll { it.type == Type.PROGRESS }
+    private fun showProgress(status: Boolean) {
+        if (status) {
+            if (mods.value.isNullOrEmpty()) {
+                progress.postValue(true)
+            } else {
+                mods.value?.add(Mod(type = Type.PROGRESS))
+            }
+        } else {
+            progress.postValue(false)
+            mods.value?.removeAll { it.type == Type.PROGRESS }
+        }
         mods.postValue(mods.value)
     }
 
     override fun onReload() {
         job?.cancel()
-        showProgressInList(false)
+        showProgress(false)
         progress.postValue(false)
         mods.value?.clear()
         mods.postValue(mods.value)

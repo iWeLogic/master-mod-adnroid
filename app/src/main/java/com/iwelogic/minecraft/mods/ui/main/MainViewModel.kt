@@ -28,7 +28,7 @@ class MainViewModel @Inject constructor(@ApplicationContext applicationContext: 
             delay(1000)
             var opens = applicationContext.readInteger(COUNTER_STARTUPS, 0)
             opens++
-            if (opens == 3) {
+            if (opens == 5) {
                 showRatingDialog.postValue(true)
             }
             applicationContext.writeInteger(COUNTER_STARTUPS, opens)

@@ -16,7 +16,7 @@ android {
         applicationId "com.iwelogic.minecraft.mods"
         minSdk 23
         targetSdk 31
-        versionCode 7
+        versionCode 8
         versionName "1.0." + versionCode
         project.archivesBaseName = applicationId + "_" + versionName
     }
@@ -37,7 +37,7 @@ android {
             firebaseCrashlytics {
                 mappingFileUploadEnabled false
             }
-            manifestPlaceholders = [ statusCrashlytics: true ]
+            manifestPlaceholders = [statusCrashlytics: true]
             buildConfigField "String", "BACKEND_URL", '"https://angelicperson.backendless.app"'
             buildConfigField "String", "BACKEND_FILES", '"http://eu.backendlessappcontent.com/131E89F3-9ABD-92C9-FF6A-9A48441F6800/D6116013-FF57-4830-AD2C-3F16ED393819/files"'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
