@@ -64,32 +64,7 @@ class ModAdapter(private val onClick: (Mod) -> Unit) : ListAdapter<Mod, Recycler
 
     inner class AdViewHolder(private val binding: ItemAdBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Mod) {
-            val context = binding.adViewContainer.context
-            if (item.adView != null) {
-                item.adView?.parent?.let {
-                    (it as ViewGroup).removeView(item.adView)
-                }
-            } else {
-                val adViewNew = AdView(context)
-                adViewNew.adUnitId = context.getString(R.string.ad_banner)
-                adViewNew.adSize = AdSize.MEDIUM_RECTANGLE
-                val adRequest = AdRequest.Builder().build()
-                adViewNew.adListener = object : AdListener() {
-                    override fun onAdFailedToLoad(p0: LoadAdError) {
-                        super.onAdFailedToLoad(p0)
-                        catchAll {
-                            item.adView = ImageView(context).apply { setImageResource(R.drawable.ad_placeholder) }
-                            binding.adViewContainer.removeAllViews()
-                            binding.adViewContainer.addView(item.adView)
-                            binding.executePendingBindings()
-                        }
-                    }
-                }
-                adViewNew.loadAd(adRequest)
-                item.adView = adViewNew
-            }
-            binding.adViewContainer.removeAllViews()
-            binding.adViewContainer.addView(item.adView)
+            binding.item = item
             binding.executePendingBindings()
         }
     }

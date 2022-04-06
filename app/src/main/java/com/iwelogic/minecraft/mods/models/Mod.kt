@@ -94,6 +94,11 @@ data class Mod(
     @Ignore
     @IgnoredOnParcel
     var adView: View? = null
+        @Bindable get
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.adView)
+        }
 
     var progress: Int
         @Bindable get() = _progress

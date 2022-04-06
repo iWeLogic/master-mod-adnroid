@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/adViewContainer"
+            adView="@{item.adView}"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_margin="@dimen/half_default_size"

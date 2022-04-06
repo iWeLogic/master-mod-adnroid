@@ -2,8 +2,11 @@ package com.iwelogic.minecraft.mods.bind
 
 import android.text.method.LinkMovementMethod
 import android.util.TypedValue
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -25,6 +28,19 @@ object Base {
     fun setOnQueryTextListener(searchView: SearchView, listener: SearchView.OnQueryTextListener) {
         searchView.setOnQueryTextListener(listener)
     }
+
+    @BindingAdapter("adView")
+    @JvmStatic
+    fun setAdView(view: LinearLayout, adView: View?) {
+        if (adView != null) {
+            adView.parent?.let {
+                (it as ViewGroup).removeView(adView)
+            }
+            view.removeAllViews()
+            view.addView(adView)
+        }
+    }
+
 
     @BindingAdapter("query")
     @JvmStatic

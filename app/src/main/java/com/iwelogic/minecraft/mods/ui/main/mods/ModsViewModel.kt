@@ -1,11 +1,18 @@
 package com.iwelogic.minecraft.mods.ui.main.mods
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.PorterDuff
 import android.os.Parcelable
+import android.util.Log
+import android.widget.ImageView
+import android.widget.ProgressBar
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.ads.*
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.data.MultiMap
 import com.iwelogic.minecraft.mods.data.Repository
@@ -13,10 +20,7 @@ import com.iwelogic.minecraft.mods.data.Result
 import com.iwelogic.minecraft.mods.models.*
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
-import com.iwelogic.minecraft.mods.utils.deepCopy
-import com.iwelogic.minecraft.mods.utils.fromPxToDp
-import com.iwelogic.minecraft.mods.utils.isTrue
-import com.iwelogic.minecraft.mods.utils.readBoolean
+import com.iwelogic.minecraft.mods.utils.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -130,16 +134,51 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
                             val data = result.data?.toMutableList()?.onEach { it.type = type } ?: ArrayList()
                             if (context.get()?.readBoolean(Advertisement.BANNER_IN_LIST.id).isTrue() && !context.get()?.resources?.getBoolean(R.bool.isTablet).isTrue()) {
                                 if (data.size > 4)
-                                    data.add(4, Mod(id = (0..999999).random(), type = Type.AD))
+                                    data.add(4, Mod(id = (0..9999999).random(), type = Type.AD))
                                 if (data.size > 19)
-                                    data.add(19, Mod(id = (0..999999).random(), type = Type.AD))
+                                    data.add(19, Mod(id = (0..9999999).random(), type = Type.AD))
                             }
                             mods.value?.addAll(data)
                             mods.postValue(mods.value)
+                            loadBanners()
                             if (data.size < PAGE_SIZE) finished = true
                         }
                         is Result.Error -> error.postValue(result.message)
                     }
+                }
+            }
+        }
+    }
+
+    private fun loadBanners() {
+        context.get()?.let { context ->
+            mods.value?.filter { it.type == Type.AD }?. forEach {
+                if (it.adView == null) {
+                    it.adView = ProgressBar(context).apply {
+                        indeterminateTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.title))
+                        indeterminateTintMode = PorterDuff.Mode.SRC_ATOP
+                    }
+                    val adViewNew = AdView(context)
+                    adViewNew.adUnitId = context.getString(R.string.ad_banner)
+                    adViewNew.adSize = AdSize.MEDIUM_RECTANGLE
+                    val adRequest = AdRequest.Builder().build()
+                    adViewNew.adListener = object : AdListener() {
+                        override fun onAdFailedToLoad(p0: LoadAdError) {
+                            super.onAdFailedToLoad(p0)
+                            Log.w("myLog", "onAdFailedToLoad: ")
+                            catchAll {
+                                it.adView = ImageView(context).apply { setImageResource(R.drawable.ad_placeholder) }
+                            }
+                        }
+
+                        override fun onAdLoaded() {
+                            super.onAdLoaded()
+                            Log.w("myLog", "onAdLoaded: ")
+                            it.adView = adViewNew
+                        }
+                    }
+                    adViewNew.loadAd(adRequest)
+
                 }
             }
         }
