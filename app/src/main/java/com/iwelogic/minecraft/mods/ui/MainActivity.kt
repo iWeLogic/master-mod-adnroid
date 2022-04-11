@@ -104,7 +104,6 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onAdShowedFullScreenContent() {
-                    FirebaseAnalytics.getInstance(this@MainActivity).logEvent("InterAdShowedFullScreenContent", Bundle())
                     callback?.invoke()
                     mInterstitialAd = null
                     count = 0
