@@ -15,6 +15,7 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -103,6 +104,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onAdShowedFullScreenContent() {
+                    FirebaseAnalytics.getInstance(this@MainActivity).logEvent("InterAdShowedFullScreenContent", Bundle())
                     callback?.invoke()
                     mInterstitialAd = null
                     count = 0

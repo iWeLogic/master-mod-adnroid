@@ -6,10 +6,13 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.models.Advertisement
 import com.iwelogic.minecraft.mods.ui.base.BaseFragment
@@ -51,6 +54,7 @@ abstract class BaseDetailsFragment<VM : BaseDetailsViewModel> : BaseFragment<VM>
                         currentNativeAd?.destroy()
                         currentNativeAd = nativeAd
                         if (adView == null) {
+                            context?.let { FirebaseAnalytics.getInstance(it).logEvent("NativeAdShowAsPrevious", Bundle()) }
                             adView = layoutInflater.inflate(R.layout.layout_native_ad, view as FrameLayout, false) as NativeAdView
                             nativeAd.images.firstOrNull()?.let { image ->
                                 adView?.findViewById<ImageView>(R.id.imageAd)?.setImageDrawable(image.drawable)
@@ -63,7 +67,23 @@ abstract class BaseDetailsFragment<VM : BaseDetailsViewModel> : BaseFragment<VM>
                         view.findViewById<FrameLayout>(R.id.ad_frame)?.addView(adView)
                     }
                 }
-                builder.build().loadAd(AdRequest.Builder().build())
+                val adLoader = builder.withAdListener(object : AdListener() {
+                    override fun onAdFailedToLoad(p0: LoadAdError) {
+                        super.onAdFailedToLoad(p0)
+                        context?.let { FirebaseAnalytics.getInstance(it).logEvent("NativeAdFailedToLoad", Bundle()) }
+                    }
+
+                    override fun onAdLoaded() {
+                        super.onAdLoaded()
+                        context?.let { FirebaseAnalytics.getInstance(it).logEvent("NativeAdLoaded", Bundle()) }
+                    }
+
+                    override fun onAdImpression() {
+                        super.onAdImpression()
+                        context?.let { FirebaseAnalytics.getInstance(it).logEvent("NativeAdsShow", Bundle()) }
+                    }
+                }).build()
+                adLoader.loadAd(AdRequest.Builder().build())
             }
         }
     }
