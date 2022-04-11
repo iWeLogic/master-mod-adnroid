@@ -16,7 +16,7 @@ android {
         applicationId "com.iwelogic.minecraft.mods"
         minSdk 23
         targetSdk 31
-        versionCode 8
+        versionCode 9
         versionName "1.0." + versionCode
         project.archivesBaseName = applicationId + "_" + versionName
     }
@@ -69,8 +69,8 @@ dependencies {
     implementation "androidx.core:core-splashscreen:1.0.0-beta02"
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
@@ -103,8 +103,8 @@ dependencies {
     api 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     //DI Hilt
-    implementation "com.google.dagger:hilt-android:2.39"
-    kapt "com.google.dagger:hilt-android-compiler:2.39"
+    implementation "com.google.dagger:hilt-android:2.39.1"
+    kapt "com.google.dagger:hilt-android-compiler:2.39.1"
 
     //Room
     implementation "androidx.room:room-runtime:2.4.2"

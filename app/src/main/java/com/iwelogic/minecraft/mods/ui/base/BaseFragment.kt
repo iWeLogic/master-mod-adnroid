@@ -10,10 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.androidadvance.topsnackbar.TSnackbar
 import com.iwelogic.minecraft.mods.R
-import com.iwelogic.minecraft.mods.models.Advertisement
 import com.iwelogic.minecraft.mods.ui.MainActivity
-import com.iwelogic.minecraft.mods.utils.isTrue
-import com.iwelogic.minecraft.mods.utils.readBoolean
 
 open class BaseFragment<VM : BaseViewModel> : Fragment() {
 
@@ -26,10 +23,7 @@ open class BaseFragment<VM : BaseViewModel> : Fragment() {
         }
 
         viewModel.showInterstitial.observe(viewLifecycleOwner) {
-            if (context?.readBoolean(Advertisement.INTERSTITIAL_OPEN_DETAILS.id).isTrue()) {
-                (activity as MainActivity).showInterstitialAd(it)
-            } else
-                it?.invoke()
+            (activity as MainActivity).showInterstitialAd(it)
         }
 
         viewModel.showSnackBar.observe(viewLifecycleOwner) { msg ->
