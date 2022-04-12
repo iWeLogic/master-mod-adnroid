@@ -1,9 +1,11 @@
 package com.iwelogic.minecraft.mods.ui.search
 
 import android.content.Context
+import android.os.Bundle
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.data.MultiMap
 import com.iwelogic.minecraft.mods.data.Repository
@@ -84,7 +86,14 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
     }
 
     val onClick: (Mod) -> Unit = {
-        openMod.invoke(it)
+        if (context.get()?.readBoolean(Advertisement.INTERSTITIAL_OPEN_DETAILS.id).isTrue()) {
+            showInterstitial.invoke {
+                context.get()?.let { FirebaseAnalytics.getInstance(it).logEvent("INTERSTITIAL_OPEN_DETAILS", Bundle()) }
+                openMod.invoke(it)
+            }
+        } else {
+            openMod.invoke(it)
+        }
     }
 
     private fun load() {
