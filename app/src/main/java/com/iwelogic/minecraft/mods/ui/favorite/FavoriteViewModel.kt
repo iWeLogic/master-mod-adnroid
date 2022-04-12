@@ -1,9 +1,7 @@
 package com.iwelogic.minecraft.mods.ui.favorite
 
 import android.content.Context
-import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.models.Advertisement
@@ -13,6 +11,7 @@ import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.utils.fromPxToDp
 import com.iwelogic.minecraft.mods.utils.isTrue
 import com.iwelogic.minecraft.mods.utils.readBoolean
+import com.iwelogic.minecraft.mods.utils.logEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -39,7 +38,7 @@ class FavoriteViewModel @Inject constructor(private val repository: Repository, 
     val onClick: (Mod) -> Unit = {
         if (context.get()?.readBoolean(Advertisement.INTERSTITIAL_OPEN_DETAILS.id).isTrue()) {
             showInterstitial.invoke {
-                context.get()?.let { FirebaseAnalytics.getInstance(it).logEvent("INTERSTITIAL_OPEN_DETAILS", Bundle()) }
+                context.get().logEvent(Advertisement.INTERSTITIAL_OPEN_DETAILS.id)
                 openMod.invoke(it)
             }
         } else {

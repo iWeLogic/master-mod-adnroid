@@ -3,7 +3,6 @@ package com.iwelogic.minecraft.mods.ui.main.mods
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
-import android.os.Bundle
 import android.os.Parcelable
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -13,7 +12,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.ads.*
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.data.MultiMap
 import com.iwelogic.minecraft.mods.data.Repository
@@ -60,7 +58,7 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
     val onClick: (Mod) -> Unit = {
         if (context.get()?.readBoolean(Advertisement.INTERSTITIAL_OPEN_DETAILS.id).isTrue()) {
             showInterstitial.invoke {
-                context.get()?.let { FirebaseAnalytics.getInstance(it).logEvent("INTERSTITIAL_OPEN_DETAILS", Bundle()) }
+                context.get().logEvent(Advertisement.INTERSTITIAL_OPEN_DETAILS.id)
                 openMod.invoke(it)
             }
         } else {
@@ -88,7 +86,7 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
     fun onClickSearch() {
         if (context.get()?.readBoolean(Advertisement.INTERSTITIAL_OPEN_SEARCH.id).isTrue()) {
             showInterstitial.invoke {
-                context.get()?.let { FirebaseAnalytics.getInstance(it).logEvent("INTERSTITIAL_OPEN_SEARCH", Bundle()) }
+                context.get().logEvent(Advertisement.INTERSTITIAL_OPEN_SEARCH.id)
                 openSearch.invoke(true)
             }
         } else {
@@ -99,7 +97,7 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
     fun onClickFavorite() {
         if (context.get()?.readBoolean(Advertisement.INTERSTITIAL_OPEN_FAVORITE.id).isTrue()) {
             showInterstitial.invoke {
-                context.get()?.let { FirebaseAnalytics.getInstance(it).logEvent("INTERSTITIAL_OPEN_FAVORITE", Bundle()) }
+                context.get().logEvent(Advertisement.INTERSTITIAL_OPEN_FAVORITE.id)
                 openFavorite.invoke(true)
             }
         } else {

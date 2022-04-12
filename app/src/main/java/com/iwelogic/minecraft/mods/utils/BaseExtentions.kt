@@ -2,11 +2,13 @@ package com.iwelogic.minecraft.mods.utils
 
 import android.app.Activity
 import android.content.Context
+import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 
 fun Int.dp(context: Context?): Int {
@@ -45,6 +47,7 @@ fun Boolean?.isTrue(action: () -> Unit) {
 fun Boolean?.isTrue(): Boolean {
     return this == true
 }
+
 fun Activity.hideKeyboard(clearFocus: Boolean) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     window.currentFocus?.let {
@@ -53,6 +56,10 @@ fun Activity.hideKeyboard(clearFocus: Boolean) {
             it.clearFocus()
         }
     }
+}
+
+fun Context?.logEvent(event: String, bundle: Bundle = Bundle()) {
+    this?.let { FirebaseAnalytics.getInstance(it).logEvent(event, bundle) }
 }
 
 inline fun catchAll(action: () -> Unit) {
