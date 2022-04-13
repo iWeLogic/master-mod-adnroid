@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mods for Minecraft</string>
+    <string name="app_name">Master mod</string>
 
     <string name="something_went_wrong">Something went wrong</string>
 
@@ -23,10 +23,10 @@
     <string name="maps_0">Adventure</string>
     <string name="maps_1">Creation</string>
     <string name="maps_2">Custom Terrain</string>
-    <string name="maps_3">Minigame</string>
+    <string name="maps_3">Mini game</string>
     <string name="maps_4">Parkour</string>
     <string name="maps_5">PVP</string>
-    <string name="maps_6">Redstone</string>
+    <string name="maps_6">Reds tone</string>
     <string name="maps_7">Survival</string>
 
     <string name="textures_0">16x16</string>
@@ -49,7 +49,7 @@
     <string name="buildings_7">Flying ships</string>
     <string name="buildings_8">Other</string>
     <string name="buildings_9">SkyWars</string>
-    <string name="buildings_10">Redstone</string>
+    <string name="buildings_10">Reds tone</string>
 
     <string name="skins_0">Monsters</string>
     <string name="skins_1">Girls</string>
