@@ -11,6 +11,9 @@ import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.models.DialogData
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.ui.base_details.BaseDetailsViewModel
+import com.iwelogic.minecraft.mods.ui.main.MainViewModel
+import com.iwelogic.minecraft.mods.utils.readInteger
+import com.iwelogic.minecraft.mods.utils.writeBoolean
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.collect
@@ -65,6 +68,7 @@ class DetailsViewModel @Inject constructor(repository: Repository, @ApplicationC
     }
 
     fun onClickInstall() {
+        context.get()?.writeBoolean(MainViewModel.INSTALLED, true)
         openInstall.invoke(File("$base/${item.value?.type}/${item.value?.id}/file.${item.value?.type?.fileExtension}"))
     }
 
