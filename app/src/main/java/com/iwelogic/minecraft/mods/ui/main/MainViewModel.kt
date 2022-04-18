@@ -35,6 +35,7 @@ class MainViewModel @Inject constructor(@ApplicationContext applicationContext: 
                 }
                 showRatingDialog.postValue(true)
             }
+
         }
     }
 }
