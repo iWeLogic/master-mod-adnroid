@@ -1,12 +1,13 @@
 package com.iwelogic.minecraft.mods.ui.main
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.iwelogic.minecraft.mods.R
+import com.iwelogic.minecraft.mods.models.Advertisement
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
-import com.iwelogic.minecraft.mods.utils.readInteger
-import com.iwelogic.minecraft.mods.utils.writeInteger
+import com.iwelogic.minecraft.mods.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(@ApplicationContext applicationContext: Context) : BaseViewModel(applicationContext) {
 
     companion object {
-        const val COUNTER_STARTUPS = "counter_startups"
+        const val INSTALLED = "installed"
+        const val SHOWED_RATING = "showed_rating"
     }
 
     var selectedItemId = R.id.addons
@@ -25,13 +27,12 @@ class MainViewModel @Inject constructor(@ApplicationContext applicationContext: 
 
     init {
         viewModelScope.launch {
-            delay(1000)
-            var opens = applicationContext.readInteger(COUNTER_STARTUPS, 0)
-            opens++
-            if (opens > 2 && opens % 3 == 0) {
+            delay(1500)
+            if (applicationContext.readBoolean(INSTALLED) && !applicationContext.readBoolean(SHOWED_RATING)) {
+                context.get().logEvent(SHOWED_RATING)
+                applicationContext.writeBoolean(SHOWED_RATING, true)
                 showRatingDialog.postValue(true)
             }
-            applicationContext.writeInteger(COUNTER_STARTUPS, opens)
         }
     }
 }

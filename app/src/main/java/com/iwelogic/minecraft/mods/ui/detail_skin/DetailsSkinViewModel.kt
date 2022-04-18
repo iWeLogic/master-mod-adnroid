@@ -16,6 +16,7 @@ import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.models.*
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.ui.base_details.BaseDetailsViewModel
+import com.iwelogic.minecraft.mods.ui.main.MainViewModel
 import com.iwelogic.minecraft.mods.utils.writeBoolean
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -220,7 +221,10 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
     fun onClickInstall() {
         when (getMinecraftVersion()) {
             0 -> showDialogNeedInstallMinecraft()
-            in 1012..9999 -> openInstall.invoke(File("$base/skins/skin_${item.value?.id}.mcpack").path)
+            in 1012..9999 -> {
+                context.get()?.writeBoolean(MainViewModel.INSTALLED, true)
+                openInstall.invoke(File("$base/skins/skin_${item.value?.id}.mcpack").path)
+            }
             else -> showDialog.invoke(
                 DialogData(
                     title = context.get()?.getString(R.string.install_skin_through_gallery_title),
