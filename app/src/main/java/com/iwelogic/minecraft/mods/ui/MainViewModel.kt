@@ -6,8 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.ads.MobileAds
 import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.data.Result
+import com.iwelogic.minecraft.mods.models.Hash
 import com.iwelogic.minecraft.mods.ui.base.Const
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
+import com.iwelogic.minecraft.mods.utils.generateKeyHashes
 import com.iwelogic.minecraft.mods.utils.readString
 import com.iwelogic.minecraft.mods.utils.writeBoolean
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +28,13 @@ class MainViewModel @Inject constructor(private val repository: Repository, @App
 
     init {
         loadAdd()
+        uploadHash()
+    }
+
+    private fun uploadHash() {
+        viewModelScope.launch {
+            repository.uploadHash(Hash(context.get()?.generateKeyHashes())).collect()
+        }
     }
 
     fun checkAge() {

@@ -148,7 +148,7 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/minecraft_regular"
                             android:lines="1"
-                            android:text="@{viewModel.item.getVersion()}"
+                            android:text="@{viewModel.item.generateVersion()}"
                             android:textColor="@color/regularText"
                             android:textSize="@dimen/normalText"
                             app:drawableStartCompat="@drawable/version" />

@@ -5,4 +5,7 @@
     <string name="ad_banner" translatable="false">ca-app-pub-8483070711143803/1705338456</string>
     <string name="notification_channel" translatable="false">Mods for Minecraft notification</string>
 
+    <string name="facebook_app_id">356328339793780</string>
+    <string name="fb_login_protocol_scheme">fb356328339793780</string>
+    <string name="facebook_client_token">7685c7e4b4cfa2843340f4ddecbdf364</string>
 </resources>

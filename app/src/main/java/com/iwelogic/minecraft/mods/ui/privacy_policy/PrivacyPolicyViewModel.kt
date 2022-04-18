@@ -9,9 +9,8 @@ import javax.inject.Inject
 @HiltViewModel
 class PrivacyPolicyViewModel @Inject constructor(@ApplicationContext applicationContext: Context) : BaseViewModel(applicationContext) {
 
-    val text = "<p>\n" +
-            "                  Nazar Novak built the Mods for minecraft app as\n" +
-            "                  a Free app. This SERVICE is provided by\n" +
+    val text = "Nazar Novak built the Master Mod app as\n" +
+            "                  an Ad Supported app. This SERVICE is provided by\n" +
             "                  Nazar Novak at no cost and is intended for use as\n" +
             "                  is.\n" +
             "                </p> <p>\n" +
@@ -27,11 +26,11 @@ class PrivacyPolicyViewModel @Inject constructor(@ApplicationContext application
             "                </p> <p>\n" +
             "                  The terms used in this Privacy Policy have the same meanings\n" +
             "                  as in our Terms and Conditions, which are accessible at\n" +
-            "                  Mods for minecraft unless otherwise defined in this Privacy Policy.\n" +
+            "                  Master Mod unless otherwise defined in this Privacy Policy.\n" +
             "                </p> <p><strong>Information Collection and Use</strong></p> <p>\n" +
             "                  For a better experience, while using our Service, I\n" +
             "                  may require you to provide us with certain personally\n" +
-            "                  identifiable information, including but not limited to Age. The information that\n" +
+            "                  identifiable information, including but not limited to iWeLogic. The information that\n" +
             "                  I request will be retained on your device and is not collected by me in any way.\n" +
             "                </p> <div><p>\n" +
             "                    The app does use third-party services that may collect\n" +
@@ -39,7 +38,7 @@ class PrivacyPolicyViewModel @Inject constructor(@ApplicationContext application
             "                  </p> <p>\n" +
             "                    Link to the privacy policy of third-party service providers used\n" +
             "                    by the app\n" +
-            "                  </p> <ul><li><a href=\"https://www.google.com/policies/privacy/\" target=\"_blank\" rel=\"noopener noreferrer\">Google Play Services</a></li><li><a href=\"https://support.google.com/admob/answer/6128543?hl=en\" target=\"_blank\" rel=\"noopener noreferrer\">AdMob</a></li><li><a href=\"https://firebase.google.com/policies/analytics\" target=\"_blank\" rel=\"noopener noreferrer\">Google Analytics for Firebase</a></li><li><a href=\"https://firebase.google.com/support/privacy/\" target=\"_blank\" rel=\"noopener noreferrer\">Firebase Crashlytics</a></li><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></ul></div> <p><strong>Log Data</strong></p> <p>\n" +
+            "                  </p> <ul><li><a href=\"https://www.google.com/policies/privacy/\" target=\"_blank\" rel=\"noopener noreferrer\">Google Play Services</a></li><li><a href=\"https://support.google.com/admob/answer/6128543?hl=en\" target=\"_blank\" rel=\"noopener noreferrer\">AdMob</a></li><li><a href=\"https://firebase.google.com/policies/analytics\" target=\"_blank\" rel=\"noopener noreferrer\">Google Analytics for Firebase</a></li><li><a href=\"https://firebase.google.com/support/privacy/\" target=\"_blank\" rel=\"noopener noreferrer\">Firebase Crashlytics</a></li><li><a href=\"https://www.facebook.com/about/privacy/update/printable\" target=\"_blank\" rel=\"noopener noreferrer\">Facebook</a></li><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></ul></div> <p><strong>Log Data</strong></p> <p>\n" +
             "                  I want to inform you that whenever you\n" +
             "                  use my Service, in a case of an error in the app\n" +
             "                  I collect data and information (through third-party\n" +
@@ -103,9 +102,8 @@ class PrivacyPolicyViewModel @Inject constructor(@ApplicationContext application
             "                  periodically for any changes. I will\n" +
             "                  notify you of any changes by posting the new Privacy Policy on\n" +
             "                  this page.\n" +
-            "                </p> <p>This policy is effective as of 2022-03-24</p> <p><strong>Contact Us</strong></p> <p>\n" +
+            "                </p> <p>This policy is effective as of 2022-04-18</p> <p><strong>Contact Us</strong></p> <p>\n" +
             "                  If you have any questions or suggestions about my\n" +
-            "                  Privacy Policy, do not hesitate to contact me at novaknazar@gmail.com.\n" +
-            "                </p>"
+            "                  Privacy Policy, do not hesitate to contact me at novaknazar@gmail.com."
 }
 

@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.models.AdvertisingStatus
 import com.iwelogic.minecraft.mods.models.BaseResponse
+import com.iwelogic.minecraft.mods.models.Hash
 import com.iwelogic.minecraft.mods.models.Mod
 import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Response
@@ -24,6 +25,10 @@ class DataSource @Inject constructor(private val api: Api, @ApplicationContext a
         return getResponse(request = { api.getAdvertisingStatuses() })
     }
 
+    suspend fun uploadHash(hash: Hash): Result<Any> {
+        return getResponse(request = { api.uploadHash(hash) })
+    }
+
     suspend fun updateMod(category: String, mod: Mod): Result<BaseResponse> {
         return getResponse(request = { api.updateMod(category, mod) })
     }
@@ -37,7 +42,7 @@ class DataSource @Inject constructor(private val api: Api, @ApplicationContext a
             } else {
                 return try {
                     val responseError = Gson().fromJson(result.errorBody()?.string(), BaseResponse::class.java)
-                    Result.Error(/*responseError.code*/ null ?: Result.Error.Code.UNKNOWN, responseError.message)
+                    Result.Error(Result.Error.Code.UNKNOWN, responseError.message)
                 } catch (e: Exception) {
                     e.printStackTrace()
                     Result.Error(Result.Error.Code.UNKNOWN, e.message)
