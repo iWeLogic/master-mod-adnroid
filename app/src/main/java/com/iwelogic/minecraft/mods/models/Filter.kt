@@ -71,10 +71,9 @@ enum class Filter(val id: String, val title: Int, val category: String) : Parcel
         fun getQuery(filters: List<FilterValue>?): String {
             var query = ""
             filters?.filter { it.value }?.forEach {
-                query += if (query.isNotEmpty()) " OR " else ""
-                query += "pack=${it.filter.id}"
+                query += "${it.filter.id},"
             }
-            return query
+            return "pack IN (${query.trim(',')})"
         }
     }
 }

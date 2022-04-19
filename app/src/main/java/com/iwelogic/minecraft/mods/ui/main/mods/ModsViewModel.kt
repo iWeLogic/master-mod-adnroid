@@ -128,10 +128,9 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
                     queries["property"] = "countImages"
                     queries["property"] = "version"
                 }
-                queries["where"] = "status=true"
                 queries["pageSize"] = PAGE_SIZE
                 queries["sortBy"] = sort.value?.query ?: ""
-                queries["where"] = Filter.getQuery(filters.value)
+                queries["where"] = "${Filter.getQuery(filters.value)} AND status=true"
                 queries["offset"] = mods.value?.size ?: 0
                 repository.getMods(type.id, queries).catch {
                     error.postValue(it.message)
@@ -145,12 +144,6 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
                         is Result.Finish -> showProgress(false)
                         is Result.Success -> {
                             val data = result.data?.toMutableList()?.onEach { it.type = type } ?: ArrayList()
-                            if (context.get()?.readBoolean(Advertisement.BANNER_IN_LIST.id).isTrue() && !context.get()?.resources?.getBoolean(R.bool.isTablet).isTrue()) {
-                                if (data.size > 4)
-                                    data.add(4, Mod(id = (0..9999999).random(), type = Type.AD))
-                                if (data.size > 19)
-                                    data.add(19, Mod(id = (0..9999999).random(), type = Type.AD))
-                            }
                             mods.value?.addAll(data)
                             mods.postValue(mods.value)
                             loadBanners()
@@ -164,32 +157,38 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
     }
 
     private fun loadBanners() {
-        context.get()?.let { context ->
-            mods.value?.filter { it.type == Type.AD }?.forEach {
-                if (it.adView == null) {
-                    it.adView = ProgressBar(context).apply {
-                        indeterminateTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.title))
-                        indeterminateTintMode = PorterDuff.Mode.SRC_ATOP
-                    }
-                    val adViewNew = AdView(context)
-                    adViewNew.adUnitId = context.getString(R.string.ad_banner)
-                    adViewNew.adSize = AdSize.MEDIUM_RECTANGLE
-                    val adRequest = AdRequest.Builder().build()
-                    adViewNew.adListener = object : AdListener() {
-                        override fun onAdFailedToLoad(p0: LoadAdError) {
-                            super.onAdFailedToLoad(p0)
-                            catchAll {
-                                it.adView = ImageView(context).apply { setImageResource(R.drawable.ad_placeholder) }
+        if (context.get()?.readBoolean(Advertisement.BANNER_IN_LIST.id).isTrue()
+            && !context.get()?.resources?.getBoolean(R.bool.isTablet).isTrue()
+            && mods.value?.none { it.type == Type.AD }.isTrue()
+        ) {
+            mods.value?.add(4, Mod(id = (0..9999999).random(), type = Type.AD))
+            context.get()?.let { context ->
+                mods.value?.filter { it.type == Type.AD }?.forEach {
+                    if (it.adView == null) {
+                        it.adView = ProgressBar(context).apply {
+                            indeterminateTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.title))
+                            indeterminateTintMode = PorterDuff.Mode.SRC_ATOP
+                        }
+                        val adViewNew = AdView(context)
+                        adViewNew.adUnitId = context.getString(R.string.ad_banner)
+                        adViewNew.adSize = AdSize.MEDIUM_RECTANGLE
+                        val adRequest = AdRequest.Builder().build()
+                        adViewNew.adListener = object : AdListener() {
+                            override fun onAdFailedToLoad(p0: LoadAdError) {
+                                super.onAdFailedToLoad(p0)
+                                catchAll {
+                                    it.adView = ImageView(context).apply { setImageResource(R.drawable.ad_placeholder) }
+                                }
+                            }
+
+                            override fun onAdLoaded() {
+                                super.onAdLoaded()
+                                it.adView = adViewNew
                             }
                         }
+                        adViewNew.loadAd(adRequest)
 
-                        override fun onAdLoaded() {
-                            super.onAdLoaded()
-                            it.adView = adViewNew
-                        }
                     }
-                    adViewNew.loadAd(adRequest)
-
                 }
             }
         }
