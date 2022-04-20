@@ -38,7 +38,7 @@ abstract class BaseDetailsFragment<VM : BaseDetailsViewModel> : BaseFragment<VM>
         }
     }
 
-    protected fun refreshAd(view: View) {
+    private fun refreshAd(view: View) {
         adView?.parent?.let {
             (it as ViewGroup).removeAllViews()
             view.findViewById<FrameLayout>(R.id.ad_frame)?.addView(adView)

@@ -11,7 +11,7 @@
 
     <dimen name="smallText">15sp</dimen>
     <dimen name="normalText">18sp</dimen>
-    <dimen name="largeText">21dp</dimen>
+    <dimen name="largeText">21sp</dimen>
     <dimen name="extraLargeText">24sp</dimen>
     <dimen name="hugeText">28sp</dimen>
     <dimen name="ageCounter">42sp</dimen>
