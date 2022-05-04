@@ -16,7 +16,7 @@ android {
         applicationId "com.iwelogic.minecraft.mods"
         minSdk 23
         targetSdk 31
-        versionCode 16
+        versionCode 17
         versionName "1.0." + versionCode
         project.archivesBaseName = applicationId + "_" + versionName
     }

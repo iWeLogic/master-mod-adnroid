@@ -28,13 +28,6 @@ class MainViewModel @Inject constructor(private val repository: Repository, @App
 
     init {
         loadAdd()
-        uploadHash()
-    }
-
-    private fun uploadHash() {
-        viewModelScope.launch {
-            repository.uploadHash(Hash(context.get()?.generateKeyHashes())).collect()
-        }
     }
 
     fun checkAge() {

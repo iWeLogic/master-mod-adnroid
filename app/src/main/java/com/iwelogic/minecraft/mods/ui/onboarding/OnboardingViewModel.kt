@@ -7,6 +7,7 @@ import com.google.android.gms.ads.MobileAds
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.ui.base.Const
+import com.iwelogic.minecraft.mods.ui.base.Const.VALUE
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.utils.ignoreFirst
 import com.iwelogic.minecraft.mods.utils.writeString
@@ -42,9 +43,10 @@ class OnboardingViewModel @Inject constructor(@ApplicationContext applicationCon
             else -> "MA"
         }
         val params = Bundle()
-        params.putString("value", contentRating)
-        context.get()?.let { FirebaseAnalytics.getInstance(it).logEvent("content_rating", params) }
+        params.putString(VALUE, contentRating)
+        context.get()?.let { FirebaseAnalytics.getInstance(it).logEvent(Const.CONTENT_RATING, params) }
         context.get()?.writeString(Const.CONTENT_RATING, contentRating)
+        context.get()?.writeString(Const.AGE, age.value.toString())
         val requestConfiguration = MobileAds.getRequestConfiguration().toBuilder().setMaxAdContentRating(contentRating).setTestDeviceIds(listOf("5571260002C1C3A1FD32D49B3E5332C1", "81AC2F5CC6A169492DFD647D9F39B4AA")).build()
         MobileAds.setRequestConfiguration(requestConfiguration)
         openMain.invoke(true)
