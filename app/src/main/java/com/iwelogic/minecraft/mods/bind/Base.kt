@@ -1,6 +1,7 @@
 package com.iwelogic.minecraft.mods.bind
 
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
@@ -58,6 +59,7 @@ object Base {
     @BindingAdapter("image", "scaleType", "radius", requireAll = false)
     @JvmStatic
     fun setImage(view: ImageView, image: String?, scaleType: ScaleType?, radius: Int?) {
+        Log.w("myLog", "Base_setImage: ${image}")
         val circularProgressDrawable = CircularProgressDrawable(view.context)
         circularProgressDrawable.strokeWidth = 6.dp(view.context).toFloat()
         circularProgressDrawable.centerRadius = 24.dp(view.context).toFloat()

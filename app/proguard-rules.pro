@@ -25,3 +25,4 @@
 }
 -keep public class com.iwelogic.minecraft.mods.models.**
 -keep class * extends androidx.fragment.app.Fragment{}
+-keepnames class androidx.navigation.fragment.NavHostFragment
