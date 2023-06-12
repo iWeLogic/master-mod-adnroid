@@ -1,7 +1,5 @@
 package com.iwelogic.minecraft.mods.data
 
-import com.iwelogic.minecraft.mods.models.AdvertisingStatus
-import com.iwelogic.minecraft.mods.models.Hash
 import com.iwelogic.minecraft.mods.models.Mod
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -10,7 +8,10 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class Repository @Inject constructor(private val dataSource: DataSource, private val dataBaseSource: DataBaseSource) {
+class Repository @Inject constructor(
+    private val dataSource: DataSource,
+    private val dataBaseSource: DataBaseSource
+) {
 
     fun checkExist(id: String) = dataBaseSource.checkExist(id)
 
@@ -37,30 +38,6 @@ class Repository @Inject constructor(private val dataSource: DataSource, private
             emit(Result.Loading)
             delay(100)
             emit(dataSource.getMods(category, queries))
-            emit(Result.Finish)
-        }.flowOn(Dispatchers.IO)
-    }
-
-    suspend fun getAdvertisingStatuses(): Flow<Result<List<AdvertisingStatus>>> {
-        return flow {
-            emit(Result.Loading)
-            emit(dataSource.getAdvertisingStatuses())
-            emit(Result.Finish)
-        }.flowOn(Dispatchers.IO)
-    }
-
-    suspend fun uploadHash(hash: Hash): Flow<Result<Any>> {
-        return flow {
-            emit(Result.Loading)
-            emit(dataSource.uploadHash(hash))
-            emit(Result.Finish)
-        }.flowOn(Dispatchers.IO)
-    }
-
-    suspend fun updateMod(category: String, mod: Mod): Flow<Result<Any>> {
-        return flow {
-            emit(Result.Loading)
-            emit(dataSource.updateMod(category, mod))
             emit(Result.Finish)
         }.flowOn(Dispatchers.IO)
     }

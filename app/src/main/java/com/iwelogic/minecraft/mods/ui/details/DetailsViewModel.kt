@@ -46,7 +46,6 @@ class DetailsViewModel @Inject constructor(repository: Repository, @ApplicationC
                     override fun onDownloadComplete() {
                         viewModelScope.launch {
                             mod.installs = (mod.installs ?: 0) + 1
-                            repository.updateMod(mod.type?.id ?: "", mod).collect()
                         }
                         mod.progress = 10000
                     }

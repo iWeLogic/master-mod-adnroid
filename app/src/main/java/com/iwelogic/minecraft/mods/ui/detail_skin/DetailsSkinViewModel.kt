@@ -68,7 +68,6 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
                         context.get()?.writeBoolean(name, true)
                         mod.progressGallery = 10000
                         mod.installs = mod.installs?.plus(1)
-                        repository.updateMod(mod.type?.id ?: "", mod).collect()
                         context.get()?.getString(R.string.image_downloaded)?.let { showSnackBar.invoke(it) }
                     } else {
                         mod.progressGallery = 0
@@ -155,7 +154,6 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
                     ZipUtil.pack(dir, filePack, true)
                     mod.progress = 10000
                     mod.installs = mod.installs?.plus(1)
-                    repository.updateMod(mod.type?.id ?: "", mod).collect()
                 }.onFailure {
                     showDialog.invoke(
                         DialogData(

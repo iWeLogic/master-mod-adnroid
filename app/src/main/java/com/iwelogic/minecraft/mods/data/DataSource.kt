@@ -3,9 +3,7 @@ package com.iwelogic.minecraft.mods.data
 import android.content.Context
 import com.google.gson.Gson
 import com.iwelogic.minecraft.mods.R
-import com.iwelogic.minecraft.mods.models.AdvertisingStatus
 import com.iwelogic.minecraft.mods.models.BaseResponse
-import com.iwelogic.minecraft.mods.models.Hash
 import com.iwelogic.minecraft.mods.models.Mod
 import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Response
@@ -13,24 +11,15 @@ import java.lang.ref.WeakReference
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-class DataSource @Inject constructor(private val api: Api, @ApplicationContext applicationContext: Context) {
+class DataSource @Inject constructor(
+    private val api: Api,
+    @ApplicationContext applicationContext: Context
+) {
 
     var context: WeakReference<Context> = WeakReference(applicationContext)
 
     suspend fun getMods(category: String, queries: MultiMap<String, Any>): Result<List<Mod>> {
         return getResponse(request = { api.getMods(category, queries) })
-    }
-
-    suspend fun getAdvertisingStatuses(): Result<List<AdvertisingStatus>> {
-        return getResponse(request = { api.getAdvertisingStatuses() })
-    }
-
-    suspend fun uploadHash(hash: Hash): Result<Any> {
-        return getResponse(request = { api.uploadHash(hash) })
-    }
-
-    suspend fun updateMod(category: String, mod: Mod): Result<BaseResponse> {
-        return getResponse(request = { api.updateMod(category, mod) })
     }
 
     @Suppress("BlockingMethodInNonBlockingContext")
@@ -41,7 +30,8 @@ class DataSource @Inject constructor(private val api: Api, @ApplicationContext a
                 Result.Success(result.body())
             } else {
                 return try {
-                    val responseError = Gson().fromJson(result.errorBody()?.string(), BaseResponse::class.java)
+                    val responseError =
+                        Gson().fromJson(result.errorBody()?.string(), BaseResponse::class.java)
                     Result.Error(Result.Error.Code.UNKNOWN, responseError.message)
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -50,7 +40,10 @@ class DataSource @Inject constructor(private val api: Api, @ApplicationContext a
             }
         } catch (e: Throwable) {
             when (e) {
-                is UnknownHostException -> Result.Error(Result.Error.Code.NO_CONNECTION, context.get()?.getString(R.string.something_went_wrong))
+                is UnknownHostException -> Result.Error(
+                    Result.Error.Code.NO_CONNECTION,
+                    context.get()?.getString(R.string.something_went_wrong)
+                )
                 else -> Result.Error(Result.Error.Code.UNKNOWN, e.message)
             }
         }
