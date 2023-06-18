@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 open class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, private val repository: Repository, @Assisted val type: Type) : BaseViewModel(applicationContext) {
 
     companion object {
-        const val PAGE_SIZE = 32
+        const val PAGE_SIZE = 64
     }
 
     private var job: Job? = null

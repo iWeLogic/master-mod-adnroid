@@ -1,7 +1,6 @@
 package com.iwelogic.minecraft.mods.bind
 
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
@@ -52,27 +51,44 @@ object Base {
         txtSearch.setTextColor(ContextCompat.getColor(searchView.context, R.color.title))
         txtSearch.setHintTextColor(ContextCompat.getColor(searchView.context, R.color.hintText))
         txtSearch.typeface = ResourcesCompat.getFont(searchView.context, R.font.minecraft_regular)
-        val searchClose = searchView.findViewById(androidx.appcompat.R.id.search_close_btn) as ImageView
+        val searchClose =
+            searchView.findViewById(androidx.appcompat.R.id.search_close_btn) as ImageView
         searchClose.setImageResource(R.drawable.clear)
     }
 
     @BindingAdapter("image", "scaleType", "radius", requireAll = false)
     @JvmStatic
     fun setImage(view: ImageView, image: String?, scaleType: ScaleType?, radius: Int?) {
-        Log.w("myLog", "Base_setImage: ${image}")
         val circularProgressDrawable = CircularProgressDrawable(view.context)
         circularProgressDrawable.strokeWidth = 6.dp(view.context).toFloat()
         circularProgressDrawable.centerRadius = 24.dp(view.context).toFloat()
-        circularProgressDrawable.setColorSchemeColors(ContextCompat.getColor(view.context, R.color.title))
+        circularProgressDrawable.setColorSchemeColors(
+            ContextCompat.getColor(
+                view.context,
+                R.color.title
+            )
+        )
         circularProgressDrawable.start()
         image?.let {
             Glide.with(view.context).load(image).transform(
                 if (radius != null && radius > 0) {
                     when (scaleType) {
-                        ScaleType.CENTER_INSIDE -> MultiTransformation(CenterInside(), RoundedCorners(radius.dp(view.context)))
-                        ScaleType.FIT_CENTER -> MultiTransformation(FitCenter(), RoundedCorners(radius.dp(view.context)))
-                        ScaleType.CIRCLE_CROP -> MultiTransformation(CircleCrop(), RoundedCorners(radius.dp(view.context)))
-                        else -> MultiTransformation(CenterCrop(), RoundedCorners(radius.dp(view.context)))
+                        ScaleType.CENTER_INSIDE -> MultiTransformation(
+                            CenterInside(),
+                            RoundedCorners(radius.dp(view.context))
+                        )
+                        ScaleType.FIT_CENTER -> MultiTransformation(
+                            FitCenter(),
+                            RoundedCorners(radius.dp(view.context))
+                        )
+                        ScaleType.CIRCLE_CROP -> MultiTransformation(
+                            CircleCrop(),
+                            RoundedCorners(radius.dp(view.context))
+                        )
+                        else -> MultiTransformation(
+                            CenterCrop(),
+                            RoundedCorners(radius.dp(view.context))
+                        )
                     }
                 } else {
                     when (scaleType) {
