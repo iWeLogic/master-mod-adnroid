@@ -26,10 +26,13 @@ import dagger.assisted.AssistedInject
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-open class ModsViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, private val repository: Repository, @Assisted val type: Type) : BaseViewModel(applicationContext) {
+open class ModsViewModel @AssistedInject constructor(
+    @ApplicationContext applicationContext: Context,
+    private val repository: Repository,
+    @Assisted val type: Type
+) : BaseViewModel(applicationContext) {
 
     companion object {
         const val PAGE_SIZE = 100
@@ -114,7 +117,8 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
     }
 
     private fun load() {
-        if (!job?.isActive.isTrue() && mods.value?.none { it.type == Type.PROGRESS }.isTrue() && !finished) {
+        if (!job?.isActive.isTrue() && mods.value?.none { it.type == Type.PROGRESS }
+                .isTrue() && !finished) {
             job = viewModelScope.launch {
                 val queries: MultiMap<String, Any> = MultiMap()
                 queries["property"] = "id"
@@ -143,7 +147,8 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
                         }
                         is Result.Finish -> showProgress(false)
                         is Result.Success -> {
-                            val data = result.data?.toMutableList()?.onEach { it.type = type } ?: ArrayList()
+                            val data = result.data?.toMutableList()?.onEach { it.type = type }
+                                ?: ArrayList()
                             mods.value?.addAll(data)
                             mods.postValue(mods.value)
                             loadBanners()
@@ -166,18 +171,24 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
                 mods.value?.filter { it.type == Type.AD }?.forEach {
                     if (it.adView == null) {
                         it.adView = ProgressBar(context).apply {
-                            indeterminateTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.title))
+                            indeterminateTintList = ColorStateList.valueOf(
+                                ContextCompat.getColor(
+                                    context,
+                                    R.color.title
+                                )
+                            )
                             indeterminateTintMode = PorterDuff.Mode.SRC_ATOP
                         }
                         val adViewNew = AdView(context)
                         adViewNew.adUnitId = context.getString(R.string.ad_banner)
-                        adViewNew.adSize = AdSize.MEDIUM_RECTANGLE
+                        adViewNew.setAdSize(AdSize.MEDIUM_RECTANGLE)
                         val adRequest = AdRequest.Builder().build()
                         adViewNew.adListener = object : AdListener() {
                             override fun onAdFailedToLoad(p0: LoadAdError) {
                                 super.onAdFailedToLoad(p0)
                                 catchAll {
-                                    it.adView = ImageView(context).apply { setImageResource(R.drawable.ad_placeholder) }
+                                    it.adView =
+                                        ImageView(context).apply { setImageResource(R.drawable.ad_placeholder) }
                                 }
                             }
 
@@ -232,9 +243,16 @@ open class ModsViewModel @AssistedInject constructor(@ApplicationContext applica
     }
 }
 
-class AddonsViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, repository: Repository, @Assisted type: Type) : ModsViewModel(applicationContext, repository, type) {
+class AddonsViewModel @AssistedInject constructor(
+    @ApplicationContext applicationContext: Context,
+    repository: Repository,
+    @Assisted type: Type
+) : ModsViewModel(applicationContext, repository, type) {
     companion object {
-        fun provideFactory(assistedFactory: AddonsViewModelFactory, type: Type): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+        fun provideFactory(
+            assistedFactory: AddonsViewModelFactory,
+            type: Type
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
                 return assistedFactory.create(type) as T
@@ -243,9 +261,16 @@ class AddonsViewModel @AssistedInject constructor(@ApplicationContext applicatio
     }
 }
 
-class MapsViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, repository: Repository, @Assisted type: Type) : ModsViewModel(applicationContext, repository, type) {
+class MapsViewModel @AssistedInject constructor(
+    @ApplicationContext applicationContext: Context,
+    repository: Repository,
+    @Assisted type: Type
+) : ModsViewModel(applicationContext, repository, type) {
     companion object {
-        fun provideFactory(assistedFactory: MapsViewModelFactory, type: Type): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+        fun provideFactory(
+            assistedFactory: MapsViewModelFactory,
+            type: Type
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
                 return assistedFactory.create(type) as T
@@ -254,9 +279,16 @@ class MapsViewModel @AssistedInject constructor(@ApplicationContext applicationC
     }
 }
 
-class TexturesViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, repository: Repository, @Assisted type: Type) : ModsViewModel(applicationContext, repository, type) {
+class TexturesViewModel @AssistedInject constructor(
+    @ApplicationContext applicationContext: Context,
+    repository: Repository,
+    @Assisted type: Type
+) : ModsViewModel(applicationContext, repository, type) {
     companion object {
-        fun provideFactory(assistedFactory: TexturesViewModelFactory, type: Type): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+        fun provideFactory(
+            assistedFactory: TexturesViewModelFactory,
+            type: Type
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
                 return assistedFactory.create(type) as T
@@ -265,9 +297,16 @@ class TexturesViewModel @AssistedInject constructor(@ApplicationContext applicat
     }
 }
 
-class SeedsViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, repository: Repository, @Assisted type: Type) : ModsViewModel(applicationContext, repository, type) {
+class SeedsViewModel @AssistedInject constructor(
+    @ApplicationContext applicationContext: Context,
+    repository: Repository,
+    @Assisted type: Type
+) : ModsViewModel(applicationContext, repository, type) {
     companion object {
-        fun provideFactory(assistedFactory: SeedsViewModelFactory, type: Type): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+        fun provideFactory(
+            assistedFactory: SeedsViewModelFactory,
+            type: Type
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
                 return assistedFactory.create(type) as T
@@ -276,9 +315,16 @@ class SeedsViewModel @AssistedInject constructor(@ApplicationContext application
     }
 }
 
-class SkinsViewModel @AssistedInject constructor(@ApplicationContext applicationContext: Context, repository: Repository, @Assisted type: Type) : ModsViewModel(applicationContext, repository, type) {
+class SkinsViewModel @AssistedInject constructor(
+    @ApplicationContext applicationContext: Context,
+    repository: Repository,
+    @Assisted type: Type
+) : ModsViewModel(applicationContext, repository, type) {
     companion object {
-        fun provideFactory(assistedFactory: SkinsViewModelFactory, type: Type): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+        fun provideFactory(
+            assistedFactory: SkinsViewModelFactory,
+            type: Type
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 @Suppress("UNCHECKED_CAST")
                 return assistedFactory.create(type) as T

@@ -16,24 +16,26 @@ import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.ui.main.mods.ModsViewModel
 import com.iwelogic.minecraft.mods.utils.fromPxToDp
 import com.iwelogic.minecraft.mods.utils.isTrue
-import com.iwelogic.minecraft.mods.utils.readBoolean
 import com.iwelogic.minecraft.mods.utils.logEvent
+import com.iwelogic.minecraft.mods.utils.readBoolean
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(private val repository: Repository, @ApplicationContext applicationContext: Context) : BaseViewModel(applicationContext) {
+class SearchViewModel @Inject constructor(
+    private val repository: Repository,
+    @ApplicationContext applicationContext: Context
+) : BaseViewModel(applicationContext) {
 
     val title: MutableLiveData<String> = MutableLiveData("")
     val mods: MutableLiveData<MutableList<Mod>> = MutableLiveData(ArrayList())
     var type: MutableLiveData<Type> = MutableLiveData(Type.ADDONS)
-    var query: MutableLiveData<String> = MutableLiveData("")
+    var query: MutableLiveData<String?> = MutableLiveData("")
     val spanCount: MutableLiveData<Int> = MutableLiveData(1)
     val openMod: SingleLiveEvent<Mod> = SingleLiveEvent()
     val openVoiceSearch: SingleLiveEvent<Boolean> = SingleLiveEvent()
@@ -96,7 +98,8 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
     }
 
     private fun load() {
-        if (!job?.isActive.isTrue() && mods.value?.none { it.type == Type.PROGRESS }.isTrue() && !finished) {
+        if (!job?.isActive.isTrue() && mods.value?.none { it.type == Type.PROGRESS }
+                .isTrue() && !finished) {
             job = viewModelScope.launch {
                 val queries: MultiMap<String, Any> = MultiMap()
                 queries["property"] = "id"
@@ -128,8 +131,12 @@ class SearchViewModel @Inject constructor(private val repository: Repository, @A
                             progress.postValue(false)
                         }
                         is Result.Success -> {
-                            val data = result.data?.toMutableList()?.onEach { it.type = type.value } ?: ArrayList()
-                            if (context.get()?.readBoolean(Advertisement.BANNER_IN_LIST.id).isTrue() && !context.get()?.resources?.getBoolean(R.bool.isTablet).isTrue()) {
+                            val data = result.data?.toMutableList()?.onEach { it.type = type.value }
+                                ?: ArrayList()
+                            if (context.get()?.readBoolean(Advertisement.BANNER_IN_LIST.id)
+                                    .isTrue() && !context.get()?.resources?.getBoolean(R.bool.isTablet)
+                                    .isTrue()
+                            ) {
                                 if (data.size > 4)
                                     data.add(4, Mod(type = Type.AD))
                                 if (data.size > 19)

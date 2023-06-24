@@ -10,7 +10,7 @@ open class BaseViewModel(applicationContext: Context) : ViewModel() {
 
     var context: WeakReference<Context> = WeakReference(applicationContext)
     var progress: MutableLiveData<Boolean> = MutableLiveData(false)
-    var error: MutableLiveData<String> = MutableLiveData("")
+    var error: MutableLiveData<String?> = MutableLiveData("")
     val close: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val showInterstitial: SingleLiveEvent<(() -> Unit)?> = SingleLiveEvent()
     val showDialog: SingleLiveEvent<DialogData> = SingleLiveEvent()

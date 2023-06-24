@@ -3,7 +3,7 @@ package com.iwelogic.minecraft.mods.data
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
-import androidx.room.OnConflictStrategy.REPLACE
+import android.database.sqlite.SQLiteDatabase.CONFLICT_REPLACE
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -28,13 +28,13 @@ class DataBaseSource @Inject constructor(@ApplicationContext applicationContext:
                         val type = Type.getValueById(category)
                         val values = ContentValues()
                         values.put("type", type.toString().uppercase())
-                        database.update("mods", REPLACE, values, "primary_id=?", arrayOf<String>(id))
+                        database.update("mods", CONFLICT_REPLACE, values, "primary_id=?", arrayOf<String>(id))
                     } while (cursor.moveToNext())
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
-                if (cursor != null && !cursor.isClosed) {
+                if (!cursor.isClosed) {
                     cursor.close()
                 }
             }

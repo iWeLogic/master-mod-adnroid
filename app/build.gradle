@@ -10,12 +10,12 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.iwelogic.minecraft.mods"
         minSdk 23
-        targetSdk 31
+        targetSdk 33
         versionCode 25
         versionName "1.0." + versionCode
         project.archivesBaseName = applicationId + "_" + versionName
@@ -60,31 +60,31 @@ android {
     buildFeatures {
         dataBinding = true
     }
+    namespace 'com.iwelogic.minecraft.mods'
 }
 
 dependencies {
 
     implementation fileTree(include: ["*.jar", "*.aar"], dir: "libs")
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation "androidx.core:core-splashscreen:1.0.0-beta02"
-    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation "androidx.core:core-splashscreen:1.0.1"
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
-    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
-    implementation "androidx.fragment:fragment-ktx:1.4.1"
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation "androidx.fragment:fragment-ktx:1.6.0"
 
     //GoogleServices
-    implementation 'com.google.android.gms:play-services-ads:20.6.0'
+    implementation 'com.google.android.gms:play-services-ads:22.1.0'
     implementation("com.google.android.play:core:1.10.3")
     implementation("com.google.android.play:core-ktx:1.8.1")
-    implementation platform('com.google.firebase:firebase-bom:29.2.1')
 
     //Firebase
-    implementation platform('com.google.firebase:firebase-bom:29.2.1')
+    implementation platform('com.google.firebase:firebase-bom:30.1.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
@@ -95,24 +95,24 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
     //OkHttp
-    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
 
     //Retrofit
     api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     //DI Hilt
-    implementation "com.google.dagger:hilt-android:2.39.1"
-    kapt "com.google.dagger:hilt-android-compiler:2.39.1"
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-android-compiler:2.44"
 
     //Room
-    implementation "androidx.room:room-runtime:2.4.2"
-    kapt "androidx.room:room-compiler:2.4.2"
-    implementation "androidx.room:room-ktx:2.4.2"
+    implementation "androidx.room:room-runtime:2.5.2"
+    kapt "androidx.room:room-compiler:2.5.2"
+    implementation "androidx.room:room-ktx:2.5.2"
 
     //Coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
 
     //Third
     implementation "com.github.amitshekhariitbhu:Fast-Android-Networking:1.0.2"
@@ -120,5 +120,4 @@ dependencies {
     implementation "org.zeroturnaround:zt-zip:1.14"
     implementation 'com.github.Redman1037:TSnackBar:V2.0.0'
     implementation 'com.facebook.android:facebook-android-sdk:13.0.0'
-
 }

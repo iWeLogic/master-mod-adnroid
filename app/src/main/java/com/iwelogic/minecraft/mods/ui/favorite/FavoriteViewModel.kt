@@ -21,7 +21,7 @@ class FavoriteViewModel @Inject constructor(private val repository: Repository, 
 
     val mods: MutableLiveData<MutableList<Mod>> = MutableLiveData(ArrayList())
     val openMod: SingleLiveEvent<Mod> = SingleLiveEvent()
-    val message: MutableLiveData<String> = MutableLiveData("")
+    val message: MutableLiveData<String?> = MutableLiveData("")
     val spanCount: MutableLiveData<Int> = MutableLiveData(1)
 
     fun load() {
