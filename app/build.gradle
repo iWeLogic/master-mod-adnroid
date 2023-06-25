@@ -16,7 +16,7 @@ android {
         applicationId "com.iwelogic.minecraft.mods"
         minSdk 23
         targetSdk 33
-        versionCode 25
+        versionCode 26
         versionName "1.0." + versionCode
         project.archivesBaseName = applicationId + "_" + versionName
     }
@@ -39,14 +39,14 @@ android {
             }
             manifestPlaceholders = [statusCrashlytics: true]
             buildConfigField "String", "BACKEND_URL", '"https://angelicperson.backendless.app"'
-            buildConfigField "String", "BACKEND_FILES", '"https://mastermod.s3.eu-central-1.amazonaws.com"'
+            buildConfigField "String", "BACKEND_FILES", '"https://master-mod.s3.eu-central-1.amazonaws.com"'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             debuggable true
             manifestPlaceholders = [statusCrashlytics: false]
             buildConfigField "String", "BACKEND_URL", '"https://angelicperson.backendless.app"'
-            buildConfigField "String", "BACKEND_FILES", '"https://mastermod.s3.eu-central-1.amazonaws.com"'
+            buildConfigField "String", "BACKEND_FILES", '"https://master-mod.s3.eu-central-1.amazonaws.com"'
         }
     }
 
@@ -93,14 +93,6 @@ dependencies {
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     kapt 'com.github.bumptech.glide:compiler:4.12.0'
-
-    //OkHttp
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
-
-    //Retrofit
-    api 'com.squareup.retrofit2:retrofit:2.9.0'
-    api 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     //DI Hilt
     implementation "com.google.dagger:hilt-android:2.44"

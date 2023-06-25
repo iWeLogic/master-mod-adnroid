@@ -84,7 +84,6 @@
                 android:id="@+id/list"
                 mods="@{viewModel.mods}"
                 onClick="@{viewModel.onClick}"
-                onScroll="@{viewModel.onScroll}"
                 spanCount="@{viewModel.spanCount}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

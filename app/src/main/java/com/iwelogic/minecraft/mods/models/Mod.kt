@@ -2,7 +2,6 @@ package com.iwelogic.minecraft.mods.models
 
 import android.os.Parcelable
 import android.view.View
-import androidx.annotation.NonNull
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
@@ -19,7 +18,6 @@ import kotlinx.parcelize.Parcelize
 data class Mod(
 
     @PrimaryKey
-    @NonNull
     @ColumnInfo(name = "primary_id")
     var primaryId: String = "",
 
@@ -139,7 +137,9 @@ data class Mod(
         value?.let {
             return when (it) {
                 in 0L..999L -> it.toString()
-                in 1000L..99999L -> "${String.format("%.1f", it.toFloat() / 1000).replace(".0", "")} k"
+                in 1000L..99999L -> "${
+                    String.format("%.1f", it.toFloat() / 1000).replace(".0", "")
+                } k"
                 in 100000L..999999L -> "${it / 1000} k"
                 else -> "${String.format("%.1f", it.toFloat() / 100000).replace(".0", "")} m"
             }
@@ -157,7 +157,8 @@ data class Mod(
         }
     }
 
-    fun getImage() = BuildConfig.BACKEND_FILES + "/" + type + "/" + id + "/images/0.${if (type?.id == "skins") "png" else "jpg"}"
+    fun getImage() =
+        BuildConfig.BACKEND_FILES + "/" + type + "/" + id + "/images/0.${if (type?.id == "skins") "png" else "jpg"}"
 
 
     fun getImages(): List<String> = (0 until (countImages ?: 0)).map {
@@ -166,7 +167,8 @@ data class Mod(
         image
     }
 
-    fun getFile() = BuildConfig.BACKEND_FILES + "/" + type + "/" + id + "/file.${type?.fileExtension}"
+    fun getFile() =
+        BuildConfig.BACKEND_FILES + "/" + type + "/" + id + "/file.${type?.fileExtension}"
 
 }
 

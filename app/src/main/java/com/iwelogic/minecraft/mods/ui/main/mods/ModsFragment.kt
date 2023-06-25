@@ -43,10 +43,10 @@ class ModsFragment : BaseFragment<ModsViewModel>() {
         binding.lifecycleOwner = this
         val type = ModsFragmentArgs.fromBundle(requireArguments()).type
         viewModel = when (type) {
-            "addons" -> ViewModelProvider(requireActivity(), AddonsViewModel.provideFactory(addonsViewModelFactory, Type.getValueById(type)))[AddonsViewModel::class.java]
-            "maps" -> ViewModelProvider(requireActivity(), MapsViewModel.provideFactory(mapsViewModelFactory, Type.getValueById(type)))[MapsViewModel::class.java]
-            "textures" -> ViewModelProvider(requireActivity(), TexturesViewModel.provideFactory(texturesViewModelFactory, Type.getValueById(type)))[TexturesViewModel::class.java]
-            "seeds" -> ViewModelProvider(requireActivity(), SeedsViewModel.provideFactory(seedsViewModelFactory, Type.getValueById(type)))[SeedsViewModel::class.java]
+            Type.ADDONS.id -> ViewModelProvider(requireActivity(), AddonsViewModel.provideFactory(addonsViewModelFactory, Type.getValueById(type)))[AddonsViewModel::class.java]
+            Type.MAPS.id -> ViewModelProvider(requireActivity(), MapsViewModel.provideFactory(mapsViewModelFactory, Type.getValueById(type)))[MapsViewModel::class.java]
+            Type.TEXTURES.id -> ViewModelProvider(requireActivity(), TexturesViewModel.provideFactory(texturesViewModelFactory, Type.getValueById(type)))[TexturesViewModel::class.java]
+            Type.SEEDS.id -> ViewModelProvider(requireActivity(), SeedsViewModel.provideFactory(seedsViewModelFactory, Type.getValueById(type)))[SeedsViewModel::class.java]
             else -> ViewModelProvider(requireActivity(), SkinsViewModel.provideFactory(skinsViewModelFactory, Type.getValueById(type)))[SkinsViewModel::class.java]
         }
         binding.viewModel = viewModel

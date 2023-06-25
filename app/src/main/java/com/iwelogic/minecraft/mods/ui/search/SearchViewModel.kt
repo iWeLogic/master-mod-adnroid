@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.iwelogic.minecraft.mods.R
-import com.iwelogic.minecraft.mods.data.MultiMap
 import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.data.Result
 import com.iwelogic.minecraft.mods.models.Advertisement
@@ -13,7 +11,6 @@ import com.iwelogic.minecraft.mods.models.Mod
 import com.iwelogic.minecraft.mods.models.Type
 import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
-import com.iwelogic.minecraft.mods.ui.main.mods.ModsViewModel
 import com.iwelogic.minecraft.mods.utils.fromPxToDp
 import com.iwelogic.minecraft.mods.utils.isTrue
 import com.iwelogic.minecraft.mods.utils.logEvent
@@ -22,7 +19,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -98,71 +94,26 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun load() {
-        if (!job?.isActive.isTrue() && mods.value?.none { it.type == Type.PROGRESS }
-                .isTrue() && !finished) {
-            job = viewModelScope.launch {
-                val queries: MultiMap<String, Any> = MultiMap()
-                queries["property"] = "id"
-                queries["property"] = "installs"
-                queries["property"] = "likes"
-                queries["property"] = "title"
-                queries["property"] = "description"
-                queries["property"] = "fileSize"
-                queries["property"] = "countImages"
-                queries["property"] = "version"
-                queries["property"] = "objectId"
-                queries["pageSize"] = ModsViewModel.PAGE_SIZE
-                queries["where"] = "title LIKE '%${query.value}%' AND status=true"
-                queries["offset"] = mods.value?.size ?: 0
-
-                repository.getMods(type.value?.id ?: "", queries).catch {
-                    showProgressInList(false)
-                    progress.postValue(false)
-                    error.postValue(it.message)
-                }.collect { result ->
+        viewModelScope.launch {
+            mods.value = ArrayList()
+            repository.getMods(type.value ?: Type.ADDONS, query.value ?: "", listOf())
+                .collect { result ->
                     when (result) {
-                        is Result.Loading -> {
-                            error.postValue(null)
-                            if (mods.value.isNullOrEmpty()) progress.postValue(true)
-                            else showProgressInList(true)
-                        }
-                        is Result.Finish -> {
-                            showProgressInList(false)
-                            progress.postValue(false)
-                        }
+                        is Result.Loading -> progress.postValue(true)
+                        is Result.Finish -> progress.postValue(false)
                         is Result.Success -> {
-                            val data = result.data?.toMutableList()?.onEach { it.type = type.value }
-                                ?: ArrayList()
-                            if (context.get()?.readBoolean(Advertisement.BANNER_IN_LIST.id)
-                                    .isTrue() && !context.get()?.resources?.getBoolean(R.bool.isTablet)
-                                    .isTrue()
-                            ) {
-                                if (data.size > 4)
-                                    data.add(4, Mod(type = Type.AD))
-                                if (data.size > 19)
-                                    data.add(19, Mod(type = Type.AD))
-                            }
-                            mods.value?.addAll(data)
-                            mods.postValue(mods.value)
-                            if (data.size < ModsViewModel.PAGE_SIZE) finished = true
+                            mods.value = result.data?.toMutableList()
                         }
                         is Result.Error -> error.postValue(result.message)
-
                     }
                 }
-            }
         }
     }
 
-    private fun showProgressInList(status: Boolean) {
-        if (status) mods.value?.add(Mod(type = Type.PROGRESS))
-        else mods.value?.removeAll { it.type == Type.PROGRESS }
-        mods.postValue(mods.value)
-    }
 
     override fun onReload() {
         job?.cancel()
-        showProgressInList(false)
+        // showProgressInList(false)
         progress.postValue(false)
         mods.value?.clear()
         mods.postValue(mods.value)

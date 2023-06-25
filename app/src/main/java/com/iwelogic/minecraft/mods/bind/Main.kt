@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.iwelogic.minecraft.mods.models.FilterValue
 import com.iwelogic.minecraft.mods.models.Mod
@@ -35,18 +34,12 @@ object Main {
         }
     }
 
-    @BindingAdapter("mods", "onClick", "onScroll", "spanCount")
+    @BindingAdapter("mods", "onClick", "spanCount")
     @JvmStatic
-    fun showMods(view: RecyclerView, mods: List<Mod>?, onClick: (Mod) -> Unit, onScroll: (Int) -> Unit, spanCount: Int?) {
+    fun showMods(view: RecyclerView, mods: List<Mod>?, onClick: (Mod) -> Unit, spanCount: Int?) {
         view.adapter ?: run {
             view.adapter = ModAdapter(onClick)
             view.itemAnimator?.changeDuration = 0
-            view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    onScroll.invoke((recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition())
-                }
-            })
         }
         spanCount?.let {
             val layoutManager = (view.layoutManager as GridLayoutManager)
@@ -56,13 +49,11 @@ object Main {
                     override fun getSpanSize(position: Int): Int {
                         view.adapter?.let {
                             return when (it.getItemViewType(position)) {
-                                Type.AD.cellType -> if (mods?.firstOrNull()?.type == Type.SKINS) 2 else 1
                                 Type.SKINS.cellType -> 1
                                 Type.ADDONS.cellType -> 1
                                 Type.MAPS.cellType -> 1
                                 Type.TEXTURES.cellType -> 1
                                 Type.SEEDS.cellType -> 1
-                                Type.BUILDINGS.cellType -> 1
                                 else -> layoutManager.spanCount
                             }
                         } ?: run {
@@ -85,7 +76,9 @@ object Main {
         value?.let {
             return when (it) {
                 in 0L..999L -> it.toString()
-                in 1000L..99999L -> "${String.format("%.1f", it.toFloat() / 1000).replace(".0", "")} k"
+                in 1000L..99999L -> "${
+                    String.format("%.1f", it.toFloat() / 1000).replace(".0", "")
+                } k"
                 in 100000L..999999L -> "${it / 1000} k"
                 else -> "${String.format("%.1f", it.toFloat() / 100000).replace(".0", "")} m"
             }
@@ -107,7 +100,12 @@ object Main {
 
     @BindingAdapter("favorites", "onClick", "spanCount")
     @JvmStatic
-    fun showFavorites(view: RecyclerView, favorites: List<Mod>?, onClick: (Mod) -> Unit, spanCount: Int) {
+    fun showFavorites(
+        view: RecyclerView,
+        favorites: List<Mod>?,
+        onClick: (Mod) -> Unit,
+        spanCount: Int
+    ) {
         view.adapter ?: run {
             view.adapter = FavoriteAdapter(onClick)
         }

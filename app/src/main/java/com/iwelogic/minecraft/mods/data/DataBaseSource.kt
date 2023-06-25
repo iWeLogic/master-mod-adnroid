@@ -23,8 +23,8 @@ class DataBaseSource @Inject constructor(@ApplicationContext applicationContext:
             try {
                 if (cursor.moveToFirst()) {
                     do {
-                        val id = cursor.getString(cursor.getColumnIndex("primary_id"));
-                        val category = cursor.getString(cursor.getColumnIndex("category"));
+                        val id = cursor.getString(cursor.getColumnIndex("primary_id"))
+                        val category = cursor.getString(cursor.getColumnIndex("category"))
                         val type = Type.getValueById(category)
                         val values = ContentValues()
                         values.put("type", type.toString().uppercase())
@@ -41,7 +41,7 @@ class DataBaseSource @Inject constructor(@ApplicationContext applicationContext:
         }
     }
 
-    var dataBase = Room.databaseBuilder(applicationContext, DataBase::class.java, "statistics")
+    private var dataBase = Room.databaseBuilder(applicationContext, DataBase::class.java, "statistics")
         .addMigrations(MIGRATION_1_2)
         .allowMainThreadQueries().build()
 

@@ -1,19 +1,12 @@
 package com.iwelogic.minecraft.mods.ui.main.mods
 
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.PorterDuff
 import android.os.Parcelable
-import android.widget.ImageView
-import android.widget.ProgressBar
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.ads.*
-import com.iwelogic.minecraft.mods.R
-import com.iwelogic.minecraft.mods.data.MultiMap
 import com.iwelogic.minecraft.mods.data.Repository
 import com.iwelogic.minecraft.mods.data.Result
 import com.iwelogic.minecraft.mods.models.*
@@ -24,8 +17,6 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 open class ModsViewModel @AssistedInject constructor(
@@ -34,16 +25,11 @@ open class ModsViewModel @AssistedInject constructor(
     @Assisted val type: Type
 ) : BaseViewModel(applicationContext) {
 
-    companion object {
-        const val PAGE_SIZE = 100
-    }
-
-    private var job: Job? = null
     private val changeObserver: (Any) -> Unit = {
         onReload()
     }
     var recyclerState: Parcelable? = null
-    val sort: MutableLiveData<Sort> = MutableLiveData(Sort.DATE)
+    val sort: MutableLiveData<Sort> = MutableLiveData(Sort.RANDOM)
     val mods: MutableLiveData<MutableList<Mod>> = MutableLiveData(ArrayList())
     val title: MutableLiveData<String> = MutableLiveData()
     val openMod: SingleLiveEvent<Mod> = SingleLiveEvent()
@@ -55,7 +41,8 @@ open class ModsViewModel @AssistedInject constructor(
     private val filters: MutableLiveData<List<FilterValue>> = MutableLiveData(ArrayList())
 
     val onSelectSort: (Sort) -> Unit = {
-        sort.postValue(it)
+        sort.value = it
+        load()
     }
 
     val onClick: (Mod) -> Unit = {
@@ -69,17 +56,28 @@ open class ModsViewModel @AssistedInject constructor(
         }
     }
 
-    val onScroll: (Int) -> Unit = {
-        if ((mods.value?.size ?: 0) < it + 5)
-            load()
-    }
-
     init {
         filters.value = Filter.getFiltersByCategory(type.id).map { FilterValue(it, true) }
-        load()
         title.postValue(applicationContext.getString(type.title))
         sort.observeForever(changeObserver)
         filters.observeForever(changeObserver)
+        load()
+    }
+
+    fun load(){
+        viewModelScope.launch {
+            mods.value = ArrayList()
+            repository.getMods(type, sort.value ?: Sort.RANDOM, filters.value ?: listOf()).collect { result ->
+                when (result) {
+                    is Result.Loading -> progress.postValue(true)
+                    is Result.Finish -> progress.postValue(false)
+                    is Result.Success -> {
+                        mods.value = result.data?.toMutableList()
+                    }
+                    is Result.Error -> error.postValue(result.message)
+                }
+            }
+        }
     }
 
     fun onClickFilter() {
@@ -111,122 +109,10 @@ open class ModsViewModel @AssistedInject constructor(
     fun setNewFilters(newFilters: List<FilterValue>) {
         for (i in newFilters.indices) {
             if (newFilters[i].value != filters.value?.get(i)?.value) {
-                filters.postValue(newFilters)
+                filters.value = newFilters
+                load()
             }
         }
-    }
-
-    private fun load() {
-        if (!job?.isActive.isTrue() && mods.value?.none { it.type == Type.PROGRESS }
-                .isTrue() && !finished) {
-            job = viewModelScope.launch {
-                val queries: MultiMap<String, Any> = MultiMap()
-                queries["property"] = "id"
-                queries["property"] = "installs"
-                queries["property"] = "likes"
-                queries["property"] = "objectId"
-                if (type != Type.SKINS) {
-                    queries["property"] = "title"
-                    queries["property"] = "description"
-                    queries["property"] = "fileSize"
-                    queries["property"] = "countImages"
-                    queries["property"] = "version"
-                }
-                queries["pageSize"] = PAGE_SIZE
-                queries["sortBy"] = sort.value?.query ?: ""
-                queries["where"] = "${Filter.getQuery(filters.value)} AND status=true"
-                queries["offset"] = mods.value?.size ?: 0
-                repository.getMods(type.id, queries).catch {
-                    error.postValue(it.message)
-                    showProgress(false)
-                }.collect { result ->
-                    when (result) {
-                        is Result.Loading -> {
-                            error.postValue(null)
-                            showProgress(true)
-                        }
-                        is Result.Finish -> showProgress(false)
-                        is Result.Success -> {
-                            val data = result.data?.toMutableList()?.onEach { it.type = type }
-                                ?: ArrayList()
-                            mods.value?.addAll(data)
-                            mods.postValue(mods.value)
-                            loadBanners()
-                            if (data.size < PAGE_SIZE) finished = true
-                        }
-                        is Result.Error -> error.postValue(result.message)
-                    }
-                }
-            }
-        }
-    }
-
-    private fun loadBanners() {
-        if (context.get()?.readBoolean(Advertisement.BANNER_IN_LIST.id).isTrue()
-            && !context.get()?.resources?.getBoolean(R.bool.isTablet).isTrue()
-            && mods.value?.none { it.type == Type.AD }.isTrue()
-        ) {
-            mods.value?.add(4, Mod(id = (0..9999999).random(), type = Type.AD))
-            context.get()?.let { context ->
-                mods.value?.filter { it.type == Type.AD }?.forEach {
-                    if (it.adView == null) {
-                        it.adView = ProgressBar(context).apply {
-                            indeterminateTintList = ColorStateList.valueOf(
-                                ContextCompat.getColor(
-                                    context,
-                                    R.color.title
-                                )
-                            )
-                            indeterminateTintMode = PorterDuff.Mode.SRC_ATOP
-                        }
-                        val adViewNew = AdView(context)
-                        adViewNew.adUnitId = context.getString(R.string.ad_banner)
-                        adViewNew.setAdSize(AdSize.MEDIUM_RECTANGLE)
-                        val adRequest = AdRequest.Builder().build()
-                        adViewNew.adListener = object : AdListener() {
-                            override fun onAdFailedToLoad(p0: LoadAdError) {
-                                super.onAdFailedToLoad(p0)
-                                catchAll {
-                                    it.adView =
-                                        ImageView(context).apply { setImageResource(R.drawable.ad_placeholder) }
-                                }
-                            }
-
-                            override fun onAdLoaded() {
-                                super.onAdLoaded()
-                                it.adView = adViewNew
-                            }
-                        }
-                        adViewNew.loadAd(adRequest)
-
-                    }
-                }
-            }
-        }
-    }
-
-    private fun showProgress(status: Boolean) {
-        if (status) {
-            if (mods.value.isNullOrEmpty()) {
-                progress.postValue(true)
-            } else {
-                mods.value?.add(Mod(type = Type.PROGRESS))
-            }
-        } else {
-            progress.postValue(false)
-            mods.value?.removeAll { it.type == Type.PROGRESS }
-        }
-        mods.postValue(mods.value)
-    }
-
-    override fun onReload() {
-        job?.cancel()
-        showProgress(false)
-        progress.postValue(false)
-        mods.value?.clear()
-        mods.postValue(mods.value)
-        finished = false
-        load()
     }
 
     override fun onCleared() {
