@@ -80,7 +80,7 @@ class DetailsViewModel @Inject constructor(repository: Repository, @ApplicationC
         context.get()?.let {
             val counter = it.readInteger(KEY_DOWNLOADS_COUNTER)
             val alreadyRated = it.readBoolean(KEY_RATE_NOW)
-            if (counter > 0 && counter % 5 == 0 && !alreadyRated) {
+            if (counter > 0 && counter % 3 == 0 && !alreadyRated) {
                 uiEvent.invoke(DetailsViewUiEvent.ShowRatingDialog)
             }
         }
