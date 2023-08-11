@@ -116,4 +116,8 @@
     <string name="rate_now">Rate now</string>
     <string name="maybe_later">Maybe later</string>
 
+    <string name="instruction_4">4. For mods: Choose \"Resource packs\". Add downloaded mod by pressing the button \"Activate\". Repeat these actions by choosing \"Behavior packs\".</string>
+    <string name="instruction_3">3. For mods: Activate all experiments</string>
+    <string name="instruction_2">2. Install mod or map</string>
+    <string name="instruction_1">1. Download mod or map</string>
 </resources>

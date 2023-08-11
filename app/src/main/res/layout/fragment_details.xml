@@ -189,17 +189,6 @@
                     android:layout_marginStart="@dimen/default_size"
                     android:layout_marginEnd="@dimen/default_size" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/default_size"
-                    android:layout_marginEnd="@dimen/default_size"
-                    android:fontFamily="@font/minecraft_regular"
-                    android:lines="1"
-                    android:text="@{`Selected age: ` + viewModel.selectedAge +`, content rating: ` + viewModel.selectedContentRating}"
-                    android:textColor="@color/regularText"
-                    android:textSize="@dimen/normalText" />
-
                 <FrameLayout
                     android:id="@+id/ad_frame"
                     android:layout_width="match_parent"
@@ -236,7 +225,7 @@
                 android:onClick="@{() -> viewModel.onClickHelp()}"
                 android:scaleType="centerInside"
                 android:src="@drawable/help"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <ImageView
                 android:layout_width="@dimen/toolbar"

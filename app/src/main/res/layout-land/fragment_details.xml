@@ -226,8 +226,7 @@
                         android:background="?attr/actionBarItemBackground"
                         android:onClick="@{() -> viewModel.onClickHelp()}"
                         android:scaleType="centerInside"
-                        android:src="@drawable/help"
-                        android:visibility="gone" />
+                        android:src="@drawable/help" />
 
                     <ImageView
                         android:layout_width="@dimen/toolbar"
