@@ -26,3 +26,9 @@
 -keep public class com.iwelogic.minecraft.mods.models.**
 -keep class * extends androidx.fragment.app.Fragment{}
 -keepnames class androidx.navigation.fragment.NavHostFragment
+-dontwarn com.google.firebase.messaging.TopicOperation$TopicOperations
+-dontwarn java.beans.ConstructorProperties
+-dontwarn java.beans.Transient
+-dontwarn org.conscrypt.Conscrypt
+-dontwarn org.conscrypt.OpenSSLProvider
+-dontwarn org.slf4j.impl.StaticLoggerBinder

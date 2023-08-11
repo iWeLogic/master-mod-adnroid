@@ -38,7 +38,7 @@ open class BaseFragment<VM : BaseViewModel> : Fragment() {
             snackBar.show()
         }
 
-        viewModel.showDialog.observe(this) { dialogData ->
+        viewModel.showDialog.observe(viewLifecycleOwner) { dialogData ->
             context?.let {
                 val dialog = AlertDialog.Builder(it, R.style.CustomAlertDialog).create()
                 val dialogView = layoutInflater.inflate(R.layout.dialog_warning, null)
