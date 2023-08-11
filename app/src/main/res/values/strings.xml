@@ -111,6 +111,9 @@
     <string name="image">Image</string>
     <string name="skin">Skin</string>
     <string name="ad">Ad</string>
-
+    <string name="rating_title">Do you like the app?</string>
+    <string name="rating_description">Support us by give 5 star and write your review</string>
+    <string name="rate_now">Rate now</string>
+    <string name="maybe_later">Maybe later</string>
 
 </resources>

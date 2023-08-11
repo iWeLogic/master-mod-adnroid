@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_detailsFragment_to_helpFragment"
             app:destination="@id/helpFragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_ratingDialog"
+            app:destination="@id/ratingDialog" />
     </fragment>
     <dialog
         android:id="@+id/filterDialog"
@@ -83,4 +86,8 @@
         android:id="@+id/helpFragment"
         android:name="com.iwelogic.minecraft.mods.ui.help.HelpFragment"
         android:label="HelpFragment" />
+    <dialog
+        android:id="@+id/ratingDialog"
+        android:name="com.iwelogic.minecraft.mods.ui.rating.RatingDialog"
+        android:label="RatingDialog" />
 </navigation>

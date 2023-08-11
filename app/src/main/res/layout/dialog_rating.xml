@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="ContentDescription">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.iwelogic.minecraft.mods.ui.rating.RatingViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="328dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/double_default_size"
+            android:background="@color/background"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/double_default_size"
+            tools:ignore="UselessParent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/rating_logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:fontFamily="@font/minecraft_bold"
+                android:text="@string/rating_title"
+                android:textColor="@color/title"
+                android:textSize="@dimen/largeText" />
+
+            <RatingBar
+                style="@style/RatingBarStyle"
+                android:layout_width="wrap_content"
+                android:stepSize="1"
+                android:rating="@={viewModel.rating}"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_size"
+                android:fontFamily="@font/minecraft_regular"
+                android:gravity="center"
+                android:text="@string/rating_description"
+                android:textColor="@color/regularText"
+                android:textSize="@dimen/normalText" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                style="@style/Button"
+                android:layout_width="220dp"
+                android:layout_marginTop="@dimen/double_default_size"
+                android:onClick="@{() -> viewModel.onClickRateNow()}"
+                android:text="@string/rate_now" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_size"
+                android:fontFamily="@font/minecraft_regular"
+                android:gravity="center"
+                android:padding="8dp"
+                android:onClick="@{() -> viewModel.onClickMaybeLater()}"
+                android:text="@string/maybe_later"
+                android:textColor="@color/regularText"
+                android:textSize="@dimen/normalText" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</layout>

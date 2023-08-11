@@ -14,7 +14,7 @@
     <color name="title">#000000</color>
     <color name="regularText">#6C6C6C</color>
     <color name="disableColor">#D1D1D1</color>
-    <color name="hintText">#80000000</color>
+    <color name="hintText">#7E7E7E</color>
     <color name="divider">#C4C4C4</color>
 
 </resources>
