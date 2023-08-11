@@ -19,6 +19,7 @@ android {
         versionCode 26
         versionName "1.0." + versionCode
         project.archivesBaseName = applicationId + "_" + versionName
+        manifestPlaceholders = [statusCrashlytics: true]
     }
 
     signingConfigs {
