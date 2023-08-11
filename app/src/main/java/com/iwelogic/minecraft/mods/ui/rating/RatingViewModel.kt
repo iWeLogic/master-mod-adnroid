@@ -24,20 +24,21 @@ class RatingViewModel @Inject constructor(@ApplicationContext applicationContext
     val uiEvent: SingleLiveEvent<RatingViewUiEvent> = SingleLiveEvent()
 
     fun onClickRateNow() {
-        uiEvent.invoke(RatingViewUiEvent.OpenPlayMarket)
-        onClickClose()
         context.get()?.let {
             it.writeBoolean(KEY_RATE_NOW, true)
             FirebaseAnalytics.getInstance(it).logEvent(KEY_RATE_NOW, bundleOf(VALUE to rating.value))
         }
+        if ((rating.value ?: 0.0f) > 3.9f)
+            uiEvent.invoke(RatingViewUiEvent.OpenPlayMarket)
+        onClickClose()
     }
 
     fun onClickMaybeLater() {
-        onClickClose()
         context.get()?.let {
             it.writeInteger(KEY_DOWNLOADS_COUNTER, -20)
             FirebaseAnalytics.getInstance(it).logEvent(KEY_MAYBE_LATER, bundleOf(VALUE to rating.value))
         }
+        onClickClose()
     }
 }
 
