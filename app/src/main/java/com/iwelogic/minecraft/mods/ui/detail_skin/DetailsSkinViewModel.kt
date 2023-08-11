@@ -205,11 +205,11 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
                 val image = File(file, name)
                 FileOutputStream(image)
             }
-            saved = bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
-            fos?.flush()
-            fos?.close()
+            saved = bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos!!)
+            fos.flush()
+            fos.close()
         } catch (e: java.lang.Exception) {
-
+            e.printStackTrace()
         } finally {
             fos?.close()
         }
