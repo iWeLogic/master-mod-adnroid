@@ -14,10 +14,7 @@ import com.iwelogic.minecraft.mods.ui.base.Const.KEY_RATE_NOW
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.ui.base_details.BaseDetailsViewModel
 import com.iwelogic.minecraft.mods.ui.main.MainViewModel
-import com.iwelogic.minecraft.mods.utils.readBoolean
-import com.iwelogic.minecraft.mods.utils.readInteger
-import com.iwelogic.minecraft.mods.utils.writeBoolean
-import com.iwelogic.minecraft.mods.utils.writeInteger
+import com.iwelogic.minecraft.mods.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
@@ -29,6 +26,7 @@ class DetailsViewModel @Inject constructor(repository: Repository, @ApplicationC
 
     val showRating: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val install: SingleLiveEvent<File> = SingleLiveEvent()
+    private var isRatingShown = false
 
     fun download() {
         item.value?.let { mod ->
@@ -45,7 +43,8 @@ class DetailsViewModel @Inject constructor(repository: Repository, @ApplicationC
                         } else {
                             mod.progress = ((bytesDownloaded * 100 / ((mod.fileSize ?: 0.0) * 1024 * 1024).toInt()) * 100).toInt() + 1
                         }
-                        if (mod.progress == 3001) {
+                        if (mod.progress > 3000 && !isRatingShown) {
+                            isRatingShown = true
                             checkToShowRatingDialog()
                         }
                     }

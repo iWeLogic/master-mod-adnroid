@@ -1,9 +1,13 @@
 package com.iwelogic.minecraft.mods.ui.main
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.*
+import android.view.*
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -17,6 +21,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainFragment : BaseFragment<MainViewModel>() {
+
+    private var requestPermissionNotification: ActivityResultLauncher<String>? = null
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding: FragmentMainBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
@@ -44,6 +51,24 @@ class MainFragment : BaseFragment<MainViewModel>() {
                         manager.launchReviewFlow(activity, reviewInfo)
                     }
                 }
+            }
+        }
+
+
+        requestPermissionNotification = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            checkPermissionAction()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun checkPermissionAction() {
+        activity?.let {
+            if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(it, Manifest.permission.POST_NOTIFICATIONS)) {
+                requestPermissionNotification?.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
     }
