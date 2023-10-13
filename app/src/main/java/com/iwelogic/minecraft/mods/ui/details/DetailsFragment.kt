@@ -8,13 +8,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.FileProvider
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.play.core.review.ReviewException
+import com.google.android.play.core.review.ReviewManagerFactory
+import com.google.android.play.core.review.model.ReviewErrorCode
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentDetailsBinding
 import com.iwelogic.minecraft.mods.models.DialogData
 import com.iwelogic.minecraft.mods.ui.base_details.BaseDetailsFragment
+import com.iwelogic.minecraft.mods.ui.rating.OPEN_REVIEW_KEY
+import com.iwelogic.minecraft.mods.ui.rating.REVIEW_FLOW_ENDED_KEY
+import com.iwelogic.minecraft.mods.ui.rating.REVIEW_FLOW_ERROR_KEY
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -66,6 +75,23 @@ class DetailsFragment : BaseDetailsFragment<DetailsViewModel>() {
                     runCatching {
                         findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToRatingDialog())
                     }
+                }
+            }
+        }
+
+        setFragmentResultListener(OPEN_REVIEW_KEY) { _, _ ->
+            val manager = ReviewManagerFactory.create(requireContext())
+            val request = manager.requestReviewFlow()
+            request.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val reviewInfo = task.result
+                    val flow = manager.launchReviewFlow(requireActivity(), reviewInfo)
+                    flow.addOnCompleteListener { _ ->
+                        FirebaseAnalytics.getInstance(requireContext()).logEvent(REVIEW_FLOW_ENDED_KEY, Bundle())
+                    }
+                } else {
+                    @ReviewErrorCode val reviewErrorCode = (task.getException() as ReviewException).errorCode
+                    FirebaseAnalytics.getInstance(requireContext()).logEvent(REVIEW_FLOW_ERROR_KEY, bundleOf("ERROR_CODE_KEY" to reviewErrorCode))
                 }
             }
         }
