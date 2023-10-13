@@ -27,7 +27,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailsViewModel @Inject constructor(repository: Repository, @ApplicationContext applicationContext: Context) : BaseDetailsViewModel(repository, applicationContext) {
 
-    val uiEvent: SingleLiveEvent<DetailsViewUiEvent> = SingleLiveEvent()
+    val showRating: SingleLiveEvent<Boolean> = SingleLiveEvent()
+    val install: SingleLiveEvent<File> = SingleLiveEvent()
 
     fun download() {
         item.value?.let { mod ->
@@ -81,14 +82,14 @@ class DetailsViewModel @Inject constructor(repository: Repository, @ApplicationC
             val counter = it.readInteger(KEY_DOWNLOADS_COUNTER)
             val alreadyRated = it.readBoolean(KEY_RATE_NOW)
             if (counter > 0 && counter % 3 == 0 && !alreadyRated) {
-                uiEvent.invoke(DetailsViewUiEvent.ShowRatingDialog)
+                showRating.invoke(true)
             }
         }
     }
 
     fun onClickInstall() {
         context.get()?.writeBoolean(MainViewModel.INSTALLED, true)
-        uiEvent.invoke(DetailsViewUiEvent.InstallMod(File("$base/${item.value?.type}/${item.value?.id}/file.${item.value?.type?.fileExtension}")))
+        install.invoke(File("$base/${item.value?.type}/${item.value?.id}/file.${item.value?.type?.fileExtension}"))
     }
 
     override fun getFile() = File("$base/${item.value?.type}/${item.value?.id}/file.${item.value?.type?.fileExtension}")

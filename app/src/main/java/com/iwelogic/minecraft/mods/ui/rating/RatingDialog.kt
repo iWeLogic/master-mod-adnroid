@@ -29,12 +29,8 @@ class RatingDialog : BaseDialog<RatingViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.uiEvent.observe(viewLifecycleOwner) { action ->
-            when (action) {
-                is RatingViewUiEvent.OpenPlayMarket -> {
-                    setFragmentResult(OPEN_REVIEW_KEY, Bundle())
-                }
-            }
+        viewModel.showPlayMarketRating.observe(viewLifecycleOwner) {
+            setFragmentResult(OPEN_REVIEW_KEY, Bundle())
         }
     }
 }

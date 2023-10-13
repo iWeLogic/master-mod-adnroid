@@ -21,7 +21,7 @@ import javax.inject.Inject
 class RatingViewModel @Inject constructor(@ApplicationContext applicationContext: Context) : BaseViewModel(applicationContext) {
 
     val rating: MutableLiveData<Float> = MutableLiveData(5.0f)
-    val uiEvent: SingleLiveEvent<RatingViewUiEvent> = SingleLiveEvent()
+    val showPlayMarketRating: SingleLiveEvent<Boolean> = SingleLiveEvent()
 
     fun onClickRateNow() {
         context.get()?.let {
@@ -29,7 +29,7 @@ class RatingViewModel @Inject constructor(@ApplicationContext applicationContext
             FirebaseAnalytics.getInstance(it).logEvent(KEY_RATE_NOW, bundleOf(RATING to rating.value))
         }
         if ((rating.value ?: 0.0f) > 3.9f)
-            uiEvent.invoke(RatingViewUiEvent.OpenPlayMarket)
+            showPlayMarketRating.invoke(true)
         onClickClose()
     }
 
