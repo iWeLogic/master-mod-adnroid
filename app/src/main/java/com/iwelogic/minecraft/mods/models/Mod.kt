@@ -2,16 +2,13 @@ package com.iwelogic.minecraft.mods.models
 
 import android.os.Parcelable
 import android.view.View
-import androidx.databinding.BaseObservable
-import androidx.databinding.Bindable
+import androidx.databinding.*
 import androidx.databinding.library.baseAdapters.BR
 import androidx.room.*
 import androidx.room.TypeConverter
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import com.google.gson.annotations.*
 import com.iwelogic.minecraft.mods.BuildConfig
-import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.*
 
 @Entity(tableName = "mods")
 @Parcelize
@@ -158,17 +155,15 @@ data class Mod(
     }
 
     fun getImage() =
-        BuildConfig.BACKEND_FILES + "/" + type + "/" + id + "/images/0.${if (type?.id == "skins") "png" else "jpg"}"
+        "${if (type?.id == "maps") BuildConfig.BACKEND_FILES_MAPS else BuildConfig.BACKEND_FILES}/$type/$id/images/0.${if (type?.id == "skins") "png" else "webp"}"
 
 
     fun getImages(): List<String> = (0 until (countImages ?: 0)).map {
-        val image = BuildConfig.BACKEND_FILES + "/" + type + "/" + id + "/images/$it.jpg"
-        //  Log.w("myLog", "getImages: " + image)
-        image
+        "${if (type?.id == "maps") BuildConfig.BACKEND_FILES_MAPS else BuildConfig.BACKEND_FILES}/$type/$id/images/$it.webp"
     }
 
     fun getFile() =
-        BuildConfig.BACKEND_FILES + "/" + type + "/" + id + "/file.${type?.fileExtension}"
+        "${if (type?.id == "maps") BuildConfig.BACKEND_FILES_MAPS else BuildConfig.BACKEND_FILES}/$type/$id/file.${type?.fileExtension}"
 
 }
 

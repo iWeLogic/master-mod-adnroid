@@ -1,9 +1,7 @@
 package com.iwelogic.minecraft.mods.ui.rating
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
@@ -13,8 +11,6 @@ import com.iwelogic.minecraft.mods.ui.base.BaseDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 const val OPEN_REVIEW_KEY = "OPEN_REVIEW_KEY"
-const val REVIEW_FLOW_ENDED_KEY = "REVIEW_FLOW_ENDED_KEY"
-const val REVIEW_FLOW_ERROR_KEY = "REVIEW_FLOW_ERROR_KEY"
 
 @AndroidEntryPoint
 class RatingDialog : BaseDialog<RatingViewModel>() {
