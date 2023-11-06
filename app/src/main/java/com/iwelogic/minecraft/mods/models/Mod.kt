@@ -155,11 +155,11 @@ data class Mod(
     }
 
     fun getImage() =
-        "${if (type?.id == "maps") BuildConfig.BACKEND_FILES_MAPS else BuildConfig.BACKEND_FILES}/$type/$id/images/0.${if (type?.id == "skins") "png" else "webp"}"
+        "${if (type?.id == "maps") BuildConfig.BACKEND_FILES_MAPS else BuildConfig.BACKEND_FILES}/$type/$id/images/0.${if (type?.id == "skins") "png" else "jpg"}"
 
 
     fun getImages(): List<String> = (0 until (countImages ?: 0)).map {
-        "${if (type?.id == "maps") BuildConfig.BACKEND_FILES_MAPS else BuildConfig.BACKEND_FILES}/$type/$id/images/$it.webp"
+        "${if (type?.id == "maps") BuildConfig.BACKEND_FILES_MAPS else BuildConfig.BACKEND_FILES}/$type/$id/images/$it.jpg"
     }
 
     fun getFile() =
