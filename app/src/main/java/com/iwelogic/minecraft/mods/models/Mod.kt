@@ -155,16 +155,18 @@ data class Mod(
     }
 
     fun getImage() =
-        "${if (type?.id == "maps") BuildConfig.BACKEND_FILES_MAPS else BuildConfig.BACKEND_FILES}/$type/$id/images/0.${if (type?.id == "skins") "png" else "jpg"}"
+        "${getUlr()}/$type/$id/images/0.${if (type?.id == "skins") "png" else "jpg"}"
 
 
     fun getImages(): List<String> = (0 until (countImages ?: 0)).map {
-        "${if (type?.id == "maps") BuildConfig.BACKEND_FILES_MAPS else BuildConfig.BACKEND_FILES}/$type/$id/images/$it.jpg"
+        "${getUlr()}/$type/$id/images/$it.jpg"
     }
 
     fun getFile() =
-        "${if (type?.id == "maps") BuildConfig.BACKEND_FILES_MAPS else BuildConfig.BACKEND_FILES}/$type/$id/file.${type?.fileExtension}"
+        "${getUlr()}/$type/$id/file.${type?.fileExtension}"
 
+
+    fun getUlr() = if (type?.id == "maps") BuildConfig.BACKEND_FILES_MAPS else if(type?.id == "addons") BuildConfig.BACKEND_FILES else BuildConfig.BACKEND_FILES_ANGELINA
 }
 
 // TypeConverter

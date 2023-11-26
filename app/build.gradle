@@ -16,7 +16,7 @@ android {
         applicationId "com.iwelogic.minecraft.mods"
         minSdk 23
         targetSdk 34
-        versionCode 30
+        versionCode 31
         versionName "1.0." + versionCode
         project.archivesBaseName = applicationId + "_" + versionName
         manifestPlaceholders = [statusCrashlytics: true]
@@ -42,6 +42,7 @@ android {
             buildConfigField "String", "BACKEND_URL", '"https://angelicperson.backendless.app"'
             buildConfigField "String", "BACKEND_FILES", '"https://master-mod.s3.eu-central-1.amazonaws.com"'
             buildConfigField "String", "BACKEND_FILES_MAPS", '"https://ira-minecraft2.s3.eu-central-1.amazonaws.com"'
+            buildConfigField "String", "BACKEND_FILES_ANGELINA", '"https://minecraft-anhelina.s3.eu-central-1.amazonaws.com"'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -50,6 +51,7 @@ android {
             buildConfigField "String", "BACKEND_URL", '"https://angelicperson.backendless.app"'
             buildConfigField "String", "BACKEND_FILES", '"https://master-mod.s3.eu-central-1.amazonaws.com"'
             buildConfigField "String", "BACKEND_FILES_MAPS", '"https://ira-minecraft2.s3.eu-central-1.amazonaws.com"'
+            buildConfigField "String", "BACKEND_FILES_ANGELINA", '"https://minecraft-anhelina.s3.eu-central-1.amazonaws.com"'
         }
     }
 
