@@ -2,12 +2,10 @@ package com.iwelogic.minecraft.mods.ui
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
-import com.google.android.gms.ads.MobileAds
+import com.iwelogic.minecraft.mods.manager.AdManager
 import com.iwelogic.minecraft.mods.models.Advertisement
-import com.iwelogic.minecraft.mods.ui.base.Const
-import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
-import com.iwelogic.minecraft.mods.utils.readString
-import com.iwelogic.minecraft.mods.utils.writeBoolean
+import com.iwelogic.minecraft.mods.ui.base.*
+import com.iwelogic.minecraft.mods.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.lang.ref.WeakReference
@@ -15,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    @ApplicationContext applicationContext: Context
+    @ApplicationContext applicationContext: Context,
+    private val adManager: AdManager
 ) : ViewModel() {
 
     var context: WeakReference<Context> = WeakReference(applicationContext)
@@ -28,12 +27,7 @@ class MainViewModel @Inject constructor(
 
     fun checkAge() {
         context.get()?.readString(Const.CONTENT_RATING)?.let {
-            val requestConfiguration = MobileAds.getRequestConfiguration()
-                .toBuilder()
-                .setMaxAdContentRating(it)
-                .setTestDeviceIds(listOf("5571260002C1C3A1FD32D49B3E5332C1"))
-                .build()
-            MobileAds.setRequestConfiguration(requestConfiguration)
+            adManager.setContentRating(it)
             openMain.invoke(true)
         } ?: run {
             openOnboarding.invoke(true)

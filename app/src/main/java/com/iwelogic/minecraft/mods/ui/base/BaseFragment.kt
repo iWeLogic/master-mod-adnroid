@@ -10,11 +10,15 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.androidadvance.topsnackbar.TSnackbar
 import com.iwelogic.minecraft.mods.R
-import com.iwelogic.minecraft.mods.ui.MainActivity
+import com.iwelogic.minecraft.mods.manager.AdManager
+import javax.inject.Inject
 
 open class BaseFragment<VM : BaseViewModel> : Fragment() {
 
     lateinit var viewModel: VM
+
+    @Inject
+    lateinit var adManager: AdManager
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -23,11 +27,11 @@ open class BaseFragment<VM : BaseViewModel> : Fragment() {
         }
 
         viewModel.showInterstitial.observe(viewLifecycleOwner) {
-            (activity as MainActivity).showInterstitialAd(it)
+            adManager.showInterstitialAd(it)
         }
 
         viewModel.showSnackBar.observe(viewLifecycleOwner) { msg ->
-            val snackBar: TSnackbar = TSnackbar.make(view, msg ?: view.context.getString(R.string.something_went_wrong), TSnackbar.LENGTH_LONG)
+            val snackBar: TSnackbar = TSnackbar.make(view, msg, TSnackbar.LENGTH_LONG)
             snackBar.view.setBackgroundResource(R.color.green)
             val textView = snackBar.view.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
             textView.maxLines = 5
