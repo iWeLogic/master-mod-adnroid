@@ -74,6 +74,15 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/sort" />
 
+            <ImageView
+                android:layout_width="@dimen/toolbar"
+                android:layout_height="@dimen/toolbar"
+                android:background="?attr/actionBarItemBackground"
+                android:contentDescription="@string/filter"
+                android:onClick="@{() -> viewModel.onClickSettings()}"
+                android:scaleType="centerInside"
+                android:src="@drawable/settings" />
+
         </LinearLayout>
 
         <FrameLayout

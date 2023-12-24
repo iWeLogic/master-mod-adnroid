@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="ContentDescription">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.iwelogic.minecraft.mods.ui.settings.SettingsViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar"
+            android:background="@drawable/background_bottom_line"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <ImageView
+                android:layout_width="@dimen/toolbar"
+                android:layout_height="@dimen/toolbar"
+                android:background="?attr/actionBarItemBackground"
+                android:contentDescription="@string/back"
+                android:onClick="@{() -> viewModel.onClickClose()}"
+                android:scaleType="centerInside"
+                android:src="@drawable/back" />
+
+            <TextView
+                style="@style/Header"
+                android:layout_marginStart="@dimen/half_default_size"
+                android:text="@string/settings" />
+
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/half_default_size"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:drawablePadding="16dp"
+                    android:fontFamily="@font/minecraft_regular"
+                    android:gravity="center_vertical"
+                    android:onClick="@{() -> viewModel.onClickRate()}"
+                    android:text="@string/rate_us"
+                    android:textColor="@color/title"
+                    android:textSize="18sp"
+                    app:drawableStartCompat="@drawable/rating_on" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:drawablePadding="16dp"
+                    android:fontFamily="@font/minecraft_regular"
+                    android:gravity="center_vertical"
+                    android:onClick="@{() -> viewModel.onClickShare()}"
+                    android:paddingHorizontal="5dp"
+                    android:text="@string/share"
+                    android:textColor="@color/title"
+                    android:textSize="18sp"
+                    app:drawableStartCompat="@drawable/share" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:drawablePadding="18dp"
+                    android:fontFamily="@font/minecraft_regular"
+                    android:gravity="center_vertical"
+                    android:onClick="@{() -> viewModel.onClickPrivacySettings()}"
+                    android:paddingHorizontal="6dp"
+                    android:text="@string/privacy_settings"
+                    android:textColor="@color/title"
+                    android:textSize="18sp"
+                    app:drawableStartCompat="@drawable/privacy" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+</layout>

@@ -2,20 +2,12 @@ package com.iwelogic.minecraft.mods.ui.main.mods
 
 import android.content.Context
 import android.os.Parcelable
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
-import com.google.android.gms.ads.*
-import com.iwelogic.minecraft.mods.data.Repository
-import com.iwelogic.minecraft.mods.data.Result
+import androidx.lifecycle.*
+import com.iwelogic.minecraft.mods.data.*
 import com.iwelogic.minecraft.mods.models.*
-import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
-import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
+import com.iwelogic.minecraft.mods.ui.base.*
 import com.iwelogic.minecraft.mods.utils.*
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
+import dagger.assisted.*
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 
@@ -36,6 +28,7 @@ open class ModsViewModel @AssistedInject constructor(
     val openSearch: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val openFavorite: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val openFilter: SingleLiveEvent<List<FilterValue>> = SingleLiveEvent()
+    val openSettings: SingleLiveEvent<Unit> = SingleLiveEvent()
     val spanCount: MutableLiveData<Int> = MutableLiveData(1)
     var finished = false
     private val filters: MutableLiveData<List<FilterValue>> = MutableLiveData(ArrayList())
@@ -82,6 +75,10 @@ open class ModsViewModel @AssistedInject constructor(
 
     fun onClickFilter() {
         openFilter.invoke(filters.value.deepCopy() ?: ArrayList())
+    }
+
+    fun onClickSettings() {
+        openSettings.invoke(Unit)
     }
 
     fun onClickSearch() {

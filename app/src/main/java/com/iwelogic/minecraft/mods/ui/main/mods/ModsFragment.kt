@@ -82,6 +82,11 @@ class ModsFragment : BaseFragment<ModsViewModel>() {
                 parentFragment?.parentFragment?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToFilterDialog("filter_" + viewModel.type.id, it.toTypedArray()))
             }
         }
+        viewModel.openSettings.observe(viewLifecycleOwner) {
+            if (parentFragment?.parentFragment?.findNavController()?.currentDestination?.id == R.id.mainFragment) {
+                parentFragment?.parentFragment?.findNavController()?.navigate(MainFragmentDirections.actionMainFragmentToSettingsFragment())
+            }
+        }
         parentFragment?.parentFragment?.setFragmentResultListener("filter_" + viewModel.type.id) { _, bundle ->
             viewModel.setNewFilters(bundle.getParcelableArray(VALUE)?.map { it as FilterValue } ?: ArrayList())
         }

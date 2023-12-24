@@ -120,4 +120,8 @@
     <string name="instruction_3">3. For mods: Activate all experiments</string>
     <string name="instruction_2">2. Install mod or map</string>
     <string name="instruction_1">1. Download mod or map</string>
+    <string name="settings">Settings</string>
+    <string name="share">Share</string>
+    <string name="privacy_settings">Privacy settings</string>
+    <string name="rate_us">Rate us</string>
 </resources>
