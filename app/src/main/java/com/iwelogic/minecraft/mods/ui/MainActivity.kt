@@ -53,14 +53,14 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.hostContainer, host).setPrimaryNavigationFragment(host).commitAllowingStateLoss()
         }
 
-        val debugSettings = ConsentDebugSettings.Builder(this)
-            .setDebugGeography(ConsentDebugSettings.DebugGeography.DEBUG_GEOGRAPHY_EEA)
-            .addTestDeviceHashedId("D24A44F786A3570897EF8B5ABCE9EBC2")
-            .build()
+//        val debugSettings = ConsentDebugSettings.Builder(this)
+//            .setDebugGeography(ConsentDebugSettings.DebugGeography.DEBUG_GEOGRAPHY_EEA)
+//            .addTestDeviceHashedId("D24A44F786A3570897EF8B5ABCE9EBC2")
+//            .build()
 
         val params = ConsentRequestParameters
             .Builder()
-            .setConsentDebugSettings(debugSettings)
+//            .setConsentDebugSettings(debugSettings)
             .build()
 
         consentInformation = UserMessagingPlatform.getConsentInformation(this)
