@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.iwelogic.minecraft.mods.ui.settings.SettingsViewModel" />
@@ -78,6 +80,7 @@
                     app:drawableStartCompat="@drawable/share" />
 
                 <TextView
+                    android:visibility="@{ viewModel.isPrivacyPolicyVisible ? View.VISIBLE : View.GONE}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"

@@ -89,6 +89,14 @@
                 android:textColor="@color/regularText"
                 android:textSize="@dimen/normalText" />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/ad_call_to_action"
+                style="@style/Button"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/half_default_size"
+                android:layout_marginBottom="@dimen/default_size"
+                android:minWidth="200dp" />
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -109,13 +117,7 @@
 
             </FrameLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/ad_call_to_action"
-                style="@style/Button"
-                android:layout_width="wrap_content"
-                android:layout_marginTop="@dimen/half_default_size"
-                android:layout_marginBottom="@dimen/default_size"
-                android:minWidth="200dp" />
+
 
         </LinearLayout>
 
