@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
 //            .addTestDeviceHashedId("D24A44F786A3570897EF8B5ABCE9EBC2")
 //            .build()
 
+
         val params = ConsentRequestParameters
             .Builder()
 //            .setConsentDebugSettings(debugSettings)
