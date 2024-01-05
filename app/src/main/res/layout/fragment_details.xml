@@ -187,6 +187,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/default_size"
+                    android:paddingVertical="@dimen/half_default_size"
                     android:layout_marginEnd="@dimen/default_size" />
 
                 <FrameLayout

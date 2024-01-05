@@ -10,5 +10,9 @@
     <color name="disableColor">#616161</color>
     <color name="hintText">#AFAFAF</color>
     <color name="divider">#717171</color>
+    <color name="addBlockColor">#4DFFFFFF</color>
+    <color name="addTextColor">#000000</color>
+    <color name="button_add">#FFFFFFFF</color>
+    <color name="button_add_pressed">#C4C4C4</color>
 
 </resources>
