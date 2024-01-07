@@ -44,20 +44,12 @@ android {
                 mappingFileUploadEnabled = true
             }
             manifestPlaceholders["statusCrashlytics"] = true
-            buildConfigField("String", "BACKEND_URL", "\"https://angelicperson.backendless.app\"")
-            buildConfigField("String", "BACKEND_FILES", "\"https://master-mod.s3.eu-central-1.amazonaws.com\"")
-            buildConfigField("String", "BACKEND_FILES_MAPS", "\"https://ira-minecraft2.s3.eu-central-1.amazonaws.com\"")
-            buildConfigField("String", "BACKEND_FILES_ANGELINA", "\"https://minecraft-anhelina.s3.eu-central-1.amazonaws.com\"")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
 
         debug {
             isDebuggable = true
             manifestPlaceholders["statusCrashlytics"] = false
-            buildConfigField("String", "BACKEND_URL", "\"https://angelicperson.backendless.app\"")
-            buildConfigField("String", "BACKEND_FILES", "\"https://master-mod.s3.eu-central-1.amazonaws.com\"")
-            buildConfigField("String", "BACKEND_FILES_MAPS", "\"https://ira-minecraft2.s3.eu-central-1.amazonaws.com\"")
-            buildConfigField("String", "BACKEND_FILES_ANGELINA", "\"https://minecraft-anhelina.s3.eu-central-1.amazonaws.com\"")
         }
     }
 
@@ -96,8 +88,9 @@ dependencies {
     implementation("com.google.android.ump:user-messaging-platform:2.1.0")
 
     //Firebase
-    implementation(platform("com.google.firebase:firebase-bom:30.1.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-config")
     implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-messaging-ktx")

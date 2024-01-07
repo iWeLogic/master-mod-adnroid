@@ -1,17 +1,22 @@
 package com.iwelogic.minecraft.mods
 
-import android.app.Application
-import android.app.NotificationChannel
-import android.app.NotificationManager
+import android.app.*
 import android.os.Build
 import com.facebook.appevents.AppEventsLogger
+import com.iwelogic.minecraft.mods.manager.FirebaseConfigManager
 import dagger.hilt.android.HiltAndroidApp
-import java.io.BufferedReader
-import java.io.InputStreamReader
+import javax.inject.Inject
 
 
 @HiltAndroidApp
 class App : Application() {
+
+    @Inject
+    lateinit var firebaseRemoteConfigManager: FirebaseConfigManager
+
+    companion object {
+        var baseUrl = "https://master-mod.s3.eu-central-1.amazonaws.com"
+    }
 
     override fun onCreate() {
         super.onCreate()

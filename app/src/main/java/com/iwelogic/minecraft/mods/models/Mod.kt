@@ -5,9 +5,8 @@ import android.view.View
 import androidx.databinding.*
 import androidx.databinding.library.baseAdapters.BR
 import androidx.room.*
-import androidx.room.TypeConverter
 import com.google.gson.annotations.*
-import com.iwelogic.minecraft.mods.BuildConfig
+import com.iwelogic.minecraft.mods.*
 import kotlinx.parcelize.*
 
 @Entity(tableName = "mods")
@@ -155,30 +154,14 @@ data class Mod(
     }
 
     fun getImage() =
-        "${getUlr()}/$type/$id/images/0.${if (type?.id == "skins") "png" else "jpg"}"
+        "${App.baseUrl}/$type/$id/images/0.${if (type?.id == "skins") "png" else "jpg"}"
 
 
     fun getImages(): List<String> = (0 until (countImages ?: 0)).map {
-        "${getUlr()}/$type/$id/images/$it.jpg"
+        "${App.baseUrl}/$type/$id/images/$it.jpg"
     }
 
     fun getFile() =
-        "${getUlr()}/$type/$id/file.${type?.fileExtension}"
+        "${App.baseUrl}/$type/$id/file.${type?.fileExtension}"
 
-
-    fun getUlr() = if (type?.id == "maps") BuildConfig.BACKEND_FILES_MAPS else if(type?.id == "addons") BuildConfig.BACKEND_FILES else BuildConfig.BACKEND_FILES_ANGELINA
-}
-
-// TypeConverter
-class TypeConverter {
-
-    @androidx.room.TypeConverter
-    fun toString(type: Type?): String? {
-        return type?.id
-    }
-
-    @TypeConverter
-    fun toType(value: String?): Type? {
-        return Type.getValueById(value ?: "")
-    }
 }

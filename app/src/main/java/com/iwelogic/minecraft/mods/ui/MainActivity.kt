@@ -31,12 +31,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen: SplashScreen = installSplashScreen()
-        var keep = true
-        splashScreen.setKeepOnScreenCondition { keep }
-        lifecycleScope.launch(Dispatchers.Default) {
-            delay(1000)
-            keep = false
-        }
+        splashScreen.setKeepOnScreenCondition { viewModel.isAnimationEnabled }
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
