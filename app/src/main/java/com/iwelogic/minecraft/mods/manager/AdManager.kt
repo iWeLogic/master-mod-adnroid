@@ -28,7 +28,7 @@ class AdManager @Inject constructor(@ApplicationContext val applicationContext: 
         val requestConfiguration = MobileAds.getRequestConfiguration()
             .toBuilder()
             .setMaxAdContentRating(contentRating)
-            .setTestDeviceIds(listOf("5571260002C1C3A1FD32D49B3E5332C1"))
+            .setTestDeviceIds(listOf("D24A44F786A3570897EF8B5ABCE9EBC2"))
             .build()
         MobileAds.setRequestConfiguration(requestConfiguration)
     }

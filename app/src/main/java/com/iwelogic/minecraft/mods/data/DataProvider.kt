@@ -14,7 +14,8 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class DataProvider @Inject constructor(
-    @ApplicationContext private val applicationContext: Context
+    @ApplicationContext private val applicationContext: Context,
+    private val gson: Gson
 ) {
     private val providerScope = CoroutineScope(Job() + Dispatchers.Main)
     private var addons: List<Mod> = listOf()
@@ -45,7 +46,7 @@ class DataProvider @Inject constructor(
         return suspendCoroutine { continuation ->
             val text: String =
                 BufferedReader(InputStreamReader(applicationContext.assets.open("${type.id}.json"))).readText()
-            val temp = Gson().fromJson(text, Array<Mod>::class.java).toList()
+            val temp = gson.fromJson(text, Array<Mod>::class.java).toList()
             temp.onEach {
                 it.type = type
             }
