@@ -44,9 +44,7 @@ class DataProvider @Inject constructor(
 
     private suspend fun loadData(type: Type): List<Mod> {
         return suspendCoroutine { continuation ->
-            val text: String =
-                BufferedReader(InputStreamReader(applicationContext.assets.open("${type.id}.json"))).readText()
-            val temp = gson.fromJson(text, Array<Mod>::class.java).toList()
+            val temp = gson.fromJson(InputStreamReader(applicationContext.assets.open("${type.id}.json")), Array<Mod>::class.java).toList()
             temp.onEach {
                 it.type = type
             }
