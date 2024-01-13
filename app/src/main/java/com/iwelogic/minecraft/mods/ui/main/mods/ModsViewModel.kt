@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Parcelable
 import androidx.lifecycle.*
 import com.iwelogic.minecraft.mods.data.*
+import com.iwelogic.minecraft.mods.manager.AdUnit
 import com.iwelogic.minecraft.mods.models.*
 import com.iwelogic.minecraft.mods.ui.base.*
 import com.iwelogic.minecraft.mods.utils.*
@@ -39,14 +40,15 @@ open class ModsViewModel @AssistedInject constructor(
     }
 
     val onClick: (Mod) -> Unit = {
-        if (context.get()?.readBoolean(Advertisement.INTERSTITIAL_OPEN_DETAILS.id).isTrue()) {
-            showInterstitial.invoke {
-                context.get().logEvent(Advertisement.INTERSTITIAL_OPEN_DETAILS.id)
-                openMod.invoke(it)
-            }
-        } else {
-            openMod.invoke(it)
-        }
+        showInterstitial.invoke(
+            AdDataHolder(
+                adUnit = AdUnit.OPEN_DETAILS,
+                callback = {
+                    context.get().logEvent(AdUnit.OPEN_DETAILS.code)
+                    openMod.invoke(it)
+                }
+            )
+        )
     }
 
     init {
@@ -82,25 +84,27 @@ open class ModsViewModel @AssistedInject constructor(
     }
 
     fun onClickSearch() {
-        if (context.get()?.readBoolean(Advertisement.INTERSTITIAL_OPEN_SEARCH.id).isTrue()) {
-            showInterstitial.invoke {
-                context.get().logEvent(Advertisement.INTERSTITIAL_OPEN_SEARCH.id)
-                openSearch.invoke(true)
-            }
-        } else {
-            openSearch.invoke(true)
-        }
+        showInterstitial.invoke(
+            AdDataHolder(
+                adUnit = AdUnit.OPEN_SEARCH,
+                callback = {
+                    context.get().logEvent(AdUnit.OPEN_SEARCH.code)
+                    openSearch.invoke(true)
+                }
+            )
+        )
     }
 
     fun onClickFavorite() {
-        if (context.get()?.readBoolean(Advertisement.INTERSTITIAL_OPEN_FAVORITE.id).isTrue()) {
-            showInterstitial.invoke {
-                context.get().logEvent(Advertisement.INTERSTITIAL_OPEN_FAVORITE.id)
-                openFavorite.invoke(true)
-            }
-        } else {
-            openFavorite.invoke(true)
-        }
+        showInterstitial.invoke(
+            AdDataHolder(
+                adUnit = AdUnit.OPEN_FAVORITE,
+                callback = {
+                    context.get().logEvent(AdUnit.OPEN_FAVORITE.code)
+                    openFavorite.invoke(true)
+                }
+            )
+        )
     }
 
     fun setNewFilters(newFilters: List<FilterValue>) {

@@ -8,6 +8,7 @@ import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.DownloadListener
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.data.Repository
+import com.iwelogic.minecraft.mods.manager.FirebaseConfigManager
 import com.iwelogic.minecraft.mods.models.DialogData
 import com.iwelogic.minecraft.mods.ui.base.Const.KEY_DOWNLOADS_COUNTER
 import com.iwelogic.minecraft.mods.ui.base.Const.KEY_RATE_NOW
@@ -22,7 +23,8 @@ import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailsViewModel @Inject constructor(repository: Repository, @ApplicationContext applicationContext: Context) : BaseDetailsViewModel(repository, applicationContext) {
+class DetailsViewModel @Inject constructor(repository: Repository, firebaseConfigManager: FirebaseConfigManager, @ApplicationContext applicationContext: Context) :
+    BaseDetailsViewModel(repository, firebaseConfigManager, applicationContext) {
 
     val showRating: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val install: SingleLiveEvent<File> = SingleLiveEvent()

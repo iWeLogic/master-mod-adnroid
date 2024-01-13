@@ -4,14 +4,10 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.data.Repository
-import com.iwelogic.minecraft.mods.models.Advertisement
+import com.iwelogic.minecraft.mods.manager.AdUnit
 import com.iwelogic.minecraft.mods.models.Mod
-import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
-import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
-import com.iwelogic.minecraft.mods.utils.fromPxToDp
-import com.iwelogic.minecraft.mods.utils.isTrue
-import com.iwelogic.minecraft.mods.utils.readBoolean
-import com.iwelogic.minecraft.mods.utils.logEvent
+import com.iwelogic.minecraft.mods.ui.base.*
+import com.iwelogic.minecraft.mods.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -36,14 +32,15 @@ class FavoriteViewModel @Inject constructor(private val repository: Repository, 
     }
 
     val onClick: (Mod) -> Unit = {
-        if (context.get()?.readBoolean(Advertisement.INTERSTITIAL_OPEN_DETAILS.id).isTrue()) {
-            showInterstitial.invoke {
-                context.get().logEvent(Advertisement.INTERSTITIAL_OPEN_DETAILS.id)
-                openMod.invoke(it)
-            }
-        } else {
-            openMod.invoke(it)
-        }
+        showInterstitial.invoke(
+            AdDataHolder(
+                adUnit = AdUnit.OPEN_DETAILS,
+                callback = {
+                    context.get().logEvent(AdUnit.OPEN_DETAILS.code)
+                    openMod.invoke(it)
+                }
+            )
+        )
     }
 
     fun reloadScreenSize(widthDp: Int?) {

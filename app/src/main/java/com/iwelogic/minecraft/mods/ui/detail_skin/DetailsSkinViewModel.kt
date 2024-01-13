@@ -2,17 +2,15 @@ package com.iwelogic.minecraft.mods.ui.detail_skin
 
 import android.content.*
 import android.content.pm.PackageInfo
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.graphics.*
 import android.net.Uri
-import android.os.Build
-import android.os.Environment
+import android.os.*
 import android.provider.MediaStore
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.google.gson.Gson
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.data.Repository
+import com.iwelogic.minecraft.mods.manager.FirebaseConfigManager
 import com.iwelogic.minecraft.mods.models.*
 import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
 import com.iwelogic.minecraft.mods.ui.base_details.BaseDetailsViewModel
@@ -20,18 +18,16 @@ import com.iwelogic.minecraft.mods.ui.main.MainViewModel
 import com.iwelogic.minecraft.mods.utils.writeBoolean
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.zeroturnaround.zip.ZipUtil
 import java.io.*
-import java.net.HttpURLConnection
-import java.net.URL
-import java.util.*
+import java.net.*
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailsSkinViewModel @Inject constructor(repository: Repository, @ApplicationContext applicationContext: Context) : BaseDetailsViewModel(repository, applicationContext) {
+class DetailsSkinViewModel @Inject constructor(repository: Repository, firebaseConfigManager: FirebaseConfigManager, @ApplicationContext applicationContext: Context) :
+    BaseDetailsViewModel(repository, firebaseConfigManager, applicationContext) {
 
     val openInstall: SingleLiveEvent<String> = SingleLiveEvent()
     val openIntent: SingleLiveEvent<Intent> = SingleLiveEvent()
@@ -184,7 +180,6 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, @Applicat
         }
     }
 
-    @Suppress("DEPRECATION")
     private fun saveImage(bitmap: Bitmap, name: String): Boolean {
         var saved = false
         var fos: OutputStream? = null

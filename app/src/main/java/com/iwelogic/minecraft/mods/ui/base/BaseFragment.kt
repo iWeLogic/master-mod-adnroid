@@ -27,7 +27,7 @@ open class BaseFragment<VM : BaseViewModel> : Fragment() {
         }
 
         viewModel.showInterstitial.observe(viewLifecycleOwner) {
-            adManager.showInterstitialAd(it)
+            adManager.showInterstitialAd(it.adUnit, it.callback)
         }
 
         viewModel.showSnackBar.observe(viewLifecycleOwner) { msg ->

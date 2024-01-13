@@ -21,7 +21,12 @@ class FirebaseConfigManager @Inject constructor() {
         Firebase.remoteConfig.apply {
             setDefaultsAsync(
                 mapOf(
-                    KEY_BASE_URL to "https://master-mod.s3.eu-central-1.amazonaws.com"
+                    KEY_BASE_URL to "https://master-mod.s3.eu-central-1.amazonaws.com",
+                    AdUnit.OPEN_SEARCH.code to false,
+                    AdUnit.OPEN_FAVORITE.code to false,
+                    AdUnit.OPEN_DETAILS.code to false,
+                    AdUnit.NATIVE_ON_DETAILS.code to false,
+                    AdUnit.BANNER_IN_LIST.code to false,
                 )
             )
         }
@@ -63,4 +68,6 @@ class FirebaseConfigManager @Inject constructor() {
             }
         }
     }
+
+    fun getAdUnitStatus(adUnit: AdUnit) = remoteConfig.getBoolean(adUnit.code)
 }

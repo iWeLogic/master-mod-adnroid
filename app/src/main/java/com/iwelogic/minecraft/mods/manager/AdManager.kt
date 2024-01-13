@@ -10,7 +10,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.*
 
 @Singleton
-class AdManager @Inject constructor(@ApplicationContext val applicationContext: Context) {
+class AdManager @Inject constructor(
+    @ApplicationContext val applicationContext: Context,
+    private val firebaseConfigManager: FirebaseConfigManager
+) {
 
     private val mAdIsLoading = MutableStateFlow(false)
     var googleInterstitial: InterstitialAd? = null
@@ -55,8 +58,11 @@ class AdManager @Inject constructor(@ApplicationContext val applicationContext: 
             })
     }
 
-
-    fun showInterstitialAd(callback: (() -> Unit)? = null) {
+    fun showInterstitialAd(adUnit: AdUnit, callback: (() -> Unit)? = null) {
+        if (!firebaseConfigManager.getAdUnitStatus(adUnit)) {
+            callback?.invoke()
+            return
+        }
         if (googleInterstitial != null) {
             googleInterstitial?.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {

@@ -2,24 +2,15 @@ package com.iwelogic.minecraft.mods.ui.search
 
 import android.content.Context
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import com.iwelogic.minecraft.mods.data.Repository
-import com.iwelogic.minecraft.mods.data.Result
-import com.iwelogic.minecraft.mods.models.Advertisement
-import com.iwelogic.minecraft.mods.models.Mod
-import com.iwelogic.minecraft.mods.models.Type
-import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
-import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
-import com.iwelogic.minecraft.mods.utils.fromPxToDp
-import com.iwelogic.minecraft.mods.utils.isTrue
-import com.iwelogic.minecraft.mods.utils.logEvent
-import com.iwelogic.minecraft.mods.utils.readBoolean
+import androidx.lifecycle.*
+import com.iwelogic.minecraft.mods.data.*
+import com.iwelogic.minecraft.mods.manager.AdUnit
+import com.iwelogic.minecraft.mods.models.*
+import com.iwelogic.minecraft.mods.ui.base.*
+import com.iwelogic.minecraft.mods.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -75,22 +66,16 @@ class SearchViewModel @Inject constructor(
         openVoiceSearch.invoke(true)
     }
 
-    val onScroll: (Int) -> Unit = {
-        if ((mods.value?.size ?: 0) < it + 3)
-            query.value?.let { query ->
-                if (query.length > 2) load()
-            }
-    }
-
     val onClick: (Mod) -> Unit = {
-        if (context.get()?.readBoolean(Advertisement.INTERSTITIAL_OPEN_DETAILS.id).isTrue()) {
-            showInterstitial.invoke {
-                context.get().logEvent(Advertisement.INTERSTITIAL_OPEN_DETAILS.id)
-                openMod.invoke(it)
-            }
-        } else {
-            openMod.invoke(it)
-        }
+        showInterstitial.invoke(
+            AdDataHolder(
+                adUnit = AdUnit.OPEN_DETAILS,
+                callback = {
+                    context.get().logEvent(AdUnit.OPEN_DETAILS.code)
+                    openMod.invoke(it)
+                }
+            )
+        )
     }
 
     private fun load() {

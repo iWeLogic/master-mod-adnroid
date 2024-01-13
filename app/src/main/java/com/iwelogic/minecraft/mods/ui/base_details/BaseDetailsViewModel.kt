@@ -1,28 +1,23 @@
 package com.iwelogic.minecraft.mods.ui.base_details
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.androidnetworking.AndroidNetworking
 import com.iwelogic.minecraft.mods.data.Repository
+import com.iwelogic.minecraft.mods.manager.*
 import com.iwelogic.minecraft.mods.models.Mod
-import com.iwelogic.minecraft.mods.ui.base.BaseViewModel
-import com.iwelogic.minecraft.mods.ui.base.Const
-import com.iwelogic.minecraft.mods.ui.base.SingleLiveEvent
-import com.iwelogic.minecraft.mods.utils.isTrue
-import com.iwelogic.minecraft.mods.utils.readString
+import com.iwelogic.minecraft.mods.ui.base.*
+import com.iwelogic.minecraft.mods.utils.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.io.File
 
-abstract class BaseDetailsViewModel(val repository: Repository, applicationContext: Context) :
+abstract class BaseDetailsViewModel(val repository: Repository, private val firebaseConfigManager: FirebaseConfigManager, applicationContext: Context) :
     BaseViewModel(applicationContext) {
 
     var isFavourite: LiveData<Boolean>? = null
-    var selectedAge: String = applicationContext.readString(Const.AGE) ?: ""
-    var selectedContentRating: String = applicationContext.readString(Const.CONTENT_RATING) ?: ""
     val openHelp: SingleLiveEvent<Boolean> = SingleLiveEvent()
+    val reloadAd: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val base = "${applicationContext.filesDir?.path}"
     val item: MutableLiveData<Mod> = MutableLiveData()
 
@@ -57,5 +52,11 @@ abstract class BaseDetailsViewModel(val repository: Repository, applicationConte
     override fun onCleared() {
         AndroidNetworking.cancelAll()
         super.onCleared()
+    }
+
+    fun reloadAd() {
+        if (firebaseConfigManager.getAdUnitStatus(AdUnit.NATIVE_ON_DETAILS)) {
+            reloadAd.invoke(true)
+        }
     }
 }
