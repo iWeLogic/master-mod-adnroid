@@ -1,4 +1,4 @@
-package com.iwelogic.minecraft.mods.manager
+package com.iwelogic.minecraft.mods.manager.ad
 
 enum class AdUnit(val code: String) {
     OPEN_SEARCH("interstitial_open_search"),

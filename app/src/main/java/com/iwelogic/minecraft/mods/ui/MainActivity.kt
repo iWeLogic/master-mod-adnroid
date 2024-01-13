@@ -13,7 +13,7 @@ import com.google.android.gms.ads.interstitial.*
 import com.google.android.ump.*
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.ActivityMainBinding
-import com.iwelogic.minecraft.mods.manager.AdManager
+import com.iwelogic.minecraft.mods.manager.ad.AdManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import javax.inject.Inject

@@ -2,6 +2,7 @@ package com.iwelogic.minecraft.mods.ui.base
 
 import android.content.Context
 import androidx.lifecycle.*
+import com.iwelogic.minecraft.mods.manager.ad.AdDataHolder
 import com.iwelogic.minecraft.mods.models.DialogData
 import java.lang.ref.WeakReference
 

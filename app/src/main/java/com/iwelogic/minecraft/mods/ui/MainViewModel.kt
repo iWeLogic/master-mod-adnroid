@@ -3,6 +3,7 @@ package com.iwelogic.minecraft.mods.ui
 import android.content.Context
 import androidx.lifecycle.*
 import com.iwelogic.minecraft.mods.manager.*
+import com.iwelogic.minecraft.mods.manager.ad.AdManager
 import com.iwelogic.minecraft.mods.ui.base.*
 import com.iwelogic.minecraft.mods.utils.readString
 import dagger.hilt.android.lifecycle.HiltViewModel

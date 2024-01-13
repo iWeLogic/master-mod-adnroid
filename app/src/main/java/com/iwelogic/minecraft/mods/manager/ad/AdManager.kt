@@ -1,9 +1,10 @@
-package com.iwelogic.minecraft.mods.manager
+package com.iwelogic.minecraft.mods.manager.ad
 
 import android.content.Context
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.*
 import com.iwelogic.minecraft.mods.R
+import com.iwelogic.minecraft.mods.manager.FirebaseConfigManager
 import com.iwelogic.minecraft.mods.ui.MainActivity
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -59,7 +60,7 @@ class AdManager @Inject constructor(
     }
 
     fun showInterstitialAd(adUnit: AdUnit, callback: (() -> Unit)? = null) {
-        if (!firebaseConfigManager.getAdUnitStatus(adUnit)) {
+        if(!firebaseConfigManager.getAdUnitStatus(adUnit)){
             callback?.invoke()
             return
         }

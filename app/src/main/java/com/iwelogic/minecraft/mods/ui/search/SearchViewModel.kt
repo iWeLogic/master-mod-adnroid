@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.*
 import com.iwelogic.minecraft.mods.data.*
-import com.iwelogic.minecraft.mods.manager.AdUnit
+import com.iwelogic.minecraft.mods.manager.ad.*
 import com.iwelogic.minecraft.mods.models.*
 import com.iwelogic.minecraft.mods.ui.base.*
 import com.iwelogic.minecraft.mods.utils.*

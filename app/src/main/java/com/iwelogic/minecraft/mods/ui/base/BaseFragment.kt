@@ -10,7 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import com.androidadvance.topsnackbar.TSnackbar
 import com.iwelogic.minecraft.mods.R
-import com.iwelogic.minecraft.mods.manager.AdManager
+import com.iwelogic.minecraft.mods.manager.ad.AdManager
 import javax.inject.Inject
 
 open class BaseFragment<VM : BaseViewModel> : Fragment() {
