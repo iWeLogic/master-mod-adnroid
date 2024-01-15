@@ -190,6 +190,16 @@
                     android:paddingVertical="@dimen/half_default_size"
                     android:layout_marginEnd="@dimen/default_size" />
 
+                <TextView
+                    android:visibility="@{viewModel.showContentRating ? View.VISIBLE : View.GONE}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/title"
+                    android:layout_marginHorizontal="@dimen/default_size"
+                    android:layout_marginTop="@dimen/default_size"
+                    android:text="@{`Selected age ` + viewModel.age + ` content rating is ` + viewModel.contentRating }"/>
+
                 <FrameLayout
                     android:id="@+id/ad_frame"
                     android:layout_width="match_parent"

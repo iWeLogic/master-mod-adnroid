@@ -13,6 +13,7 @@ class FirebaseConfigManager @Inject constructor() {
 
     companion object {
         private const val KEY_BASE_URL = "base_url"
+        private const val KEY_SHOW_CONTENT_RATING = "show_content_rating"
     }
 
     private val _isLoaded = MutableStateFlow(false)
@@ -23,6 +24,7 @@ class FirebaseConfigManager @Inject constructor() {
             setDefaultsAsync(
                 mapOf(
                     KEY_BASE_URL to "https://master-mod.s3.eu-central-1.amazonaws.com",
+                    KEY_SHOW_CONTENT_RATING to true,
                     AdUnit.OPEN_SEARCH.code to false,
                     AdUnit.OPEN_FAVORITE.code to false,
                     AdUnit.OPEN_DETAILS.code to false,
@@ -71,4 +73,6 @@ class FirebaseConfigManager @Inject constructor() {
     }
 
     fun getAdUnitStatus(adUnit: AdUnit) = remoteConfig.getBoolean(adUnit.code)
+
+    fun isContentRatingShown() = remoteConfig.getBoolean(KEY_SHOW_CONTENT_RATING)
 }

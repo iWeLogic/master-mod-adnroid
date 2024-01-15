@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
             openMain()
         }
 
+
         viewModel.openOnboarding.observe(this) {
             val host = NavHostFragment.create(R.navigation.onboarding)
             supportFragmentManager.beginTransaction().replace(R.id.hostContainer, host).setPrimaryNavigationFragment(host).commitAllowingStateLoss()
@@ -66,13 +67,13 @@ class MainActivity : AppCompatActivity() {
                 this@MainActivity
             ) {
                 if (consentInformation.canRequestAds()) {
-                    adManager.enableAdd(this)
+                    adManager.enableAdd()
                 }
             }
         }, {
         })
         if (consentInformation.canRequestAds()) {
-            adManager.enableAdd(this)
+            adManager.enableAdd()
 
         }
     }

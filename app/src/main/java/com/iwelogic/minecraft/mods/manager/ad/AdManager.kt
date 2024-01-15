@@ -6,7 +6,10 @@ import com.google.android.gms.ads.interstitial.*
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.manager.FirebaseConfigManager
 import com.iwelogic.minecraft.mods.ui.MainActivity
+import com.iwelogic.minecraft.mods.ui.base.Const
+import com.iwelogic.minecraft.mods.utils.readString
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.*
 
@@ -22,19 +25,24 @@ class AdManager @Inject constructor(
     lateinit var activity: MainActivity
     var canRequestAd = false
 
-    fun enableAdd(context: Context) {
-        MobileAds.initialize(context)
+    fun enableAdd() {
         canRequestAd = true
-        loadAdd()
+        applicationContext.readString(Const.CONTENT_RATING)?.let { contentRating ->
+            setContentRating(contentRating)
+        }
     }
 
-    fun setContentRating(contentRating: String){
+    fun setContentRating(contentRating: String) {
+        if (!canRequestAd) return
         val requestConfiguration = MobileAds.getRequestConfiguration()
             .toBuilder()
             .setMaxAdContentRating(contentRating)
-            .setTestDeviceIds(listOf("D24A44F786A3570897EF8B5ABCE9EBC2"))
             .build()
         MobileAds.setRequestConfiguration(requestConfiguration)
+        MobileAds.initialize(applicationContext)
+        CoroutineScope(Dispatchers.Main).launch {
+            loadAdd()
+        }
     }
 
     private fun loadAdd() {

@@ -236,14 +236,32 @@
                         android:src="@{viewModel.isFavourite ? @drawable/favorite_on : @drawable/favorite_off}" />
 
                 </LinearLayout>
+
             </FrameLayout>
 
-            <FrameLayout
-                android:id="@+id/ad_frame"
+            <LinearLayout
                 android:layout_width="0dp"
+                android:orientation="vertical"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_size"
-                android:layout_weight="1" />
+                android:layout_weight="1" >
+
+                <TextView
+                    android:visibility="@{viewModel.showContentRating ? View.VISIBLE : View.GONE}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/title"
+                    android:layout_marginHorizontal="@dimen/default_size"
+                    android:layout_marginTop="@dimen/default_size"
+                    android:text="@{`Selected age ` + viewModel.age + ` content rating is ` + viewModel.contentRating }"/>
+
+                <FrameLayout
+                    android:id="@+id/ad_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_size"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

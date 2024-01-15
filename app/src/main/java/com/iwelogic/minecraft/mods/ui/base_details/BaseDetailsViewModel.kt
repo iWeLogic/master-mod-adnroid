@@ -16,6 +16,9 @@ import java.io.File
 abstract class BaseDetailsViewModel(val repository: Repository, private val firebaseConfigManager: FirebaseConfigManager, applicationContext: Context) :
     BaseViewModel(applicationContext) {
 
+    val showContentRating: MutableLiveData<Boolean> = MutableLiveData(firebaseConfigManager.isContentRatingShown())
+    val contentRating: MutableLiveData<String> = MutableLiveData(applicationContext.readString(Const.CONTENT_RATING))
+    val age: MutableLiveData<String> = MutableLiveData(applicationContext.readString(Const.AGE))
     var isFavourite: LiveData<Boolean>? = null
     val openHelp: SingleLiveEvent<Boolean> = SingleLiveEvent()
     val reloadAd: SingleLiveEvent<Boolean> = SingleLiveEvent()
