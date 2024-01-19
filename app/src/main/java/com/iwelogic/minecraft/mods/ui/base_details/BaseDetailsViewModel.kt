@@ -58,7 +58,7 @@ abstract class BaseDetailsViewModel(val repository: Repository, private val fire
         super.onCleared()
     }
 
-    fun reloadAd() {
+    fun onViewCreated() {
         if (firebaseConfigManager.getAdUnitStatus(AdUnit.NATIVE_ON_DETAILS)) {
             reloadAd.invoke(true)
         }
