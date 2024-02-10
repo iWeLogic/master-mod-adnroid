@@ -78,14 +78,14 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.fragment:fragment-ktx:1.6.2")
 
     //GoogleServices
     implementation("com.google.android.gms:play-services-ads:22.6.0")
     implementation("com.google.android.play:core:1.10.3")
     implementation("com.google.android.play:core-ktx:1.8.1")
-    implementation("com.google.android.ump:user-messaging-platform:2.1.0")
+    implementation("com.google.android.ump:user-messaging-platform:2.2.0")
 
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
