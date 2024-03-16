@@ -2,7 +2,6 @@ package com.iwelogic.minecraft.mods
 
 import android.app.*
 import android.os.Build
-import com.facebook.appevents.AppEventsLogger
 import com.iwelogic.minecraft.mods.manager.FirebaseConfigManager
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
@@ -30,6 +29,5 @@ class App : Application() {
             )
             notificationManager.createNotificationChannel(mChannel)
         }
-        AppEventsLogger.newLogger(this).logEvent("sentFriendRequest")
     }
 }

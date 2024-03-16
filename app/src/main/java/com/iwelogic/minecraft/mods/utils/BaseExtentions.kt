@@ -1,13 +1,12 @@
 package com.iwelogic.minecraft.mods.utils
 
 import android.app.Activity
-import android.content.Context
-import android.os.Bundle
+import android.content.*
+import android.os.*
+import android.os.Build.VERSION.SDK_INT
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 
@@ -62,11 +61,23 @@ fun Context?.logEvent(event: String, bundle: Bundle = Bundle()) {
     this?.let { FirebaseAnalytics.getInstance(it).logEvent(event, bundle) }
 }
 
-inline fun catchAll(action: () -> Unit) {
-    try {
-        action()
-    } catch (t: Throwable) {
-        t.printStackTrace()
-        Log.w("myLog", "catchAll: " + t.message)
-    }
+inline fun <reified T : Parcelable> Intent.parcelable(key: String): T? = when {
+    SDK_INT >= 33 -> getParcelableExtra(key, T::class.java)
+    else -> @Suppress("DEPRECATION") getParcelableExtra(key) as? T
 }
+
+inline fun <reified T : Parcelable> Bundle.parcelable(key: String): T? = when {
+    SDK_INT >= 33 -> getParcelable(key, T::class.java)
+    else -> @Suppress("DEPRECATION") getParcelable(key) as? T
+}
+
+inline fun <reified T : Parcelable> Intent.parcelableArray(key: String): List<T>? = when {
+    SDK_INT >= 33 -> getParcelableArrayExtra(key, T::class.java)?.toList()
+    else -> @Suppress("DEPRECATION") (getParcelableArrayExtra(key))?.map { it as T }
+}
+
+inline fun <reified T : Parcelable> Bundle.parcelableArray(key: String): List<T>? = when {
+    SDK_INT >= 33 -> getParcelableArray(key, T::class.java)?.toList()
+    else -> @Suppress("DEPRECATION") (getParcelableArray(key))?.map { it as T }
+}
+

@@ -2,9 +2,7 @@ package com.iwelogic.minecraft.mods.ui.main.mods
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
@@ -12,11 +10,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.FragmentModsBinding
-import com.iwelogic.minecraft.mods.models.FilterValue
-import com.iwelogic.minecraft.mods.models.Type
+import com.iwelogic.minecraft.mods.models.*
 import com.iwelogic.minecraft.mods.ui.base.BaseFragment
 import com.iwelogic.minecraft.mods.ui.base.Const.VALUE
 import com.iwelogic.minecraft.mods.ui.main.MainFragmentDirections
+import com.iwelogic.minecraft.mods.utils.parcelableArray
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -88,7 +86,7 @@ class ModsFragment : BaseFragment<ModsViewModel>() {
             }
         }
         parentFragment?.parentFragment?.setFragmentResultListener("filter_" + viewModel.type.id) { _, bundle ->
-            viewModel.setNewFilters(bundle.getParcelableArray(VALUE)?.map { it as FilterValue } ?: ArrayList())
+            viewModel.setNewFilters(bundle.parcelableArray<FilterValue>(VALUE) ?: ArrayList())
         }
         viewModel.recyclerState?.let {
             view.findViewById<RecyclerView>(R.id.list)?.layoutManager?.onRestoreInstanceState(it)

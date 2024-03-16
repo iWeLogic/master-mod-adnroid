@@ -55,7 +55,7 @@ class MainFragment : BaseFragment<MainViewModel>() {
         }
 
 
-        requestPermissionNotification = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+        requestPermissionNotification = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
 
         }
 
