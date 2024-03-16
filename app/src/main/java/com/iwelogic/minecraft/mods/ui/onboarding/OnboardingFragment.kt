@@ -31,6 +31,7 @@ class OnboardingFragment : BaseFragment<OnboardingViewModel>() {
             (activity as MainActivity).openMain()
         }
 
+
         viewModel.openUrl.observe(viewLifecycleOwner) {
             if (findNavController().currentDestination?.id == R.id.onboardingFragment) {
                 findNavController().navigate(OnboardingFragmentDirections.actionOnboardingFragmentToPrivacyPolicyFragment())
