@@ -42,7 +42,7 @@ class DetailsSkinFragment : BaseDetailsFragment<DetailsSkinViewModel>() {
     private fun checkPermissionAction() {
         activity?.let {
             if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(it, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                requestPermissionStorage?.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                requestPermissionStorage?.launch(Manifest.permission.)
             } else {
                 permissionAction?.invoke()
             }
