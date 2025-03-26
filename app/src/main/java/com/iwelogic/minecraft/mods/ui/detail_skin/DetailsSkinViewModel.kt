@@ -173,7 +173,7 @@ class DetailsSkinViewModel @Inject constructor(repository: Repository, firebaseC
     private fun getMinecraftVersion(): Int {
         return try {
             val packageInfo: PackageInfo = context.get()?.packageManager?.getPackageInfo("com.mojang.minecraftpe", 0) ?: return 0
-            val split = packageInfo.versionName.split("\\.".toRegex()).toTypedArray()
+            val split = packageInfo.versionName!!.split("\\.".toRegex()).toTypedArray()
             split[0].toInt() * 1000 + split[1].toInt()
         } catch (e: Exception) {
             0

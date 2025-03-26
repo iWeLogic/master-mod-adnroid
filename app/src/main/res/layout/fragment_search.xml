@@ -43,8 +43,7 @@
                 app:defaultQueryHint="@string/search"
                 app:iconifiedByDefault="false"
                 app:queryBackground="@color/transparent"
-                app:queryHint="@string/search"
-                app:searchIcon="@null" />
+                app:queryHint="@string/search" />
 
             <ImageView
                 android:layout_width="@dimen/toolbar"

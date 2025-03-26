@@ -1,26 +1,26 @@
 package com.iwelogic.minecraft.mods.ui.search
 
-import android.app.Activity
-import android.content.Intent
-import android.content.res.Configuration
-import android.os.Bundle
-import android.speech.RecognizerIntent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import android.app.*
+import android.content.*
+import android.content.res.*
+import android.os.*
+import android.speech.*
+import android.view.*
+import android.widget.*
+import androidx.activity.result.*
+import androidx.activity.result.contract.*
+import androidx.appcompat.widget.SearchView
+import androidx.databinding.*
+import androidx.lifecycle.*
+import androidx.navigation.fragment.*
 import com.iwelogic.minecraft.mods.R
-import com.iwelogic.minecraft.mods.databinding.FragmentSearchBinding
-import com.iwelogic.minecraft.mods.models.DialogData
-import com.iwelogic.minecraft.mods.models.Type
-import com.iwelogic.minecraft.mods.ui.base.BaseFragment
-import com.iwelogic.minecraft.mods.utils.hideKeyboard
-import dagger.hilt.android.AndroidEntryPoint
+import com.iwelogic.minecraft.mods.databinding.*
+import com.iwelogic.minecraft.mods.models.*
+import com.iwelogic.minecraft.mods.ui.base.*
+import com.iwelogic.minecraft.mods.utils.*
+import dagger.hilt.android.*
 import java.util.*
+
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<SearchViewModel>() {
@@ -38,6 +38,11 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val searchView = view.findViewById<SearchView>(R.id.search)
+        searchView.setIconifiedByDefault(false)
+        val icon = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_mag_icon)
+        icon.layoutParams = LinearLayout.LayoutParams(0, 0)
 
         resultVoiceSearch = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
