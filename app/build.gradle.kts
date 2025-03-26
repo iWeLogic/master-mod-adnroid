@@ -23,6 +23,7 @@ android {
         targetSdk = 35
         versionCode = getVersionCode()
         versionName = "1.0.$versionCode"
+        base.archivesName = "${applicationId}_$versionName"
     }
 
     signingConfigs {
@@ -119,16 +120,4 @@ dependencies {
 
 fun getVersionCode(): Int {
     return project.extra.get("gitVersion") as? Int ?: 1
-}
-
-androidComponents {
-    onVariants { variant ->
-        variant.outputs.forEach { output ->
-            if (output is com.android.build.api.variant.impl.VariantOutputImpl) {
-                val fileName = output.outputFileName.orNull ?: ""
-                val extension = fileName.substring(fileName.length -3)
-                output.outputFileName = "Minecraft_${output.versionName}.$extension"
-            }
-        }
-    }
 }
