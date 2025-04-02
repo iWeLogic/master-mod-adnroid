@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 //            .build()
 
 
+
         val params = ConsentRequestParameters
             .Builder()
 //            .setConsentDebugSettings(debugSettings)
