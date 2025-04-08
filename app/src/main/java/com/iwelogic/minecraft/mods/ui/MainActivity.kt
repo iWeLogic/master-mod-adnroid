@@ -8,14 +8,11 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
 import androidx.navigation.fragment.NavHostFragment
-import com.google.android.gms.ads.*
-import com.google.android.gms.ads.interstitial.*
 import com.google.android.ump.*
 import com.iwelogic.minecraft.mods.R
 import com.iwelogic.minecraft.mods.databinding.ActivityMainBinding
 import com.iwelogic.minecraft.mods.manager.ad.AdManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
 import javax.inject.Inject
 
 
@@ -43,19 +40,15 @@ class MainActivity : AppCompatActivity() {
             openMain()
         }
 
-
         viewModel.openOnboarding.observe(this) {
             val host = NavHostFragment.create(R.navigation.onboarding)
             supportFragmentManager.beginTransaction().replace(R.id.hostContainer, host).setPrimaryNavigationFragment(host).commitAllowingStateLoss()
         }
 
-
 //        val debugSettings = ConsentDebugSettings.Builder(this)
 //            .setDebugGeography(ConsentDebugSettings.DebugGeography.DEBUG_GEOGRAPHY_EEA)
 //            .addTestDeviceHashedId("D24A44F786A3570897EF8B5ABCE9EBC2")
 //            .build()
-
-
 
         val params = ConsentRequestParameters
             .Builder()
