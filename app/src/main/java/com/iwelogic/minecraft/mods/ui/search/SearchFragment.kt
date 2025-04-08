@@ -6,10 +6,8 @@ import android.content.res.*
 import android.os.*
 import android.speech.*
 import android.view.*
-import android.widget.*
 import androidx.activity.result.*
 import androidx.activity.result.contract.*
-import androidx.appcompat.widget.SearchView
 import androidx.databinding.*
 import androidx.lifecycle.*
 import androidx.navigation.fragment.*
@@ -38,11 +36,6 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val searchView = view.findViewById<SearchView>(R.id.search)
-        searchView.setIconifiedByDefault(false)
-        val icon = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_mag_icon)
-        icon.layoutParams = LinearLayout.LayoutParams(0, 0)
 
         resultVoiceSearch = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {

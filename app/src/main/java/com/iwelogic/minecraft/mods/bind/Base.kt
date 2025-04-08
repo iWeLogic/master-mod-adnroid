@@ -1,32 +1,58 @@
 package com.iwelogic.minecraft.mods.bind
 
-import android.text.method.LinkMovementMethod
-import android.util.TypedValue
-import android.view.View
-import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.annotation.*
+import android.text.method.*
+import android.view.*
+import android.view.inputmethod.*
+import android.widget.*
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.text.HtmlCompat
-import androidx.databinding.BindingAdapter
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.MultiTransformation
+import androidx.core.content.*
+import androidx.core.text.*
+import androidx.core.widget.*
+import androidx.databinding.*
+import androidx.swiperefreshlayout.widget.*
+import com.bumptech.glide.*
+import com.bumptech.glide.load.*
 import com.bumptech.glide.load.resource.bitmap.*
 import com.iwelogic.minecraft.mods.R
-import com.iwelogic.minecraft.mods.utils.dp
+import com.iwelogic.minecraft.mods.utils.*
 
 
 object Base {
 
+    @SuppressLint("ClickableViewAccessibility")
     @BindingAdapter("queryTextListener")
     @JvmStatic
-    fun setOnQueryTextListener(searchView: SearchView, listener: SearchView.OnQueryTextListener) {
-        searchView.setOnQueryTextListener(listener)
+    fun setOnQueryTextListener(view: EditText, listener: SearchView.OnQueryTextListener) {
+        view.addTextChangedListener {
+            listener.onQueryTextChange(view.text.toString())
+        }
+        view.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP && !view.text.isNullOrEmpty()) {
+                val drawableEnd = 2
+                view.compoundDrawables[drawableEnd]?.let { drawable ->
+                    val bounds = drawable.bounds
+                    val x = event.rawX.toInt()
+                    val right = view.right
+                    if (x >= right - bounds.width() - view.paddingEnd) {
+                        view.text.clear()
+                        return@setOnTouchListener true
+                    }
+                }
+            }
+            false
+        }
+        view.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE ||
+                actionId == EditorInfo.IME_ACTION_SEARCH ||
+                (event?.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)
+            ) {
+                view.hideKeyboard(true)
+                true
+            } else {
+                false
+            }
+        }
     }
 
     @BindingAdapter("adView")
@@ -44,16 +70,12 @@ object Base {
 
     @BindingAdapter("query")
     @JvmStatic
-    fun setOnQuery(searchView: SearchView, query: String) {
-        searchView.setQuery(query, false)
-        val txtSearch = searchView.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
-        txtSearch.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
-        txtSearch.setTextColor(ContextCompat.getColor(searchView.context, R.color.title))
-        txtSearch.setHintTextColor(ContextCompat.getColor(searchView.context, R.color.hintText))
-        txtSearch.typeface = ResourcesCompat.getFont(searchView.context, R.font.minecraft_regular)
-        val searchClose =
-            searchView.findViewById(androidx.appcompat.R.id.search_close_btn) as ImageView
-        searchClose.setImageResource(R.drawable.clear)
+    fun setOnQuery(view: EditText, query: String) {
+        if (query != view.text.toString())
+            view.setText(query)
+        view.addTextChangedListener {
+            view.setCompoundDrawablesWithIntrinsicBounds(0, 0, if (view.text.isNullOrEmpty()) 0 else R.drawable.clear, 0)
+        }
     }
 
     @BindingAdapter("image", "scaleType", "radius", requireAll = false)

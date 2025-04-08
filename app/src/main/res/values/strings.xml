@@ -124,4 +124,5 @@
     <string name="share">Share</string>
     <string name="privacy_settings">Privacy settings</string>
     <string name="rate_us">Rate us</string>
+    <string name="empty_search">No items found for your search request. Try entering another text with at least 3 characters</string>
 </resources>

@@ -4,6 +4,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <import type="com.iwelogic.minecraft.mods.models.Type" />
 
         <variable
@@ -31,7 +33,7 @@
                 android:scaleType="centerInside"
                 android:src="@drawable/back" />
 
-            <androidx.appcompat.widget.SearchView
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/search"
                 query="@{viewModel.query}"
                 queryTextListener="@{viewModel.listener}"
@@ -39,11 +41,14 @@
                 android:layout_height="32dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:theme="@style/SearchStyle"
-                app:defaultQueryHint="@string/search"
-                app:iconifiedByDefault="false"
-                app:queryBackground="@color/transparent"
-                app:queryHint="@string/search" />
+                android:background="@color/transparent"
+                android:fontFamily="@font/minecraft_regular"
+                android:hint="@string/search"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:lines="1"
+                android:textColorHint="@color/hintText"
+                android:textSize="20sp" />
 
             <ImageView
                 android:layout_width="@dimen/toolbar"
@@ -152,6 +157,19 @@
                 android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="@{1}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/double_default_size"
+                android:fontFamily="@font/minecraft_regular"
+                android:gravity="center"
+                android:text="@string/empty_search"
+                android:textColor="@color/title"
+                android:lineSpacingExtra="@dimen/quarter_default_size"
+                android:textSize="@dimen/largeText"
+                android:visibility="@{viewModel.mods.size() > 0 ? View.GONE : View.VISIBLE}" />
+
 
             <include
                 layout="@layout/layout_progress"

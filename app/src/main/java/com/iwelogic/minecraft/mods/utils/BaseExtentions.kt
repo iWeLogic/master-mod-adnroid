@@ -1,14 +1,14 @@
 package com.iwelogic.minecraft.mods.utils
 
-import android.app.Activity
+import android.app.*
 import android.content.*
 import android.os.*
-import android.os.Build.VERSION.SDK_INT
-import android.util.Log
-import android.view.inputmethod.InputMethodManager
+import android.os.Build.VERSION.*
+import android.view.*
+import android.view.inputmethod.*
 import androidx.lifecycle.*
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.gson.Gson
+import com.google.firebase.analytics.*
+import com.google.gson.*
 
 fun Int.dp(context: Context?): Int {
     return (toFloat() * (context?.resources?.displayMetrics?.density ?: 1f)).toInt()
@@ -55,6 +55,19 @@ fun Activity.hideKeyboard(clearFocus: Boolean) {
             it.clearFocus()
         }
     }
+}
+
+fun View.hideKeyboard(clearFocus: Boolean) {
+    findActivity()?.hideKeyboard(clearFocus)
+}
+
+fun View.findActivity(): Activity? {
+    var context = this.context
+    while (context is ContextWrapper) {
+        if (context is Activity) return context
+        context = context.baseContext
+    }
+    return null
 }
 
 fun Context?.logEvent(event: String, bundle: Bundle = Bundle()) {

@@ -10,9 +10,6 @@
         <item name="android:fontFamily">@font/minecraft_regular</item>
     </style>
 
-    <style name="SearchStyle">
-        <item name="colorAccent">@color/title</item>
-    </style>
 
     <style name="AppTheme.TextAppearance.Popup" parent="TextAppearance.MaterialComponents.Caption">
         <item name="fontFamily">@font/minecraft_regular</item>
